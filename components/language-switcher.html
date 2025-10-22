@@ -1,0 +1,183 @@
+<!-- 语言切换器组件 -->
+<div class="language-switcher">
+    <button class="lang-button" id="langButton">
+        <i class="fas fa-globe"></i>
+        <span id="currentLangName">简体中文</span>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    
+    <div class="lang-dropdown">
+        <div class="lang-dropdown-header">选择语言 / Select Language</div>
+        <div class="lang-options">
+            <div class="lang-option" data-lang="zh-CN">
+                <span class="lang-flag">🇨🇳</span>
+                <span class="lang-name">简体中文</span>
+                <span class="lang-code">ZH-CN</span>
+            </div>
+            
+            <div class="lang-option" data-lang="zh-TW">
+                <span class="lang-flag">🇹🇼</span>
+                <span class="lang-name">繁體中文</span>
+                <span class="lang-code">ZH-TW</span>
+            </div>
+            
+            <div class="lang-option" data-lang="en">
+                <span class="lang-flag">🇺🇸</span>
+                <span class="lang-name">English</span>
+                <span class="lang-code">EN</span>
+            </div>
+            
+            <div class="lang-option" data-lang="ja">
+                <span class="lang-flag">🇯🇵</span>
+                <span class="lang-name">日本語</span>
+                <span class="lang-code">JA</span>
+            </div>
+            
+            <div class="lang-option" data-lang="ko">
+                <span class="lang-flag">🇰🇷</span>
+                <span class="lang-name">한국어</span>
+                <span class="lang-code">KO</span>
+            </div>
+            
+            <div class="lang-option" data-lang="es">
+                <span class="lang-flag">🇪🇸</span>
+                <span class="lang-name">Español</span>
+                <span class="lang-code">ES</span>
+            </div>
+            
+            <div class="lang-option" data-lang="fr">
+                <span class="lang-flag">🇫🇷</span>
+                <span class="lang-name">Français</span>
+                <span class="lang-code">FR</span>
+            </div>
+            
+            <div class="lang-option" data-lang="de">
+                <span class="lang-flag">🇩🇪</span>
+                <span class="lang-name">Deutsch</span>
+                <span class="lang-code">DE</span>
+            </div>
+            
+            <div class="lang-option" data-lang="pt">
+                <span class="lang-flag">🇵🇹</span>
+                <span class="lang-name">Português</span>
+                <span class="lang-code">PT</span>
+            </div>
+            
+            <div class="lang-option" data-lang="ru">
+                <span class="lang-flag">🇷🇺</span>
+                <span class="lang-name">Русский</span>
+                <span class="lang-code">RU</span>
+            </div>
+            
+            <div class="lang-option" data-lang="ar">
+                <span class="lang-flag">🇸🇦</span>
+                <span class="lang-name">العربية</span>
+                <span class="lang-code">AR</span>
+            </div>
+            
+            <div class="lang-option" data-lang="hi">
+                <span class="lang-flag">🇮🇳</span>
+                <span class="lang-name">हिन्दी</span>
+                <span class="lang-code">HI</span>
+            </div>
+            
+            <div class="lang-option" data-lang="th">
+                <span class="lang-flag">🇹🇭</span>
+                <span class="lang-name">ไทย</span>
+                <span class="lang-code">TH</span>
+            </div>
+            
+            <div class="lang-option" data-lang="vi">
+                <span class="lang-flag">🇻🇳</span>
+                <span class="lang-name">Tiếng Việt</span>
+                <span class="lang-code">VI</span>
+            </div>
+            
+            <div class="lang-option" data-lang="tr">
+                <span class="lang-flag">🇹🇷</span>
+                <span class="lang-name">Türkçe</span>
+                <span class="lang-code">TR</span>
+            </div>
+            
+            <div class="lang-option" data-lang="nl">
+                <span class="lang-flag">🇳🇱</span>
+                <span class="lang-name">Nederlands</span>
+                <span class="lang-code">NL</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 语言切换器交互
+document.addEventListener('DOMContentLoaded', () => {
+    const langSwitcher = document.querySelector('.language-switcher');
+    const langButton = document.getElementById('langButton');
+    const langOptions = document.querySelectorAll('.lang-option');
+    const currentLangName = document.getElementById('currentLangName');
+    
+    // 语言名称映射
+    const langNames = {
+        'zh-CN': '简体中文',
+        'zh-TW': '繁體中文',
+        'en': 'English',
+        'ja': '日本語',
+        'ko': '한국어',
+        'es': 'Español',
+        'fr': 'Français',
+        'de': 'Deutsch',
+        'pt': 'Português',
+        'ru': 'Русский',
+        'ar': 'العربية',
+        'hi': 'हिन्दी',
+        'th': 'ไทย',
+        'vi': 'Tiếng Việt',
+        'tr': 'Türkçe',
+        'nl': 'Nederlands'
+    };
+    
+    // 切换下拉菜单
+    langButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langSwitcher.classList.toggle('active');
+    });
+    
+    // 点击外部关闭
+    document.addEventListener('click', () => {
+        langSwitcher.classList.remove('active');
+    });
+    
+    // 选择语言
+    langOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const lang = option.dataset.lang;
+            
+            // 更新active状态
+            langOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            
+            // 更新显示的语言名称
+            currentLangName.textContent = langNames[lang] || lang;
+            
+            // 切换语言
+            if (typeof setLanguage === 'function') {
+                setLanguage(lang);
+            }
+            
+            // 关闭下拉菜单
+            langSwitcher.classList.remove('active');
+        });
+    });
+    
+    // 初始化active状态
+    const currentLang = localStorage.getItem('language') || 'zh-CN';
+    langOptions.forEach(option => {
+        if (option.dataset.lang === currentLang) {
+            option.classList.add('active');
+            currentLangName.textContent = langNames[currentLang] || currentLang;
+        }
+    });
+});
+</script>
+
+

@@ -1,0 +1,292 @@
+/* 语言切换器样式 */
+
+/* 导航栏中的语言切换器容器 */
+.language-switcher-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* 语言切换按钮 */
+.language-switcher-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.language-switcher-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.language-switcher-btn i:first-child {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.language-switcher-btn i:last-child {
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+}
+
+.language-switcher-item.active .language-switcher-btn i:last-child {
+    transform: rotate(180deg);
+}
+
+/* 语言下拉菜单 */
+.language-dropdown {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    background: #3d4856;
+    background: linear-gradient(135deg, #3d4856 0%, #404954 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    min-width: 240px;
+    max-height: 480px;
+    overflow-y: auto;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.language-dropdown.active,
+.language-dropdown.show,
+.language-switcher-item.active .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* 语言选项 */
+.language-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.language-option:first-child {
+    border-radius: 12px 12px 0 0;
+}
+
+.language-option:last-child {
+    border-bottom: none;
+    border-radius: 0 0 12px 12px;
+}
+
+.language-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 1.2rem;
+}
+
+.language-option.active {
+    background: rgba(127, 157, 172, 0.25);
+    border-left: 3px solid #7F9DAC;
+}
+
+/* 国家代码标识 */
+.language-option .lang-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 28px;
+    padding: 0 8px;
+    background: linear-gradient(135deg, #5A6B75, #475569);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.language-option:hover .lang-code {
+    background: linear-gradient(135deg, #7F9DAC, #5A6B75);
+    transform: scale(1.05);
+}
+
+.language-option.active .lang-code {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 3px 8px rgba(127, 157, 172, 0.4);
+}
+
+/* 语言名称 */
+.language-option .lang-name {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.language-option:hover .lang-name {
+    color: white;
+}
+
+.language-option.active .lang-name {
+    color: white;
+    font-weight: 600;
+}
+
+/* 旗帜emoji（如果使用） */
+.language-option .flag {
+    font-size: 1.5rem;
+    width: 28px;
+    text-align: center;
+    line-height: 1;
+}
+
+/* 旧版兼容样式 */
+.language-switcher {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.lang-button:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-light);
+}
+
+.lang-button i {
+    font-size: 1.1rem;
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s;
+}
+
+.language-switcher.active .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-dropdown-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.lang-options {
+    padding: 0.5rem;
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.lang-option:hover {
+    background: var(--bg-light);
+}
+
+.lang-option.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.lang-flag {
+    font-size: 1.5rem;
+    width: 24px;
+    text-align: center;
+}
+
+.lang-name {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.lang-code {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.lang-option.active .lang-code {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .lang-dropdown {
+        right: auto;
+        left: 0;
+        max-width: 90vw;
+    }
+}
+
+/* 滚动条样式 */
+.lang-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lang-dropdown::-webkit-scrollbar-track {
+    background: var(--bg-card);
+}
+
+.lang-dropdown::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.lang-dropdown::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+

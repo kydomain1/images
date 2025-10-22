@@ -1,0 +1,49 @@
+# robots.txt for AI图片生成器
+# 允许所有搜索引擎抓取
+
+User-agent: *
+Allow: /
+
+# 不允许抓取的路径
+Disallow: /node_modules/
+Disallow: /.env
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /server-*.js
+
+# 允许抓取关键页面
+Allow: /index.html
+Allow: /tool.html
+Allow: /pages/
+Allow: /css/
+Allow: /js/
+
+# Sitemap 位置
+Sitemap: http://localhost:3000/sitemap.xml
+
+# 特定搜索引擎配置
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Baidu (百度)
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# 禁止抓取生成的图片（避免消耗带宽）
+User-agent: *
+Disallow: /uploads/
+Disallow: /temp/
+

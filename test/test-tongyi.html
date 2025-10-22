@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通义万相API测试工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .image-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .image-item img {
+            width: 100%;
+            display: block;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+        }
+        
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .tips {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .tips h4 {
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+        
+        .tips ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        
+        .tips li {
+            margin: 5px 0;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 通义万相API测试工具</h1>
+        <p class="subtitle">测试阿里云通义万相图片生成功能</p>
+        
+        <div class="tips">
+            <h4>📝 使用提示</h4>
+            <ul>
+                <li>首次使用需要在 <a href="https://dashscope.console.aliyun.com/" target="_blank">DashScope控制台</a> 获取API Key</li>
+                <li>新用户有100万Tokens免费额度（约1000-2000张图片）</li>
+                <li>通义万相对中文提示词支持最好</li>
+                <li>生成时间约10-30秒，请耐心等待</li>
+            </ul>
+        </div>
+        
+        <form id="test-form">
+            <div class="form-group">
+                <label for="api-key">
+                    API Key <span style="color: red;">*</span>
+                    <small style="font-weight: normal; color: #999;">
+                        (格式：sk-xxxxxxxxxx)
+                    </small>
+                </label>
+                <input 
+                    type="password" 
+                    id="api-key" 
+                    placeholder="请输入您的通义万相API Key"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="prompt">
+                    图片描述 <span style="color: red;">*</span>
+                </label>
+                <textarea 
+                    id="prompt" 
+                    placeholder="详细描述您想要生成的图片...&#10;&#10;示例：一只可爱的橘猫坐在窗台上，阳光洒在它的身上，温暖的午后，油画风格，细节丰富"
+                    required
+                ></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="negative-prompt">负面提示词（可选）</label>
+                <input 
+                    type="text" 
+                    id="negative-prompt" 
+                    placeholder="不想出现的内容，如：模糊、低质量、变形"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="size">图片尺寸</label>
+                <select id="size">
+                    <option value="1024*1024">1024×1024 (正方形)</option>
+                    <option value="720*1280">720×1280 (竖向)</option>
+                    <option value="1280*720">1280×720 (横向)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="count">生成数量</label>
+                <select id="count">
+                    <option value="1" selected>1张</option>
+                    <option value="2">2张</option>
+                    <option value="4">4张</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn" id="submit-btn">
+                🚀 开始生成
+            </button>
+        </form>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="result" class="result">
+            <h3>✨ 生成结果</h3>
+            <div id="image-grid" class="image-grid"></div>
+        </div>
+    </div>
+    
+    <script src="js/tongyi-api.js"></script>
+    <script>
+        const form = document.getElementById('test-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusDiv = document.getElementById('status');
+        const resultDiv = document.getElementById('result');
+        const imageGrid = document.getElementById('image-grid');
+        
+        function showStatus(message, type) {
+            statusDiv.textContent = message;
+            statusDiv.className = `status show ${type}`;
+        }
+        
+        function hideStatus() {
+            statusDiv.className = 'status';
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const apiKey = document.getElementById('api-key').value.trim();
+            const prompt = document.getElementById('prompt').value.trim();
+            const negativePrompt = document.getElementById('negative-prompt').value.trim();
+            const size = document.getElementById('size').value;
+            const count = parseInt(document.getElementById('count').value);
+            
+            // 验证
+            if (!apiKey) {
+                alert('请输入API Key');
+                return;
+            }
+            
+            if (!prompt) {
+                alert('请输入图片描述');
+                return;
+            }
+            
+            // 禁用按钮
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ 生成中...';
+            
+            // 显示加载状态
+            showStatus('正在提交生成任务...', 'loading');
+            
+            // 隐藏之前的结果
+            resultDiv.classList.remove('show');
+            imageGrid.innerHTML = '';
+            
+            try {
+                // 创建API实例
+                const api = new TongyiWanxiangAPI(apiKey);
+                
+                // 调用API
+                const images = await api.generate({
+                    prompt: prompt,
+                    negativePrompt: negativePrompt,
+                    size: size,
+                    count: count
+                });
+                
+                // 显示成功状态
+                showStatus(`✅ 成功生成 ${images.length} 张图片！`, 'success');
+                
+                // 显示图片
+                images.forEach((image, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item';
+                    div.innerHTML = `
+                        <img src="${image.url}" alt="生成的图片 ${index + 1}">
+                    `;
+                    imageGrid.appendChild(div);
+                });
+                
+                resultDiv.classList.add('show');
+                
+            } catch (error) {
+                console.error('生成失败:', error);
+                showStatus(`❌ 生成失败: ${error.message}`, 'error');
+                
+                // 显示详细错误信息
+                if (error.message.includes('Invalid API Key')) {
+                    showStatus('❌ API Key无效，请检查是否正确配置', 'error');
+                } else if (error.message.includes('Insufficient')) {
+                    showStatus('❌ 余额不足，请前往控制台充值', 'error');
+                } else if (error.message.includes('timeout')) {
+                    showStatus('❌ 生成超时，请稍后重试', 'error');
+                }
+            } finally {
+                // 恢复按钮
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 开始生成';
+            }
+        });
+        
+        // 页面加载时的提示
+        console.log('通义万相API测试工具已加载');
+        console.log('请访问 https://dashscope.console.aliyun.com/ 获取API Key');
+    </script>
+</body>
+</html>
+
+

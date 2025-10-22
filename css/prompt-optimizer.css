@@ -1,0 +1,381 @@
+/* ==================== 提示词优化助手样式 ==================== */
+
+/* 优化工具按钮组 */
+.prompt-optimizer-tools {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.optimizer-btn {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(127, 157, 172, 0.3);
+}
+
+.optimizer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(127, 157, 172, 0.4);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+}
+
+.optimizer-btn:active {
+    transform: translateY(0);
+}
+
+.optimizer-btn.secondary {
+    background: var(--bg-card);
+    color: var(--text-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.optimizer-btn.secondary:hover {
+    background: var(--bg-hover);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.optimizer-btn i {
+    font-size: 16px;
+}
+
+/* 优化选项面板 */
+.optimizer-panel {
+    margin-top: 16px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.optimizer-section {
+    margin-bottom: 16px;
+}
+
+.optimizer-section:last-child {
+    margin-bottom: 0;
+}
+
+.optimizer-section label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.optimizer-section select {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-light);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.optimizer-section select:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-hover);
+}
+
+.optimizer-section select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(127, 157, 172, 0.2);
+}
+
+/* 优化操作按钮 */
+.optimizer-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.optimizer-btn-small {
+    flex: 1;
+    padding: 10px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.optimizer-btn-small:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.optimizer-btn-small.secondary {
+    background: var(--bg-hover);
+    color: var(--text-color);
+}
+
+.optimizer-btn-small.secondary:hover {
+    background: var(--border-light);
+}
+
+/* 模板面板 */
+.templates-panel,
+.styles-panel {
+    margin-top: 16px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.3s ease;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.templates-header,
+.styles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.templates-header h4,
+.styles-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.close-btn {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-color);
+}
+
+/* 模板网格 */
+.templates-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.template-item {
+    padding: 14px;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.template-item:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(127, 157, 172, 0.2);
+}
+
+.template-item:active {
+    transform: translateX(2px);
+}
+
+/* 风格网格 */
+.styles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.style-item {
+    padding: 16px;
+    background: var(--bg-light);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.style-item:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(127, 157, 172, 0.3);
+}
+
+.style-item.selected {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.style-item i {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+/* 自定义滚动条 - 模板和风格面板 */
+.templates-panel::-webkit-scrollbar,
+.styles-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.templates-panel::-webkit-scrollbar-track,
+.styles-panel::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 3px;
+}
+
+.templates-panel::-webkit-scrollbar-thumb,
+.styles-panel::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.templates-panel::-webkit-scrollbar-thumb:hover,
+.styles-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* 优化提示 */
+.optimizer-hint {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(138, 155, 168, 0.15);
+    border-left: 3px solid var(--info-color);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.5;
+}
+
+.optimizer-hint i {
+    color: var(--info-color);
+    margin-right: 6px;
+}
+
+/* 加载动画 */
+.optimizer-loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .prompt-optimizer-tools {
+        flex-direction: column;
+    }
+    
+    .optimizer-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .styles-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .optimizer-actions {
+        flex-direction: column;
+    }
+    
+    .templates-panel,
+    .styles-panel {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .optimizer-panel {
+        padding: 16px;
+    }
+    
+    .optimizer-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    
+    .styles-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 成功提示动画 */
+@keyframes successPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(143, 168, 136, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(143, 168, 136, 0);
+    }
+}
+
+.optimizer-btn.success {
+    background: var(--success-color);
+    animation: successPulse 0.6s ease;
+}
+

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO 基础标签 -->
+    <title>AI图片生成工具 - 文字转图片在线编辑器 | 免费AI绘画</title>
+    <meta name="description" content="强大的AI图片生成工具，支持文字转图片、多种艺术风格选择、AI提示词优化。提供写实、动漫、油画、水彩等8种风格，生成高质量1024x1024图片，永久保存。">
+    <meta name="keywords" content="AI图片生成,图片编辑器,文字生成图片,AI绘画工具,提示词优化,通义万相API,免费AI作画,在线图片生成">
+    <meta name="author" content="AI图片生成器">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="http://localhost:3000/tool.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:3000/tool.html">
+    <meta property="og:title" content="AI图片生成工具 - 文字转图片在线编辑器">
+    <meta property="og:description" content="支持多种艺术风格的AI图片生成工具，提供提示词优化和历史记录功能">
+    <meta property="og:image" content="http://localhost:3000/assets/tool-preview.svg">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="http://localhost:3000/tool.html">
+    <meta name="twitter:title" content="AI图片生成工具 - 文字转图片在线编辑器">
+    <meta name="twitter:description" content="支持多种艺术风格的AI图片生成工具">
+    <meta name="twitter:image" content="http://localhost:3000/assets/tool-preview.svg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://pub-cbddee5991484904ac9e5399ab06dcd7.r2.dev">
+    <link rel="preload" href="js/tool.js" as="script">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+    <link rel="stylesheet" href="css/prompt-optimizer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AI图片生成工具",
+      "description": "支持多种艺术风格的AI图片生成工具，提供提示词优化和历史记录功能",
+      "url": "http://localhost:3000/tool.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "文字转图片生成",
+        "8种艺术风格",
+        "AI提示词优化",
+        "生成历史记录",
+        "永久图片保存"
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2 data-i18n="nav.brand">AI图片生成器</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" data-i18n="nav.home">首页</a></li>
+                <li><a href="tool.html" class="active" data-i18n="nav.tool">图片编辑器</a></li>
+                <li class="language-switcher-item">
+                    <button class="language-switcher-btn" id="languageSwitcherBtn">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguage">中文</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option" data-lang="zh-CN">
+                            <span class="flag">🇨🇳</span>
+                            <span>中文 (简体)</span>
+                        </div>
+                        <div class="language-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="ja">
+                            <span class="flag">🇯🇵</span>
+                            <span>日本語</span>
+                        </div>
+                        <div class="language-option" data-lang="ko">
+                            <span class="flag">🇰🇷</span>
+                            <span>한국어</span>
+                        </div>
+                        <div class="language-option" data-lang="es">
+                            <span class="flag">🇪🇸</span>
+                            <span>Español</span>
+                        </div>
+                        <div class="language-option" data-lang="fr">
+                            <span class="flag">🇫🇷</span>
+                            <span>Français</span>
+                        </div>
+                        <div class="language-option" data-lang="de">
+                            <span class="flag">🇩🇪</span>
+                            <span>Deutsch</span>
+                        </div>
+                        <div class="language-option" data-lang="pt">
+                            <span class="flag">🇵🇹</span>
+                            <span>Português</span>
+                        </div>
+                        <div class="language-option" data-lang="ru">
+                            <span class="flag">🇷🇺</span>
+                            <span>Русский</span>
+                        </div>
+                        <div class="language-option" data-lang="ar">
+                            <span class="flag">🇸🇦</span>
+                            <span>العربية</span>
+                        </div>
+                        <div class="language-option" data-lang="hi">
+                            <span class="flag">🇮🇳</span>
+                            <span>हिन्दी</span>
+                        </div>
+                        <div class="language-option" data-lang="th">
+                            <span class="flag">🇹🇭</span>
+                            <span>ไทย</span>
+                        </div>
+                        <div class="language-option" data-lang="vi">
+                            <span class="flag">🇻🇳</span>
+                            <span>Tiếng Việt</span>
+                        </div>
+                        <div class="language-option" data-lang="id">
+                            <span class="flag">🇮🇩</span>
+                            <span>Bahasa Indonesia</span>
+                        </div>
+                        <div class="language-option" data-lang="it">
+                            <span class="flag">🇮🇹</span>
+                            <span>Italiano</span>
+                        </div>
+                        <div class="language-option" data-lang="tr">
+                            <span class="flag">🇹🇷</span>
+                            <span>Türkçe</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 工具页面主体 -->
+    <div class="tool-page">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">
+                    <h3><i class="fas fa-history"></i> <span data-i18n="history.title">历史记录</span></h3>
+                    <button class="clear-history-btn" onclick="clearAllHistory()" title="清空历史记录">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <div id="history-list" class="history-list">
+                    <p class="empty-state" data-i18n="history.empty">暂无生成记录</p>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3><i class="fas fa-star"></i> <span data-i18n="tool.suggestions">推荐提示词</span></h3>
+                <div class="prompt-suggestions">
+                    <button class="suggestion-btn" data-prompt="一只可爱的橘猫坐在窗台上，阳光洒在它的身上，油画风格，细节丰富">
+                        <span data-i18n="suggest.cat">可爱橘猫</span>
+                    </button>
+                    <button class="suggestion-btn" data-prompt="未来主义城市景观，赛博朋克风格，霓虹灯，夜晚，高楼大厦，科幻感">
+                        <span data-i18n="suggest.city">赛博朋克城市</span>
+                    </button>
+                    <button class="suggestion-btn" data-prompt="梦幻森林，魔法氛围，发光的蘑菇，仙女，奇幻风格，柔和光线">
+                        <span data-i18n="suggest.forest">魔法森林</span>
+                    </button>
+                    <button class="suggestion-btn" data-prompt="宇宙星空，星云，行星，深邃的太空，壮观的宇宙景象，超现实主义">
+                        <span data-i18n="suggest.space">宇宙星空</span>
+                    </button>
+                    <button class="suggestion-btn" data-prompt="日本樱花盛开的街道，春天，粉色花瓣飘落，传统建筑，动漫风格">
+                        <span data-i18n="suggest.sakura">樱花街道</span>
+                    </button>
+                    <button class="suggestion-btn" data-prompt="古代龙，威武雄壮，东方神话风格，云雾缭绕，金色鳞片">
+                        <span data-i18n="suggest.dragon">东方神龙</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 功能标题 -->
+            <div class="tool-header">
+                <h2><i class="fas fa-pen-fancy"></i> <span data-i18n="tool.text2img">文字生成图片</span></h2>
+            </div>
+            
+            <!-- 文字生成图片面板 -->
+            <div class="tool-panel active" id="text2img-panel">
+                <!-- 输入区 -->
+                <section class="input-section">
+                    <h2><i class="fas fa-pen"></i> <span data-i18n="tool.settings">创作设置</span></h2>
+                
+                <div class="input-group">
+                    <label for="tool-prompt">
+                        <i class="fas fa-message"></i> <span data-i18n="tool.prompt">描述您的图片</span>
+                    </label>
+                    <textarea 
+                        id="tool-prompt" 
+                        placeholder="详细描述您想要创建的图像...&#10;&#10;示例：一只可爱的橘猫坐在窗台上，阳光洒在它的身上，油画风格，细节丰富，温暖的色调，柔和的光线"
+                        rows="5"
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="char-counter">0</span> / 2000 字符
+                    </div>
+                    
+                    <!-- 提示词优化助手 -->
+                    <div class="prompt-optimizer-tools">
+                        <button type="button" class="optimizer-btn" id="optimizeBtn">
+                            <i class="fas fa-magic"></i>
+                            <span data-i18n="optimizer.optimizeBtn">优化提示词</span>
+                        </button>
+                        
+                        <button type="button" class="optimizer-btn secondary" id="showTemplatesBtn">
+                            <i class="fas fa-lightbulb"></i>
+                            <span data-i18n="optimizer.templates">示例模板</span>
+                        </button>
+                        
+                        <button type="button" class="optimizer-btn secondary" id="showStylesBtn">
+                            <i class="fas fa-palette"></i>
+                            <span data-i18n="optimizer.styles">风格预设</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 优化选项面板 -->
+                    <div class="optimizer-panel" id="optimizerPanel" style="display: none;">
+                        <div class="optimizer-section">
+                            <label data-i18n="optimizer.category">主题分类</label>
+                            <select id="categorySelect">
+                                <option value="auto" data-i18n="optimizer.category.auto">自动识别</option>
+                                <option value="character" data-i18n="optimizer.category.character">人物角色</option>
+                                <option value="landscape" data-i18n="optimizer.category.landscape">风景景观</option>
+                                <option value="animal" data-i18n="optimizer.category.animal">动物宠物</option>
+                                <option value="product" data-i18n="optimizer.category.product">产品物品</option>
+                                <option value="architecture" data-i18n="optimizer.category.architecture">建筑场景</option>
+                                <option value="food" data-i18n="optimizer.category.food">美食饮品</option>
+                            </select>
+                        </div>
+                        
+                        <div class="optimizer-section">
+                            <label data-i18n="optimizer.styleLabel">艺术风格</label>
+                            <select id="styleSelect">
+                                <option value="realistic" data-i18n="optimizer.style.realistic">写实风格</option>
+                                <option value="anime" data-i18n="optimizer.style.anime">动漫风格</option>
+                                <option value="oil_painting" data-i18n="optimizer.style.oil">油画风格</option>
+                                <option value="watercolor" data-i18n="optimizer.style.watercolor">水彩风格</option>
+                                <option value="sketch" data-i18n="optimizer.style.sketch">素描风格</option>
+                                <option value="cyberpunk" data-i18n="optimizer.style.cyberpunk">赛博朋克</option>
+                                <option value="fantasy" data-i18n="optimizer.style.fantasy">奇幻风格</option>
+                                <option value="minimalist" data-i18n="optimizer.style.minimalist">极简风格</option>
+                                <option value="vintage" data-i18n="optimizer.style.vintage">复古风格</option>
+                                <option value="3d_render" data-i18n="optimizer.style.3d">3D渲染</option>
+                            </select>
+                        </div>
+                        
+                        <div class="optimizer-actions">
+                            <button type="button" class="optimizer-btn-small" id="applyOptimizeBtn">
+                                <i class="fas fa-check"></i>
+                                <span data-i18n="optimizer.apply">应用优化</span>
+                            </button>
+                            <button type="button" class="optimizer-btn-small secondary" id="cancelOptimizeBtn">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="optimizer.cancel">取消</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 模板面板 -->
+                    <div class="templates-panel" id="templatesPanel" style="display: none;">
+                        <div class="templates-header">
+                            <h4 data-i18n="optimizer.templatesTitle">提示词模板</h4>
+                            <button class="close-btn" id="closeTemplates">×</button>
+                        </div>
+                        <div class="templates-grid" id="templatesGrid">
+                            <!-- 动态生成模板 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 风格面板 -->
+                    <div class="styles-panel" id="stylesPanel" style="display: none;">
+                        <div class="styles-header">
+                            <h4 data-i18n="optimizer.stylesTitle">风格预设</h4>
+                            <button class="close-btn" id="closeStyles">×</button>
+                        </div>
+                        <div class="styles-grid" id="stylesGrid">
+                            <!-- 动态生成风格选项 -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div class="input-group">
+                        <label for="image-count">
+                            <i class="fas fa-images"></i> <span data-i18n="tool.count">生成数量</span>
+                        </label>
+                        <select id="image-count">
+                            <option value="1" data-i18n="option.count1">1张图片</option>
+                            <option value="2" data-i18n="option.count2">2张图片</option>
+                            <option value="4" selected data-i18n="option.count4">4张图片</option>
+                            <option value="6" data-i18n="option.count6">6张图片</option>
+                            <option value="8" data-i18n="option.count8">8张图片</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="image-size">
+                            <i class="fas fa-expand"></i> <span data-i18n="tool.size">图片尺寸</span>
+                        </label>
+                        <select id="image-size">
+                            <option value="1024x1024" selected data-i18n="option.size1">1024 x 1024 (正方形)</option>
+                            <option value="1024x1792" data-i18n="option.size2">1024 x 1792 (竖向 9:16)</option>
+                            <option value="1024x1280" data-i18n="option.size3">1024 x 1280 (竖向 4:5)</option>
+                            <option value="768x1024" data-i18n="option.size4">768 x 1024 (竖向 3:4)</option>
+                            <option value="682x1024" data-i18n="option.size5">682 x 1024 (竖向 2:3)</option>
+                            <option value="1792x1024" data-i18n="option.size6">1792 x 1024 (横向 16:9)</option>
+                            <option value="1280x1024" data-i18n="option.size7">1280 x 1024 (横向 5:4)</option>
+                            <option value="1024x768" data-i18n="option.size8">1024 x 768 (横向 4:3)</option>
+                            <option value="1024x682" data-i18n="option.size9">1024 x 682 (横向 3:2)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-row">
+                    <div class="input-group">
+                        <label for="art-style">
+                            <i class="fas fa-palette"></i> <span data-i18n="tool.style">艺术风格</span>
+                        </label>
+                        <select id="art-style">
+                            <option value="auto" data-i18n="option.styleAuto">自动</option>
+                            <option value="photorealistic" data-i18n="option.stylePhoto">逼真照片</option>
+                            <option value="anime" data-i18n="option.styleAnime">动漫风格</option>
+                            <option value="oil-painting" data-i18n="option.styleOil">油画</option>
+                            <option value="watercolor" data-i18n="option.styleWater">水彩</option>
+                            <option value="cyberpunk" data-i18n="option.styleCyber">赛博朋克</option>
+                            <option value="fantasy" data-i18n="option.styleFantasy">奇幻</option>
+                            <option value="minimalist" data-i18n="option.styleMinimal">极简主义</option>
+                            <option value="3d-render" data-i18n="option.style3d">3D渲染</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="quality">
+                            <i class="fas fa-gem"></i> <span data-i18n="tool.quality">图片质量</span>
+                        </label>
+                        <select id="quality">
+                            <option value="standard" data-i18n="option.qualityStd">标准</option>
+                            <option value="hd" selected data-i18n="option.qualityHD">高清 (HD)</option>
+                            <option value="ultra" data-i18n="option.qualityUltra">超高清 (Ultra HD)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="advanced-settings">
+                    <button class="toggle-advanced" id="toggle-advanced">
+                        <i class="fas fa-cog"></i> <span data-i18n="tool.advanced">高级设置</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="advanced-panel" id="advanced-panel">
+                        <div class="input-group">
+                            <label for="negative-prompt">
+                                <i class="fas fa-ban"></i> <span data-i18n="tool.negative">负面提示词（避免出现的内容）</span>
+                            </label>
+                            <textarea 
+                                id="negative-prompt" 
+                                placeholder="输入您不想在图片中出现的元素...&#10;例如：模糊、低质量、变形、水印"
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label for="creativity">
+                                <i class="fas fa-lightbulb"></i> 创意程度
+                                <span id="creativity-value">7</span>
+                            </label>
+                            <input type="range" id="creativity" min="1" max="10" value="7" step="1">
+                            <div class="slider-labels">
+                                <span>保守</span>
+                                <span>创新</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="generate-btn-large" id="generate-btn">
+                    <i class="fas fa-magic"></i> <span data-i18n="btn.generate">生成图片</span>
+                </button>
+            </section>
+
+            <!-- 图片输出区 -->
+            <section class="output-section">
+                <div class="output-header">
+                    <h2><i class="fas fa-image"></i> 生成结果</h2>
+                    <div class="output-actions">
+                        <button class="action-btn" id="download-all" disabled>
+                            <i class="fas fa-download"></i> 下载全部
+                        </button>
+                        <button class="action-btn" id="clear-all" disabled>
+                            <i class="fas fa-trash"></i> 清空
+                        </button>
+                    </div>
+                </div>
+
+                <div id="output-grid" class="output-grid">
+                    <div class="empty-output">
+                        <i class="fas fa-image fa-3x"></i>
+                        <p data-i18n="tool.empty">您生成的图片将在这里显示</p>
+                        <p class="hint" data-i18n="tool.emptyHint">输入描述并点击"生成图片"开始创作</p>
+                    </div>
+                </div>
+
+                <div id="loading-state" class="loading-state" style="display: none;">
+                    <div class="loader"></div>
+                    <p>AI正在为您创作中...</p>
+                    <p class="loading-hint">这可能需要几秒钟时间</p>
+                </div>
+            </section>
+            </div>
+            <!-- 文字生成面板结束 -->
+            
+        </main>
+    </div>
+
+    <!-- 图片预览模态框 -->
+    <div id="image-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content-wrapper">
+            <img class="modal-content" id="modal-image">
+            <div class="modal-actions">
+                <button class="modal-btn" id="modal-download">
+                    <i class="fas fa-download"></i> 下载
+                </button>
+                <button class="modal-btn" id="modal-share">
+                    <i class="fas fa-share"></i> 分享
+                </button>
+                <button class="modal-btn" id="modal-edit">
+                    <i class="fas fa-edit"></i> 再次编辑
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="pages/privacy.html" data-i18n="footer.privacy">隐私政策</a>
+                <span>•</span>
+                <a href="pages/terms.html" data-i18n="footer.terms">服务条款</a>
+                <span>•</span>
+                <a href="pages/about.html" data-i18n="footer.about">关于我们</a>
+                <span>•</span>
+                <a href="pages/contact.html" data-i18n="footer.contact">联系我们</a>
+            </div>
+            <p class="copyright">© 2025 • AI图片生成器. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/performance.js" defer></script>
+    <script src="js/lazy-load.js" defer></script>
+    <script src="js/i18n.js?v=2"></script>
+    <script src="js/tongyi-api.js?v=2"></script>
+    <script src="js/api-config.js?v=2"></script>
+    <script src="js/prompt-optimizer.js?v=2"></script>
+    <script src="js/tool.js?v=2"></script>
+</body>
+</html>

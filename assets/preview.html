@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交分享图预览 - OG Image Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #E8F4F8 0%, #F5E6D3 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #7F9DAC;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #9FA8A3;
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box h2 {
+            color: #7F9DAC;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .info-box p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .preview-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .preview-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .preview-card h3 {
+            color: #7F9DAC;
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .preview-card .meta {
+            color: #9FA8A3;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .image-wrapper {
+            border: 3px solid #E8F4F8;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #fafafa;
+        }
+        
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            background: #F5F5F5;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-label {
+            color: #9FA8A3;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            color: #7F9DAC;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #7F9DAC, #C8B5A0);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(127, 157, 172, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #7F9DAC;
+            border: 2px solid #7F9DAC;
+        }
+        
+        .btn-secondary:hover {
+            background: #7F9DAC;
+            color: white;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .success-badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 社交分享图预览</h1>
+        <p class="subtitle">Open Graph & Twitter Card Images</p>
+        
+        <div class="info-box">
+            <h2>✅ 状态：已完成</h2>
+            <p><strong>创建时间：</strong>2025-10-21</p>
+            <p><strong>图片格式：</strong>SVG（可缩放矢量图）</p>
+            <p><strong>标准尺寸：</strong>1200 x 630 像素（符合Open Graph规范）</p>
+            <p><strong>兼容平台：</strong></p>
+            <ul>
+                <li>✅ Facebook / Meta</li>
+                <li>✅ Twitter / X</li>
+                <li>✅ LinkedIn</li>
+                <li>✅ 微信分享</li>
+                <li>✅ Telegram</li>
+                <li>✅ Discord</li>
+            </ul>
+        </div>
+        
+        <div class="preview-grid">
+            <!-- 首页分享图 -->
+            <div class="preview-card">
+                <h3>
+                    🏠 首页分享图
+                    <span class="success-badge">已启用</span>
+                </h3>
+                <p class="meta">文件：assets/og-image.svg</p>
+                
+                <div class="image-wrapper">
+                    <img src="og-image.svg" alt="首页OG图">
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-label">宽度</div>
+                        <div class="stat-value">1200px</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">高度</div>
+                        <div class="stat-value">630px</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">比例</div>
+                        <div class="stat-value">1.91:1</div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <a href="og-image.svg" class="btn btn-primary" download>下载 SVG</a>
+                    <a href="og-image.svg" class="btn btn-secondary" target="_blank">新窗口查看</a>
+                </div>
+            </div>
+            
+            <!-- 工具页分享图 -->
+            <div class="preview-card">
+                <h3>
+                    🛠️ 工具页分享图
+                    <span class="success-badge">已启用</span>
+                </h3>
+                <p class="meta">文件：assets/tool-preview.svg</p>
+                
+                <div class="image-wrapper">
+                    <img src="tool-preview.svg" alt="工具页OG图">
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-label">宽度</div>
+                        <div class="stat-value">1200px</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">高度</div>
+                        <div class="stat-value">630px</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">比例</div>
+                        <div class="stat-value">1.91:1</div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <a href="tool-preview.svg" class="btn btn-primary" download>下载 SVG</a>
+                    <a href="tool-preview.svg" class="btn btn-secondary" target="_blank">新窗口查看</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h2>🔍 如何测试社交分享效果</h2>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">1. Facebook / Meta 调试工具</h3>
+            <p>使用 Facebook 分享调试器查看效果：</p>
+            <div class="code-block">https://developers.facebook.com/tools/debug/</div>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">2. Twitter Card 验证器</h3>
+            <p>验证 Twitter 卡片显示：</p>
+            <div class="code-block">https://cards-dev.twitter.com/validator</div>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">3. LinkedIn 帖子检查器</h3>
+            <p>检查 LinkedIn 分享效果：</p>
+            <div class="code-block">https://www.linkedin.com/post-inspector/</div>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">4. 本地测试</h3>
+            <p>在浏览器中查看源代码，确认 Meta 标签：</p>
+            <div class="code-block">&lt;meta property="og:image" content="http://localhost:3000/assets/og-image.svg"&gt;
+&lt;meta name="twitter:image" content="http://localhost:3000/assets/og-image.svg"&gt;</div>
+        </div>
+        
+        <div class="info-box">
+            <h2>💡 如果需要转换为 JPG 格式</h2>
+            <p>虽然 SVG 格式兼容性很好，但如果你需要 JPG 格式，可以：</p>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">方法 1：在线转换工具</h3>
+            <ul>
+                <li>CloudConvert：<a href="https://cloudconvert.com/svg-to-jpg" target="_blank">https://cloudconvert.com/svg-to-jpg</a></li>
+                <li>SVG to JPG Converter：<a href="https://www.svgtojpg.com/" target="_blank">https://www.svgtojpg.com/</a></li>
+            </ul>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">方法 2：使用浏览器截图</h3>
+            <ol style="margin-left: 20px; color: #666; line-height: 1.8;">
+                <li>在新窗口打开 SVG 文件</li>
+                <li>使用浏览器开发者工具设置视窗为 1200x630</li>
+                <li>截图并保存为 JPG</li>
+            </ol>
+            
+            <h3 style="color: #7F9DAC; margin: 20px 0 10px 0;">方法 3：使用 Photoshop / GIMP</h3>
+            <p>导入 SVG 文件，导出为 JPG 格式（质量建议设置为 90-95%）</p>
+        </div>
+        
+        <div class="info-box" style="text-align: center; background: linear-gradient(135deg, #E8F4F8, #F5E6D3); border: 2px solid #7F9DAC;">
+            <h2 style="color: #7F9DAC;">🎉 恭喜！</h2>
+            <p style="font-size: 18px; color: #5A6B75; margin-top: 10px;">
+                社交分享图已成功创建并应用到网站
+            </p>
+            <p style="color: #9FA8A3; margin-top: 15px;">
+                现在您的网站在社交媒体分享时会显示精美的预览图
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

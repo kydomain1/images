@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepAI API测试工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .image-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .image-item img {
+            width: 100%;
+            display: block;
+        }
+        
+        .download-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: white;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+        }
+        
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .tips {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .tips h4 {
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+        
+        .tips ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        
+        .tips li {
+            margin: 5px 0;
+        }
+        
+        .model-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .model-option {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .model-option:hover {
+            border-color: #667eea;
+        }
+        
+        .model-option.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .model-option h5 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .model-option p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        
+        a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 DeepAI API测试工具</h1>
+        <p class="subtitle">测试DeepAI图片生成功能</p>
+        
+        <div class="tips">
+            <h4>📝 使用提示</h4>
+            <ul>
+                <li>首次使用需要在 <a href="https://deepai.org/dashboard" target="_blank">DeepAI控制台</a> 获取API Key</li>
+                <li>免费版每月有调用次数限制</li>
+                <li>建议使用<strong>英文提示词</strong>效果更好</li>
+                <li>免费版生成的图片会有DeepAI水印</li>
+                <li>生成时间约3-10秒</li>
+            </ul>
+        </div>
+        
+        <form id="test-form">
+            <div class="form-group">
+                <label for="api-key">
+                    API Key <span style="color: red;">*</span>
+                    <small style="font-weight: normal; color: #999;">
+                        (在 <a href="https://deepai.org/dashboard/profile" target="_blank">这里</a> 获取)
+                    </small>
+                </label>
+                <input 
+                    type="password" 
+                    id="api-key" 
+                    placeholder="请输入您的DeepAI API Key"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label>选择模型</label>
+                <div class="model-selector">
+                    <div class="model-option active" data-model="text2img">
+                        <h5>标准模型</h5>
+                        <p>通用图片生成</p>
+                    </div>
+                    <div class="model-option" data-model="stable-diffusion">
+                        <h5>Stable Diffusion</h5>
+                        <p>更高质量</p>
+                    </div>
+                    <div class="model-option" data-model="cute-creature-generator">
+                        <h5>可爱生物</h5>
+                        <p>生成可爱角色</p>
+                    </div>
+                    <div class="model-option" data-model="fantasy-world-generator">
+                        <h5>奇幻世界</h5>
+                        <p>奇幻场景</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="prompt">
+                    图片描述 <span style="color: red;">*</span>
+                    <small style="font-weight: normal; color: #999;">
+                        (建议使用英文)
+                    </small>
+                </label>
+                <textarea 
+                    id="prompt" 
+                    placeholder="请输入图片描述（英文效果更好）...&#10;&#10;Example: a cute orange cat sitting on a windowsill, sunlight shining on it, oil painting style, highly detailed"
+                    required
+                ></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="count">生成数量</label>
+                <select id="count">
+                    <option value="1" selected>1张</option>
+                    <option value="2">2张</option>
+                    <option value="3">3张</option>
+                    <option value="4">4张</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn" id="submit-btn">
+                🚀 开始生成
+            </button>
+        </form>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="result" class="result">
+            <h3>✨ 生成结果</h3>
+            <div id="image-grid" class="image-grid"></div>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('test-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusDiv = document.getElementById('status');
+        const resultDiv = document.getElementById('result');
+        const imageGrid = document.getElementById('image-grid');
+        const modelOptions = document.querySelectorAll('.model-option');
+        
+        let selectedModel = 'text2img';
+        
+        // 模型选择
+        modelOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                modelOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedModel = this.dataset.model;
+            });
+        });
+        
+        function showStatus(message, type) {
+            statusDiv.textContent = message;
+            statusDiv.className = `status show ${type}`;
+        }
+        
+        function hideStatus() {
+            statusDiv.className = 'status';
+        }
+        
+        async function generateImage(apiKey, prompt, model) {
+            const formData = new FormData();
+            formData.append('text', prompt);
+            
+            const response = await fetch(`https://api.deepai.org/api/${model}`, {
+                method: 'POST',
+                headers: {
+                    'api-key': apiKey
+                },
+                body: formData
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || errorData.message || `HTTP ${response.status}`);
+            }
+            
+            return await response.json();
+        }
+        
+        async function downloadImage(url, filename) {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (error) {
+                alert('下载失败: ' + error.message);
+            }
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const apiKey = document.getElementById('api-key').value.trim();
+            const prompt = document.getElementById('prompt').value.trim();
+            const count = parseInt(document.getElementById('count').value);
+            
+            if (!apiKey) {
+                alert('请输入API Key');
+                return;
+            }
+            
+            if (!prompt) {
+                alert('请输入图片描述');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ 生成中...';
+            
+            showStatus(`正在生成 ${count} 张图片...`, 'loading');
+            
+            resultDiv.classList.remove('show');
+            imageGrid.innerHTML = '';
+            
+            try {
+                const promises = [];
+                for (let i = 0; i < count; i++) {
+                    promises.push(generateImage(apiKey, prompt, selectedModel));
+                }
+                
+                const results = await Promise.all(promises);
+                
+                showStatus(`✅ 成功生成 ${results.length} 张图片！`, 'success');
+                
+                results.forEach((result, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item';
+                    div.innerHTML = `
+                        <img src="${result.output_url}" alt="生成的图片 ${index + 1}">
+                        <button class="download-btn" onclick="downloadImageByIndex(${index}, '${result.output_url}')">
+                            📥 下载
+                        </button>
+                    `;
+                    imageGrid.appendChild(div);
+                });
+                
+                resultDiv.classList.add('show');
+                
+            } catch (error) {
+                console.error('生成失败:', error);
+                
+                let errorMessage = `❌ 生成失败: ${error.message}`;
+                
+                if (error.message.includes('Invalid API key')) {
+                    errorMessage = '❌ API Key无效，请检查是否正确配置';
+                } else if (error.message.includes('Rate limit')) {
+                    errorMessage = '❌ 超出速率限制，请稍后重试（约1分钟）';
+                } else if (error.message.includes('credits') || error.message.includes('quota')) {
+                    errorMessage = '❌ 免费额度已用完，请升级账号或等待下月重置';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = '❌ 请求超时，请检查网络连接';
+                }
+                
+                showStatus(errorMessage, 'error');
+                
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 开始生成';
+            }
+        });
+        
+        window.downloadImageByIndex = async function(index, url) {
+            await downloadImage(url, `deepai-image-${index + 1}.jpg`);
+        };
+        
+        console.log('DeepAI API测试工具已加载');
+        console.log('请访问 https://deepai.org/dashboard 获取API Key');
+    </script>
+</body>
+</html>
+
+

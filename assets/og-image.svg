@@ -1,0 +1,59 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8F4F8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F5E6D3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E8D4C4;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7F9DAC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C8B5A0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- 装饰圆圈 -->
+  <circle cx="100" cy="100" r="80" fill="#7F9DAC" opacity="0.1"/>
+  <circle cx="1100" cy="530" r="100" fill="#C8B5A0" opacity="0.1"/>
+  <circle cx="200" cy="500" r="60" fill="#D4A5A5" opacity="0.1"/>
+  <circle cx="1000" cy="150" r="70" fill="#9FA8A3" opacity="0.1"/>
+  
+  <!-- 图标 -->
+  <text x="600" y="200" font-size="120" text-anchor="middle" fill="#7F9DAC">🎨</text>
+  
+  <!-- 主标题 -->
+  <text x="600" y="320" font-size="64" font-weight="bold" text-anchor="middle" fill="url(#titleGradient)" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+    AI图片生成器
+  </text>
+  
+  <!-- 副标题 -->
+  <text x="600" y="380" font-size="32" text-anchor="middle" fill="#7F9DAC" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+    免费在线文字转图片工具
+  </text>
+  
+  <!-- 特性标签 -->
+  <rect x="380" y="420" width="140" height="45" rx="22.5" fill="#7F9DAC" opacity="0.15"/>
+  <text x="450" y="450" font-size="22" text-anchor="middle" fill="#7F9DAC" font-family="'Microsoft YaHei', sans-serif">
+    完全免费
+  </text>
+  
+  <rect x="530" y="420" width="140" height="45" rx="22.5" fill="#C8B5A0" opacity="0.15"/>
+  <text x="600" y="450" font-size="22" text-anchor="middle" fill="#8B7355" font-family="'Microsoft YaHei', sans-serif">
+    多种风格
+  </text>
+  
+  <rect x="680" y="420" width="140" height="45" rx="22.5" fill="#D4A5A5" opacity="0.15"/>
+  <text x="750" y="450" font-size="22" text-anchor="middle" fill="#A67C7C" font-family="'Microsoft YaHei', sans-serif">
+    永久保存
+  </text>
+  
+  <!-- 底部文字 -->
+  <text x="600" y="560" font-size="20" text-anchor="middle" fill="#9FA8A3" font-family="'Microsoft YaHei', sans-serif">
+    输入文字描述，AI即刻为您创作精美图片
+  </text>
+</svg>
+
