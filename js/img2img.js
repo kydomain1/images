@@ -643,9 +643,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 显示结果
     function displayImg2ImgResult(result, settings) {
         // 清空之前的空状态
-        const emptyState = img2imgOutputGrid.querySelector('.empty-state');
-        if (emptyState) {
-            emptyState.remove();
+        const emptyOutput = img2imgOutputGrid.querySelector('.empty-output');
+        if (emptyOutput) {
+            emptyOutput.remove();
         }
         
         // 创建图片卡片
@@ -674,9 +674,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         img2imgOutputGrid.appendChild(card);
         
-        // 显示操作按钮
-        document.getElementById('img2img-download-all').style.display = 'inline-flex';
-        document.getElementById('img2img-clear-all').style.display = 'inline-flex';
+        // 启用操作按钮
+        document.getElementById('img2img-download-all').disabled = false;
+        document.getElementById('img2img-clear-all').disabled = false;
         
         // 平滑滚动到结果区
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -693,14 +693,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('img2img-clear-all')?.addEventListener('click', () => {
         if (confirm('确定要清空所有生成的图片吗？')) {
             img2imgOutputGrid.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-image"></i>
+                <div class="empty-output">
+                    <i class="fas fa-image fa-3x"></i>
                     <p>还没有生成图片</p>
                     <p class="hint">上传图片并设置效果后，点击"开始转换"按钮</p>
                 </div>
             `;
-            document.getElementById('img2img-download-all').style.display = 'none';
-            document.getElementById('img2img-clear-all').style.display = 'none';
+            // 禁用操作按钮
+            document.getElementById('img2img-download-all').disabled = true;
+            document.getElementById('img2img-clear-all').disabled = true;
         }
     });
 });

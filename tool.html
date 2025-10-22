@@ -645,43 +645,43 @@
                         ></textarea>
                     </div>
                     
-                    <!-- 生成按钮 -->
-                    <button class="generate-btn" id="img2img-generate-btn">
-                        <i class="fas fa-wand-magic-sparkles"></i>
-                        <span data-i18n="tool.img2img.generate">开始转换</span>
-                    </button>
-                </section>
+                <!-- 生成按钮 -->
+                <button class="generate-btn-large" id="img2img-generate-btn">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span data-i18n="tool.img2img.generate">开始转换</span>
+                </button>
+            </section>
+            
+            <!-- 图片输出区 -->
+            <section class="output-section">
+                <div class="output-header">
+                    <h2><i class="fas fa-image"></i> <span data-i18n="tool.output">生成结果</span></h2>
+                    <div class="output-actions">
+                        <button class="action-btn" id="img2img-download-all" disabled>
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="tool.downloadAll">下载全部</span>
+                        </button>
+                        <button class="action-btn" id="img2img-clear-all" disabled>
+                            <i class="fas fa-trash"></i>
+                            <span data-i18n="tool.clearAll">清空全部</span>
+                        </button>
+                    </div>
+                </div>
                 
-                <!-- 输出区（复用） -->
-                <section class="output-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-image"></i> <span data-i18n="tool.output">生成结果</span></h2>
-                        <div class="output-actions">
-                            <button class="action-btn" id="img2img-download-all" style="display: none;">
-                                <i class="fas fa-download"></i>
-                                <span data-i18n="tool.downloadAll">下载全部</span>
-                            </button>
-                            <button class="action-btn secondary" id="img2img-clear-all" style="display: none;">
-                                <i class="fas fa-trash"></i>
-                                <span data-i18n="tool.clearAll">清空全部</span>
-                            </button>
-                        </div>
+                <div id="img2img-output-grid" class="output-grid">
+                    <div class="empty-output">
+                        <i class="fas fa-image fa-3x"></i>
+                        <p data-i18n="tool.noImages">还没有生成图片</p>
+                        <p class="hint" data-i18n="tool.img2img.hint">上传图片并设置效果后，点击"开始转换"按钮</p>
                     </div>
-                    
-                    <div id="img2img-output-grid" class="output-grid">
-                        <div class="empty-state">
-                            <i class="fas fa-image"></i>
-                            <p data-i18n="tool.noImages">还没有生成图片</p>
-                            <p class="hint" data-i18n="tool.img2img.hint">上传图片并设置效果后，点击"开始转换"按钮</p>
-                        </div>
-                    </div>
-                    
-                    <div id="img2img-loading-state" class="loading-state" style="display: none;">
-                        <div class="loader"></div>
-                        <p>AI正在转换图片中...</p>
-                        <p class="loading-hint">这可能需要几秒钟时间</p>
-                    </div>
-                </section>
+                </div>
+                
+                <div id="img2img-loading-state" class="loading-state" style="display: none;">
+                    <div class="loader"></div>
+                    <p>AI正在转换图片中...</p>
+                    <p class="loading-hint">这可能需要几秒钟时间</p>
+                </div>
+            </section>
             </div>
             <!-- 图生图面板结束 -->
             
