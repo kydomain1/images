@@ -460,25 +460,61 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 图生图API调用
     async function generateImg2Img(settings) {
-        // 调用imageAPI的图生图方法
-        if (typeof imageAPI !== 'undefined' && imageAPI.generateImg2Img) {
-            const results = await imageAPI.generateImg2Img(settings);
-            return results[0]; // 返回第一个结果
-        } else {
-            // 降级方案：使用Pollinations.ai
-            const { prompt, referenceImage, strength } = settings;
+        const { prompt, referenceImage, strength, style, size } = settings;
+        
+        // 由于当前使用静态服务器，直接使用Pollinations.ai
+        // Pollinations.ai是完全免费的，无需API密钥
+        try {
             const seed = Math.floor(Math.random() * 1000000);
-            const encodedPrompt = encodeURIComponent(prompt);
+            const [width, height] = size.split('x');
+            
+            // 构建提示词
+            let fullPrompt = prompt || '保持原图风格';
+            
+            // 根据选择的风格添加描述
+            const styleDescriptions = {
+                '<auto>': '',
+                '<3d cartoon>': ', 3D卡通风格',
+                '<anime>': ', 日系动漫风格',
+                '<oil painting>': ', 油画风格',
+                '<watercolor>': ', 水彩画风格',
+                '<sketch>': ', 素描风格',
+                '<chinese painting>': ', 中国画风格',
+                '<flat illustration>': ', 扁平插画风格'
+            };
+            
+            if (style && styleDescriptions[style]) {
+                fullPrompt += styleDescriptions[style];
+            }
+            
+            // 根据强度调整
+            if (strength < 0.3) {
+                fullPrompt += ', 保持原图特征';
+            } else if (strength > 0.7) {
+                fullPrompt += ', 大幅艺术化';
+            }
+            
+            const encodedPrompt = encodeURIComponent(fullPrompt);
             const enhanceParam = strength > 0.5 ? 'true' : 'false';
             
-            const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?seed=${seed}&enhance=${enhanceParam}&nologo=true`;
+            // 使用Pollinations.ai生成
+            const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&seed=${seed}&enhance=${enhanceParam}&nologo=true`;
+            
+            // 由于Pollinations无法真正实现图生图，我们给用户一个友好提示
+            console.info('💡 提示：当前使用Pollinations.ai免费服务，将基于文字描述生成新图片');
+            console.info('📝 如需真正的图生图功能，请配置Replicate API或启动完整服务器');
             
             return {
                 url: url,
-                prompt: prompt,
+                prompt: fullPrompt,
                 settings: settings,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                seed: seed,
+                note: '使用Pollinations.ai生成（基于文字描述，非真实图生图）'
             };
+        } catch (error) {
+            console.error('图片生成失败:', error);
+            throw new Error('图片生成失败，请稍后重试');
         }
     }
     
