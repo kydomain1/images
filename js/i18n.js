@@ -138,6 +138,21 @@ const translations = {
         'tool.upscale': '高清放大',
         
         // 图生图
+        'tool.img2img.title': '图生图设置',
+        'tool.img2img.upload': '上传参考图片',
+        'tool.img2img.dragdrop': '拖拽图片到这里',
+        'tool.img2img.or': '或',
+        'tool.img2img.select': '选择图片',
+        'tool.img2img.formats': '支持 JPG, PNG, WebP 格式，最大10MB',
+        'tool.img2img.prompt': '描述想要的效果',
+        'tool.img2img.strength': '转换强度',
+        'tool.img2img.lowStrength': '保留原图',
+        'tool.img2img.highStrength': '大幅变化',
+        'tool.img2img.strengthHint': '值越小越接近原图，值越大变化越大',
+        'tool.img2img.generate': '开始转换',
+        'tool.img2img.hint': '上传图片并设置效果后，点击"开始转换"按钮',
+        
+        // 旧的图生图翻译（保留兼容）
         'img2img.title': '图生图 - AI重绘',
         'img2img.uploadHint': '点击或拖拽上传参考图片',
         'img2img.uploadHint2': '支持 JPG、PNG 格式，最大10MB',
@@ -527,7 +542,22 @@ const translations = {
         'tool.img2img': 'Image to Image',
         'tool.upscale': 'Upscale',
         
-        // Image to Image
+        // Image to Image (New)
+        'tool.img2img.title': 'Image to Image Settings',
+        'tool.img2img.upload': 'Upload Reference Image',
+        'tool.img2img.dragdrop': 'Drag and drop image here',
+        'tool.img2img.or': 'or',
+        'tool.img2img.select': 'Select Image',
+        'tool.img2img.formats': 'Supports JPG, PNG, WebP format, max 10MB',
+        'tool.img2img.prompt': 'Describe desired effect',
+        'tool.img2img.strength': 'Transform Strength',
+        'tool.img2img.lowStrength': 'Keep Original',
+        'tool.img2img.highStrength': 'High Variation',
+        'tool.img2img.strengthHint': 'Lower values preserve original, higher values create more changes',
+        'tool.img2img.generate': 'Start Transform',
+        'tool.img2img.hint': 'Upload image and set effects, then click "Start Transform"',
+        
+        // Image to Image (Legacy)
         'img2img.title': 'Image to Image - AI Redraw',
         'img2img.uploadHint': 'Click or drag to upload reference image',
         'img2img.uploadHint2': 'Supports JPG, PNG format, max 10MB',
@@ -967,6 +997,22 @@ const translations = {
         'tool.text2img': 'テキスト生成',
         'tool.img2img': '画像生成',
         'tool.upscale': '高画質化',
+        
+        // Image to Image
+        'tool.img2img.title': '画像生成設定',
+        'tool.img2img.upload': '参照画像をアップロード',
+        'tool.img2img.dragdrop': 'ここに画像をドロップ',
+        'tool.img2img.or': 'または',
+        'tool.img2img.select': '画像を選択',
+        'tool.img2img.formats': 'JPG、PNG、WebP形式対応、最大10MB',
+        'tool.img2img.prompt': '希望する効果を記述',
+        'tool.img2img.strength': '変換強度',
+        'tool.img2img.lowStrength': '元画像を保持',
+        'tool.img2img.highStrength': '大きく変化',
+        'tool.img2img.strengthHint': '値が小さいほど元画像に近く、大きいほど変化が大きい',
+        'tool.img2img.generate': '変換開始',
+        'tool.img2img.hint': '画像をアップロードし、効果を設定してから「変換開始」をクリック',
+        
         'tool.settings': '作成設定',
         'tool.prompt': '画像を説明',
         'tool.suggestions': 'おすすめプロンプト',
@@ -1269,6 +1315,22 @@ const translations = {
         'tool.text2img': '텍스트 생성',
         'tool.img2img': '이미지 생성',
         'tool.upscale': '고화질화',
+        
+        // Image to Image
+        'tool.img2img.title': '이미지 생성 설정',
+        'tool.img2img.upload': '참조 이미지 업로드',
+        'tool.img2img.dragdrop': '여기에 이미지를 드롭',
+        'tool.img2img.or': '또는',
+        'tool.img2img.select': '이미지 선택',
+        'tool.img2img.formats': 'JPG, PNG, WebP 형식 지원, 최대 10MB',
+        'tool.img2img.prompt': '원하는 효과 설명',
+        'tool.img2img.strength': '변환 강도',
+        'tool.img2img.lowStrength': '원본 유지',
+        'tool.img2img.highStrength': '대폭 변경',
+        'tool.img2img.strengthHint': '값이 작을수록 원본에 가깝고, 클수록 변화가 큽니다',
+        'tool.img2img.generate': '변환 시작',
+        'tool.img2img.hint': '이미지를 업로드하고 효과를 설정한 후 "변환 시작"을 클릭',
+        
         'tool.settings': '창작 설정',
         'tool.prompt': '이미지 설명',
         'tool.suggestions': '추천 프롬프트',
@@ -2461,6 +2523,22 @@ const translations = {
         'tool.text2img': '文字生成圖片',
         'tool.img2img': '圖生圖',
         'tool.upscale': '高清放大',
+        
+        // Image to Image
+        'tool.img2img.title': '圖生圖設定',
+        'tool.img2img.upload': '上傳參考圖片',
+        'tool.img2img.dragdrop': '拖曳圖片到這裡',
+        'tool.img2img.or': '或',
+        'tool.img2img.select': '選擇圖片',
+        'tool.img2img.formats': '支援 JPG, PNG, WebP 格式，最大10MB',
+        'tool.img2img.prompt': '描述想要的效果',
+        'tool.img2img.strength': '轉換強度',
+        'tool.img2img.lowStrength': '保留原圖',
+        'tool.img2img.highStrength': '大幅變化',
+        'tool.img2img.strengthHint': '值越小越接近原圖，值越大變化越大',
+        'tool.img2img.generate': '開始轉換',
+        'tool.img2img.hint': '上傳圖片並設定效果後，點擊「開始轉換」按鈕',
+        
         'tool.settings': '創作設定',
         'tool.prompt': '描述您的圖片',
         'tool.suggestions': '推薦提示詞',
