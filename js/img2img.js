@@ -147,6 +147,260 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // ==================== 图生图提示词优化功能 ====================
+    
+    // 图生图专用模板
+    const img2imgTemplates = {
+        styleTransfer: [
+            { name: '油画风格', prompt: '转换为印象派油画风格，可见的笔触，丰富的色彩层次，艺术感强' },
+            { name: '动漫风格', prompt: '转换为日系动漫风格，清晰的线条，明亮的色彩，二次元美学' },
+            { name: '水彩画', prompt: '转换为水彩画风格，柔和的色彩，水润的质感，纸张纹理' },
+            { name: '素描风格', prompt: '转换为铅笔素描风格，清晰的线条，明暗对比，黑白画面' },
+            { name: '赛博朋克', prompt: '转换为赛博朋克风格，霓虹灯光效果，未来科技感，蓝紫色调' },
+            { name: '复古胶片', prompt: '转换为复古胶片照片，褪色效果，颗粒质感，怀旧氛围' }
+        ],
+        enhancement: [
+            { name: '细节增强', prompt: '增强图片细节，提高清晰度，锐化边缘，保持自然' },
+            { name: '色彩增强', prompt: '增强色彩饱和度，提高对比度，色彩更加鲜艳生动' },
+            { name: '光线优化', prompt: '优化光线效果，增强明暗对比，添加柔和光照，氛围更好' },
+            { name: '艺术化', prompt: '添加艺术效果，增强美感，细节丰富，视觉冲击力强' }
+        ],
+        mood: [
+            { name: '温暖氛围', prompt: '调整为温暖色调，金黄色光线，温馨舒适的氛围' },
+            { name: '冷色调', prompt: '调整为冷色调，蓝色光线，宁静冷峻的氛围' },
+            { name: '梦幻感', prompt: '添加梦幻效果，柔和的光晕，朦胧美感，仙境般的氛围' },
+            { name: '戏剧性', prompt: '增强戏剧性效果，强烈的光影对比，张力十足' }
+        ],
+        special: [
+            { name: '黑白艺术', prompt: '转换为黑白照片，高对比度，经典胶片质感，艺术摄影风格' },
+            { name: '极简风格', prompt: '简化画面，极简主义，清爽干净，突出主体' },
+            { name: '3D渲染', prompt: '转换为3D渲染效果，光滑表面，专业建模，真实材质' },
+            { name: '插画风格', prompt: '转换为扁平插画风格，简洁的造型，明快的色彩，现代设计感' }
+        ]
+    };
+    
+    // 优化效果描述
+    const img2imgEffectEnhancements = {
+        style: {
+            realistic: '转换为写实风格，真实的光影，细腻的质感，照片级效果',
+            anime: '转换为动漫风格，清晰的线条，明亮的色彩，日系美学',
+            oil_painting: '转换为油画风格，可见的笔触，丰富的色彩，印象派质感',
+            watercolor: '转换为水彩画风格，柔和的色彩，水润质感，艺术氛围',
+            sketch: '转换为素描风格，细腻的线条，明暗对比，黑白艺术',
+            cyberpunk: '转换为赛博朋克风格，霓虹灯光，科技感，未来都市',
+            fantasy: '转换为奇幻风格，魔法氛围，神秘感，幻想世界',
+            minimalist: '转换为极简风格，简洁构图，纯净色彩，现代美学',
+            vintage: '转换为复古风格，怀旧色调，胶片质感，年代感',
+            '3d_render': '转换为3D渲染效果，光滑表面，真实材质，专业建模'
+        },
+        enhance: '增强图片质量，提高清晰度，优化细节，色彩更鲜艳',
+        mood: '调整画面氛围，优化光线效果，增强情感表达',
+        color: '优化色彩搭配，调整色调，增强视觉冲击力',
+        composition: '优化构图，调整画面平衡，突出主体，更好的视觉效果'
+    };
+    
+    // 图生图优化按钮
+    const img2imgOptimizeBtn = document.getElementById('img2img-optimizeBtn');
+    const img2imgShowTemplatesBtn = document.getElementById('img2img-showTemplatesBtn');
+    const img2imgShowStylesBtn = document.getElementById('img2img-showStylesBtn');
+    const img2imgOptimizerPanel = document.getElementById('img2img-optimizerPanel');
+    const img2imgEffectSelect = document.getElementById('img2img-effectSelect');
+    const img2imgStyleSelect = document.getElementById('img2img-styleSelect');
+    const img2imgApplyOptimizeBtn = document.getElementById('img2img-applyOptimizeBtn');
+    const img2imgCancelOptimizeBtn = document.getElementById('img2img-cancelOptimizeBtn');
+    const img2imgTemplatesPanel = document.getElementById('img2img-templatesPanel');
+    const img2imgStylesPanel = document.getElementById('img2img-stylesPanel');
+    const img2imgTemplatesGrid = document.getElementById('img2img-templatesGrid');
+    const img2imgStylesGrid = document.getElementById('img2img-stylesGrid');
+    const img2imgCloseTemplates = document.getElementById('img2img-closeTemplates');
+    const img2imgCloseStyles = document.getElementById('img2img-closeStyles');
+    
+    // 显示优化面板
+    if (img2imgOptimizeBtn) {
+        img2imgOptimizeBtn.addEventListener('click', function() {
+            const isVisible = img2imgOptimizerPanel.style.display === 'block';
+            img2imgOptimizerPanel.style.display = isVisible ? 'none' : 'block';
+            img2imgTemplatesPanel.style.display = 'none';
+            img2imgStylesPanel.style.display = 'none';
+        });
+    }
+    
+    // 显示模板面板
+    if (img2imgShowTemplatesBtn) {
+        img2imgShowTemplatesBtn.addEventListener('click', function() {
+            img2imgTemplatesPanel.style.display = 'block';
+            img2imgOptimizerPanel.style.display = 'none';
+            img2imgStylesPanel.style.display = 'none';
+            renderImg2ImgTemplates();
+        });
+    }
+    
+    // 显示风格面板
+    if (img2imgShowStylesBtn) {
+        img2imgShowStylesBtn.addEventListener('click', function() {
+            img2imgStylesPanel.style.display = 'block';
+            img2imgOptimizerPanel.style.display = 'none';
+            img2imgTemplatesPanel.style.display = 'none';
+            renderImg2ImgStyles();
+        });
+    }
+    
+    // 应用优化
+    if (img2imgApplyOptimizeBtn) {
+        img2imgApplyOptimizeBtn.addEventListener('click', function() {
+            const currentPrompt = img2imgPrompt.value.trim();
+            const effect = img2imgEffectSelect.value;
+            const style = img2imgStyleSelect.value;
+            
+            let optimized = currentPrompt;
+            
+            // 根据效果类型优化
+            if (effect === 'style') {
+                optimized = currentPrompt ? 
+                    `${currentPrompt}，${img2imgEffectEnhancements.style[style]}` :
+                    img2imgEffectEnhancements.style[style];
+            } else {
+                const effectText = img2imgEffectEnhancements[effect];
+                optimized = currentPrompt ? 
+                    `${currentPrompt}，${effectText}` :
+                    effectText;
+            }
+            
+            img2imgPrompt.value = optimized;
+            img2imgPrompt.dispatchEvent(new Event('input'));
+            img2imgOptimizerPanel.style.display = 'none';
+        });
+    }
+    
+    // 取消优化
+    if (img2imgCancelOptimizeBtn) {
+        img2imgCancelOptimizeBtn.addEventListener('click', function() {
+            img2imgOptimizerPanel.style.display = 'none';
+        });
+    }
+    
+    // 关闭模板面板
+    if (img2imgCloseTemplates) {
+        img2imgCloseTemplates.addEventListener('click', function() {
+            img2imgTemplatesPanel.style.display = 'none';
+        });
+    }
+    
+    // 关闭风格面板
+    if (img2imgCloseStyles) {
+        img2imgCloseStyles.addEventListener('click', function() {
+            img2imgStylesPanel.style.display = 'none';
+        });
+    }
+    
+    // 渲染模板
+    function renderImg2ImgTemplates() {
+        if (!img2imgTemplatesGrid) return;
+        
+        let html = '';
+        
+        // 风格转换
+        html += '<div class="template-category"><h5>🎨 风格转换</h5><div class="template-items">';
+        img2imgTemplates.styleTransfer.forEach(template => {
+            html += `
+                <div class="template-item" data-prompt="${template.prompt}">
+                    <strong>${template.name}</strong>
+                    <p>${template.prompt}</p>
+                </div>
+            `;
+        });
+        html += '</div></div>';
+        
+        // 细节增强
+        html += '<div class="template-category"><h5>✨ 细节增强</h5><div class="template-items">';
+        img2imgTemplates.enhancement.forEach(template => {
+            html += `
+                <div class="template-item" data-prompt="${template.prompt}">
+                    <strong>${template.name}</strong>
+                    <p>${template.prompt}</p>
+                </div>
+            `;
+        });
+        html += '</div></div>';
+        
+        // 氛围调整
+        html += '<div class="template-category"><h5>🌟 氛围调整</h5><div class="template-items">';
+        img2imgTemplates.mood.forEach(template => {
+            html += `
+                <div class="template-item" data-prompt="${template.prompt}">
+                    <strong>${template.name}</strong>
+                    <p>${template.prompt}</p>
+                </div>
+            `;
+        });
+        html += '</div></div>';
+        
+        // 特殊效果
+        html += '<div class="template-category"><h5>🎭 特殊效果</h5><div class="template-items">';
+        img2imgTemplates.special.forEach(template => {
+            html += `
+                <div class="template-item" data-prompt="${template.prompt}">
+                    <strong>${template.name}</strong>
+                    <p>${template.prompt}</p>
+                </div>
+            `;
+        });
+        html += '</div></div>';
+        
+        img2imgTemplatesGrid.innerHTML = html;
+        
+        // 添加点击事件
+        document.querySelectorAll('#img2img-templatesGrid .template-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const prompt = this.dataset.prompt;
+                img2imgPrompt.value = prompt;
+                img2imgPrompt.dispatchEvent(new Event('input'));
+                img2imgTemplatesPanel.style.display = 'none';
+            });
+        });
+    }
+    
+    // 渲染风格
+    function renderImg2ImgStyles() {
+        if (!img2imgStylesGrid) return;
+        
+        const styles = [
+            { name: '油画', value: '印象派油画风格，明显的笔触，丰富的色彩', emoji: '🖼️' },
+            { name: '水彩', value: '柔和的水彩画风格，淡雅的色调，水润质感', emoji: '💧' },
+            { name: '动漫', value: '日系动漫风格，清晰线条，明亮色彩，二次元', emoji: '🎭' },
+            { name: '素描', value: '铅笔素描风格，细腻线条，明暗对比，黑白', emoji: '✏️' },
+            { name: '赛博朋克', value: '赛博朋克风格，霓虹灯效果，科技感，未来都市', emoji: '🌃' },
+            { name: '复古', value: '复古胶片风格，褪色效果，颗粒质感，怀旧', emoji: '📷' },
+            { name: '极简', value: '极简主义风格，简洁构图，纯净色彩，现代', emoji: '⬜' },
+            { name: '3D渲染', value: '3D渲染效果，光滑表面，真实材质，专业', emoji: '🎲' }
+        ];
+        
+        let html = '';
+        styles.forEach(style => {
+            html += `
+                <div class="style-item" data-style="${style.value}">
+                    <div class="style-emoji">${style.emoji}</div>
+                    <div class="style-name">${style.name}</div>
+                </div>
+            `;
+        });
+        
+        img2imgStylesGrid.innerHTML = html;
+        
+        // 添加点击事件
+        document.querySelectorAll('#img2img-stylesGrid .style-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const styleValue = this.dataset.style;
+                const currentPrompt = img2imgPrompt.value.trim();
+                img2imgPrompt.value = currentPrompt ? 
+                    `${currentPrompt}，${styleValue}` :
+                    styleValue;
+                img2imgPrompt.dispatchEvent(new Event('input'));
+                img2imgStylesPanel.style.display = 'none';
+            });
+        });
+    }
+    
     // 强度滑块
     img2imgStrength.addEventListener('input', function() {
         strengthValue.textContent = this.value;

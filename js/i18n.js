@@ -131,6 +131,14 @@ const translations = {
         'optimizer.templatesTitle': '提示词模板',
         'optimizer.stylesTitle': '风格预设',
         'optimizer.emptyPrompt': '请先输入提示词',
+        'optimizer.img2imgTemplates': '图生图模板',
+        'optimizer.img2imgTemplatesTitle': '图生图提示词模板',
+        'optimizer.img2img.effect': '转换效果',
+        'optimizer.img2img.effect.style': '风格转换',
+        'optimizer.img2img.effect.enhance': '细节增强',
+        'optimizer.img2img.effect.mood': '氛围调整',
+        'optimizer.img2img.effect.color': '色彩调整',
+        'optimizer.img2img.effect.composition': '构图优化',
         
         // 工具标签
         'tool.text2img': '文字生成图片',
@@ -536,6 +544,14 @@ const translations = {
         'optimizer.templatesTitle': 'Prompt Templates',
         'optimizer.stylesTitle': 'Style Presets',
         'optimizer.emptyPrompt': 'Please enter a prompt first',
+        'optimizer.img2imgTemplates': 'Image-to-Image Templates',
+        'optimizer.img2imgTemplatesTitle': 'Image-to-Image Prompt Templates',
+        'optimizer.img2img.effect': 'Transform Effect',
+        'optimizer.img2img.effect.style': 'Style Transfer',
+        'optimizer.img2img.effect.enhance': 'Detail Enhancement',
+        'optimizer.img2img.effect.mood': 'Mood Adjustment',
+        'optimizer.img2img.effect.color': 'Color Adjustment',
+        'optimizer.img2img.effect.composition': 'Composition Optimization',
         
         // Tool Tabs
         'tool.text2img': 'Text to Image',

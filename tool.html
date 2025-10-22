@@ -488,6 +488,87 @@
                         <div class="char-count">
                             <span id="img2img-char-counter">0</span> / 1000 字符
                         </div>
+                        
+                        <!-- 图生图提示词优化工具 -->
+                        <div class="prompt-optimizer-tools">
+                            <button type="button" class="optimizer-btn" id="img2img-optimizeBtn">
+                                <i class="fas fa-magic"></i>
+                                <span data-i18n="optimizer.optimizeBtn">优化提示词</span>
+                            </button>
+                            
+                            <button type="button" class="optimizer-btn secondary" id="img2img-showTemplatesBtn">
+                                <i class="fas fa-lightbulb"></i>
+                                <span data-i18n="optimizer.img2imgTemplates">图生图模板</span>
+                            </button>
+                            
+                            <button type="button" class="optimizer-btn secondary" id="img2img-showStylesBtn">
+                                <i class="fas fa-palette"></i>
+                                <span data-i18n="optimizer.styles">风格预设</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 优化选项面板 -->
+                        <div class="optimizer-panel" id="img2img-optimizerPanel" style="display: none;">
+                            <div class="optimizer-section">
+                                <label data-i18n="optimizer.img2img.effect">转换效果</label>
+                                <select id="img2img-effectSelect">
+                                    <option value="style" data-i18n="optimizer.img2img.effect.style">风格转换</option>
+                                    <option value="enhance" data-i18n="optimizer.img2img.effect.enhance">细节增强</option>
+                                    <option value="mood" data-i18n="optimizer.img2img.effect.mood">氛围调整</option>
+                                    <option value="color" data-i18n="optimizer.img2img.effect.color">色彩调整</option>
+                                    <option value="composition" data-i18n="optimizer.img2img.effect.composition">构图优化</option>
+                                </select>
+                            </div>
+                            
+                            <div class="optimizer-section">
+                                <label data-i18n="optimizer.styleLabel">艺术风格</label>
+                                <select id="img2img-styleSelect">
+                                    <option value="realistic" data-i18n="optimizer.style.realistic">写实风格</option>
+                                    <option value="anime" data-i18n="optimizer.style.anime">动漫风格</option>
+                                    <option value="oil_painting" data-i18n="optimizer.style.oil">油画风格</option>
+                                    <option value="watercolor" data-i18n="optimizer.style.watercolor">水彩风格</option>
+                                    <option value="sketch" data-i18n="optimizer.style.sketch">素描风格</option>
+                                    <option value="cyberpunk" data-i18n="optimizer.style.cyberpunk">赛博朋克</option>
+                                    <option value="fantasy" data-i18n="optimizer.style.fantasy">奇幻风格</option>
+                                    <option value="minimalist" data-i18n="optimizer.style.minimalist">极简风格</option>
+                                    <option value="vintage" data-i18n="optimizer.style.vintage">复古风格</option>
+                                    <option value="3d_render" data-i18n="optimizer.style.3d">3D渲染</option>
+                                </select>
+                            </div>
+                            
+                            <div class="optimizer-actions">
+                                <button type="button" class="optimizer-btn-small" id="img2img-applyOptimizeBtn">
+                                    <i class="fas fa-check"></i>
+                                    <span data-i18n="optimizer.apply">应用优化</span>
+                                </button>
+                                <button type="button" class="optimizer-btn-small secondary" id="img2img-cancelOptimizeBtn">
+                                    <i class="fas fa-times"></i>
+                                    <span data-i18n="optimizer.cancel">取消</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 图生图模板面板 -->
+                        <div class="templates-panel" id="img2img-templatesPanel" style="display: none;">
+                            <div class="templates-header">
+                                <h4 data-i18n="optimizer.img2imgTemplatesTitle">图生图提示词模板</h4>
+                                <button class="close-btn" id="img2img-closeTemplates">×</button>
+                            </div>
+                            <div class="templates-grid" id="img2img-templatesGrid">
+                                <!-- 动态生成模板 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 风格面板（复用） -->
+                        <div class="styles-panel" id="img2img-stylesPanel" style="display: none;">
+                            <div class="styles-header">
+                                <h4 data-i18n="optimizer.stylesTitle">风格预设</h4>
+                                <button class="close-btn" id="img2img-closeStyles">×</button>
+                            </div>
+                            <div class="styles-grid" id="img2img-stylesGrid">
+                                <!-- 动态生成风格 -->
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- 图生图强度 -->
