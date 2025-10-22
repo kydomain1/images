@@ -198,9 +198,16 @@
 
         <!-- 主内容区 -->
         <main class="main-content">
-            <!-- 功能标题 -->
-            <div class="tool-header">
-                <h2><i class="fas fa-pen-fancy"></i> <span data-i18n="tool.text2img">文字生成图片</span></h2>
+            <!-- 功能切换标签 -->
+            <div class="tool-tabs">
+                <button class="tool-tab active" data-tab="text2img-panel">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span data-i18n="tool.text2img">文字生成图片</span>
+                </button>
+                <button class="tool-tab" data-tab="img2img-panel">
+                    <i class="fas fa-image"></i>
+                    <span data-i18n="tool.img2img">图生图</span>
+                </button>
             </div>
             
             <!-- 文字生成图片面板 -->
@@ -435,6 +442,161 @@
             </div>
             <!-- 文字生成面板结束 -->
             
+            <!-- 图生图面板 -->
+            <div class="tool-panel" id="img2img-panel" style="display: none;">
+                <!-- 输入区 -->
+                <section class="input-section">
+                    <h2><i class="fas fa-image"></i> <span data-i18n="tool.img2img.title">图生图设置</span></h2>
+                    
+                    <!-- 图片上传区 -->
+                    <div class="input-group">
+                        <label for="reference-image">
+                            <i class="fas fa-upload"></i> <span data-i18n="tool.img2img.upload">上传参考图片</span>
+                        </label>
+                        <div class="image-upload-area" id="image-upload-area">
+                            <input type="file" id="reference-image" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p><span data-i18n="tool.img2img.dragdrop">拖拽图片到这里</span></p>
+                                <p class="upload-hint"><span data-i18n="tool.img2img.or">或</span></p>
+                                <button type="button" class="upload-btn" id="select-image-btn">
+                                    <i class="fas fa-folder-open"></i>
+                                    <span data-i18n="tool.img2img.select">选择图片</span>
+                                </button>
+                                <p class="upload-info"><span data-i18n="tool.img2img.formats">支持 JPG, PNG, WebP 格式，最大10MB</span></p>
+                            </div>
+                            <div class="image-preview" id="image-preview" style="display: none;">
+                                <img id="preview-img" src="" alt="预览">
+                                <button type="button" class="remove-image-btn" id="remove-image-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <div class="image-info" id="image-info"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 提示词输入 -->
+                    <div class="input-group">
+                        <label for="img2img-prompt">
+                            <i class="fas fa-message"></i> <span data-i18n="tool.img2img.prompt">描述想要的效果</span>
+                        </label>
+                        <textarea 
+                            id="img2img-prompt" 
+                            placeholder="描述您想要的图片效果...&#10;&#10;示例：转换为油画风格，增强色彩饱和度，添加艺术感"
+                            rows="4"
+                        ></textarea>
+                        <div class="char-count">
+                            <span id="img2img-char-counter">0</span> / 1000 字符
+                        </div>
+                    </div>
+                    
+                    <!-- 图生图强度 -->
+                    <div class="input-group">
+                        <label for="img2img-strength">
+                            <i class="fas fa-sliders-h"></i>
+                            <span data-i18n="tool.img2img.strength">转换强度</span>
+                            <span class="strength-value" id="strength-value">0.5</span>
+                        </label>
+                        <input 
+                            type="range" 
+                            id="img2img-strength" 
+                            min="0.1" 
+                            max="1.0" 
+                            step="0.05" 
+                            value="0.5"
+                            class="slider"
+                        >
+                        <div class="slider-labels">
+                            <span data-i18n="tool.img2img.lowStrength">保留原图</span>
+                            <span data-i18n="tool.img2img.highStrength">大幅变化</span>
+                        </div>
+                        <p class="hint"><span data-i18n="tool.img2img.strengthHint">值越小越接近原图，值越大变化越大</span></p>
+                    </div>
+                    
+                    <!-- 基础设置 -->
+                    <div class="settings-grid">
+                        <div class="input-group">
+                            <label for="img2img-art-style">
+                                <i class="fas fa-palette"></i> <span data-i18n="tool.artStyle">艺术风格</span>
+                            </label>
+                            <select id="img2img-art-style">
+                                <option value="<auto>" data-i18n="style.auto">自动</option>
+                                <option value="<3d cartoon>" data-i18n="style.3d">3D卡通</option>
+                                <option value="<anime>" data-i18n="style.anime">动漫</option>
+                                <option value="<oil painting>" data-i18n="style.oil">油画</option>
+                                <option value="<watercolor>" data-i18n="style.watercolor">水彩</option>
+                                <option value="<sketch>" data-i18n="style.sketch">素描</option>
+                                <option value="<chinese painting>" data-i18n="style.chinese">中国画</option>
+                                <option value="<flat illustration>" data-i18n="style.flat">扁平插画</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="img2img-size">
+                                <i class="fas fa-expand"></i> <span data-i18n="tool.size">图片尺寸</span>
+                            </label>
+                            <select id="img2img-size">
+                                <option value="1024x1024" data-i18n="size.square">1024×1024 (正方形)</option>
+                                <option value="1280x720" data-i18n="size.landscape">1280×720 (横版)</option>
+                                <option value="720x1280" data-i18n="size.portrait">720×1280 (竖版)</option>
+                                <option value="512x512">512×512</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- 负面提示词 -->
+                    <div class="input-group">
+                        <label for="img2img-negative-prompt">
+                            <i class="fas fa-ban"></i> <span data-i18n="tool.negativePrompt">负面提示词</span>
+                            <span class="optional" data-i18n="tool.optional">(可选)</span>
+                        </label>
+                        <textarea 
+                            id="img2img-negative-prompt" 
+                            placeholder="描述您不想要的元素..."
+                            rows="2"
+                        ></textarea>
+                    </div>
+                    
+                    <!-- 生成按钮 -->
+                    <button class="generate-btn" id="img2img-generate-btn">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <span data-i18n="tool.img2img.generate">开始转换</span>
+                    </button>
+                </section>
+                
+                <!-- 输出区（复用） -->
+                <section class="output-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-image"></i> <span data-i18n="tool.output">生成结果</span></h2>
+                        <div class="output-actions">
+                            <button class="action-btn" id="img2img-download-all" style="display: none;">
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="tool.downloadAll">下载全部</span>
+                            </button>
+                            <button class="action-btn secondary" id="img2img-clear-all" style="display: none;">
+                                <i class="fas fa-trash"></i>
+                                <span data-i18n="tool.clearAll">清空全部</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="img2img-output-grid" class="output-grid">
+                        <div class="empty-state">
+                            <i class="fas fa-image"></i>
+                            <p data-i18n="tool.noImages">还没有生成图片</p>
+                            <p class="hint" data-i18n="tool.img2img.hint">上传图片并设置效果后，点击"开始转换"按钮</p>
+                        </div>
+                    </div>
+                    
+                    <div id="img2img-loading-state" class="loading-state" style="display: none;">
+                        <div class="loader"></div>
+                        <p>AI正在转换图片中...</p>
+                        <p class="loading-hint">这可能需要几秒钟时间</p>
+                    </div>
+                </section>
+            </div>
+            <!-- 图生图面板结束 -->
+            
         </main>
     </div>
 
@@ -481,5 +643,6 @@
     <script src="js/api-config.js?v=2"></script>
     <script src="js/prompt-optimizer.js?v=2"></script>
     <script src="js/tool.js?v=2"></script>
+    <script src="js/img2img.js?v=1"></script>
 </body>
 </html>

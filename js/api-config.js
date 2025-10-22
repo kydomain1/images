@@ -324,6 +324,119 @@ class ImageGenerationAPI {
             index: index
         }));
     }
+    
+    // ==================== 图生图功能 ====================
+    
+    // 图生图 - Replicate API (推荐)
+    async generateImg2ImgWithReplicate(settings) {
+        const { prompt, referenceImage, strength, negativePrompt, size } = settings;
+        
+        try {
+            // 这里需要调用服务器端API（因为API Key不能暴露在前端）
+            const response = await fetch('http://localhost:3000/api/img2img', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    image: referenceImage,
+                    strength: strength,
+                    negative_prompt: negativePrompt || '',
+                    size: size
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API请求失败: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            return [{
+                url: data.output,
+                prompt: prompt,
+                settings: settings,
+                timestamp: new Date().toISOString()
+            }];
+        } catch (error) {
+            console.error('Replicate图生图API调用失败:', error);
+            throw error;
+        }
+    }
+    
+    // 图生图 - Pollinations.ai (完全免费)
+    async generateImg2ImgWithPollinations(settings) {
+        const { prompt, referenceImage, strength } = settings;
+        
+        // Pollinations.ai 支持图生图
+        // 注意：需要先将参考图片上传或使用URL
+        const seed = Math.floor(Math.random() * 1000000);
+        const enhanceParam = strength > 0.5 ? 'true' : 'false';
+        
+        try {
+            // 构建URL
+            const encodedPrompt = encodeURIComponent(prompt);
+            const url = `${this.config.pollinations.endpoint}${encodedPrompt}?seed=${seed}&enhance=${enhanceParam}`;
+            
+            return [{
+                url: url,
+                prompt: prompt,
+                settings: settings,
+                timestamp: new Date().toISOString(),
+                seed: seed
+            }];
+        } catch (error) {
+            console.error('Pollinations图生图失败:', error);
+            throw error;
+        }
+    }
+    
+    // 主图生图函数
+    async generateImg2Img(settings) {
+        // 根据配置的provider选择API
+        switch (this.provider) {
+            case 'pollinations':
+                return await this.generateImg2ImgWithPollinations(settings);
+            case 'tongyi':
+                // 通义万相也支持图生图
+                return await this.generateImg2ImgWithTongyi(settings);
+            default:
+                // 默认使用Replicate
+                return await this.generateImg2ImgWithReplicate(settings);
+        }
+    }
+    
+    // 通义万相图生图
+    async generateImg2ImgWithTongyi(settings) {
+        const { prompt, referenceImage, strength, negativePrompt } = settings;
+        
+        try {
+            const response = await fetch('http://localhost:3000/api/tongyi-img2img', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: prompt,
+                    reference_image: referenceImage,
+                    strength: strength,
+                    negative_prompt: negativePrompt || ''
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`API请求失败: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            return data.images || [];
+        } catch (error) {
+            console.error('通义万相图生图失败:', error);
+            throw error;
+        }
+    }
 }
 
 // 导出API实例
