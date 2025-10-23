@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单上传测试</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; margin-bottom: 20px; }
+        .upload-area {
+            border: 2px dashed #667eea;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .preview img {
+            max-width: 100%;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+        .log {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-item {
+            margin: 5px 0;
+            padding: 3px 0;
+            border-bottom: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 简单上传测试</h1>
+        
+        <div class="upload-area">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            <button class="btn" id="selectBtn">选择图片</button>
+            <p style="margin-top: 15px; color: #666;">或者拖拽图片到这里</p>
+        </div>
+        
+        <div class="preview" id="preview" style="display: none;">
+            <h3>预览：</h3>
+            <img id="previewImg" src="" alt="预览">
+            <div style="margin-top: 10px;">
+                <span id="imageInfo"></span>
+            </div>
+        </div>
+        
+        <div class="log" id="log">
+            <div class="log-item">📋 控制台日志：</div>
+        </div>
+    </div>
+
+    <script>
+        const selectBtn = document.getElementById('selectBtn');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const previewImg = document.getElementById('previewImg');
+        const imageInfo = document.getElementById('imageInfo');
+        const logDiv = document.getElementById('log');
+        
+        function addLog(message) {
+            const logItem = document.createElement('div');
+            logItem.className = 'log-item';
+            logItem.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(logItem);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        // 初始化检查
+        addLog('✅ 页面加载完成');
+        addLog(`元素检查: selectBtn=${!!selectBtn}, fileInput=${!!fileInput}`);
+        
+        // 点击按钮
+        if (selectBtn && fileInput) {
+            selectBtn.addEventListener('click', () => {
+                addLog('🖱️ 按钮被点击');
+                fileInput.click();
+                addLog('📂 触发文件选择器');
+            });
+            addLog('✅ 事件监听器已添加');
+        } else {
+            addLog('❌ 元素不存在！');
+        }
+        
+        // 文件选择
+        fileInput.addEventListener('change', (e) => {
+            addLog('📁 文件选择事件触发');
+            const file = e.target.files[0];
+            
+            if (file) {
+                addLog(`✅ 选中文件: ${file.name} (${(file.size/1024).toFixed(2)} KB)`);
+                
+                // 检查文件类型
+                if (!file.type.startsWith('image/')) {
+                    addLog('❌ 不是图片文件');
+                    alert('请选择图片文件！');
+                    return;
+                }
+                
+                addLog('📖 开始读取图片...');
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    addLog('✅ 图片读取成功');
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                    
+                    const img = new Image();
+                    img.onload = () => {
+                        imageInfo.textContent = `${img.width} × ${img.height} px`;
+                        addLog(`📐 图片尺寸: ${img.width} × ${img.height}`);
+                    };
+                    img.src = e.target.result;
+                };
+                
+                reader.onerror = () => {
+                    addLog('❌ 图片读取失败');
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                addLog('❌ 没有选中文件');
+            }
+        });
+        
+        // 拖拽上传
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#5568d3';
+            uploadArea.style.background = '#f0f4ff';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.background = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.background = 'transparent';
+            
+            addLog('🎯 检测到拖拽文件');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                addLog(`📦 拖拽了 ${files.length} 个文件`);
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+        
+        addLog('🎉 所有功能初始化完成');
+    </script>
+</body>
+</html>
+

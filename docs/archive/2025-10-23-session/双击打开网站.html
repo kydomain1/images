@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="1; url=http://localhost:3000/tool.html">
+    <title>正在打开...</title>
+    <style>
+        body {
+            background: #667eea;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding-top: 200px;
+            font-size: 24px;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 正在打开网站...</h1>
+    <div class="spinner"></div>
+    <p>http://localhost:3000/tool.html</p>
+    <script>
+        setTimeout(() => window.location.href = 'http://localhost:3000/tool.html', 1000);
+    </script>
+</body>
+</html>
+
+

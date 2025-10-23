@@ -5,7 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build:css": "node scripts/build-css.js",
+    "build:css:min": "node scripts/build-css.js --minify",
+    "update:version": "node scripts/update-version.js",
+    "build": "npm run build:css:min && npm run update:version",
+    "prebuild": "echo Building optimized assets..."
   },
   "keywords": [
     "ai",
@@ -17,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.913.0",
+    "@imgly/background-removal": "^1.7.0",
     "axios": "^1.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",

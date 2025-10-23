@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一键解决所有缓存问题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .problem-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .problem-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .problem-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .problem-list li {
+            padding: 8px 0;
+            color: #856404;
+        }
+        
+        .problem-list li:before {
+            content: "⚠️ ";
+            margin-right: 8px;
+        }
+        
+        .solution-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .solution-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .big-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .big-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 2px dashed #dee2e6;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-number {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .step-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .keyboard {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 0 3px;
+            box-shadow: 0 2px 0 #000;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checklist li {
+            padding: 10px 0;
+            font-size: 16px;
+        }
+        
+        .checklist li:before {
+            content: "✅ ";
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .secondary-button {
+            padding: 15px 25px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .secondary-button:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+        
+        .status-message {
+            display: none;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .status-message.show {
+            display: block;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="emoji">🔄</div>
+            <h1>一键解决所有缓存问题</h1>
+            <p class="subtitle">清除浏览器缓存，加载最新代码</p>
+        </div>
+        
+        <div class="problem-box">
+            <div class="problem-title">您可能遇到的问题：</div>
+            <ul class="problem-list">
+                <li>看到"图生图结果 1"（旧版本的模拟效果）</li>
+                <li>看到 preload CSS 的性能警告</li>
+                <li>图生图功能不工作或显示错误</li>
+                <li>页面样式或功能不是最新的</li>
+            </ul>
+        </div>
+        
+        <div class="solution-box">
+            <div class="solution-title">✅ 原因：浏览器缓存了旧版本</div>
+            <p style="color: #155724; font-size: 16px; line-height: 1.6;">
+                所有问题都是因为浏览器缓存了旧的HTML、CSS或JS文件。<br>
+                我们已经更新了所有文件版本号到 <strong>v=20251022</strong>，<br>
+                只需清除缓存即可解决所有问题！
+            </p>
+        </div>
+        
+        <button class="big-button" onclick="oneClickSolution()">
+            🚀 一键解决 - 打开最新页面
+        </button>
+        
+        <div class="status-message status-success" id="statusMessage">
+            ✅ 页面已在新标签打开！<br>
+            请在新页面按 <span class="keyboard">Ctrl + F5</span> 强制刷新！
+        </div>
+        
+        <div class="steps">
+            <h3 style="margin-bottom: 25px; color: #333;">📋 手动操作步骤：</h3>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">关闭旧页面</div>
+                    <div class="step-desc">
+                        关闭所有 <strong>tool.html</strong> 标签页
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">强制刷新</div>
+                    <div class="step-desc">
+                        打开工具页面后，立即按：<br>
+                        <span class="keyboard">Ctrl</span> + <span class="keyboard">F5</span> (Windows)<br>
+                        <span class="keyboard">Cmd</span> + <span class="keyboard">Shift</span> + <span class="keyboard">R</span> (Mac)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">验证成功</div>
+                    <div class="step-desc">
+                        打开控制台（按 <span class="keyboard">F12</span>）<br>
+                        应该看到：<strong>img2img.js?v=20251022</strong><br>
+                        不再有 preload 警告
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="margin-bottom: 15px; color: #1976d2;">💡 其他解决方案：</h3>
+            <div class="button-group">
+                <button class="secondary-button" onclick="openTestPage()">
+                    🧪 独立测试页面
+                </button>
+                <button class="secondary-button" onclick="clearCache()">
+                    🗑️ 清除缓存指南
+                </button>
+                <button class="secondary-button" onclick="checkStatus()">
+                    🔍 检查服务器状态
+                </button>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="margin-bottom: 15px; color: #1976d2;">✅ 修复后的效果：</h3>
+            <ul class="checklist">
+                <li>图生图生成真实的AI图片（非模拟）</li>
+                <li>不再看到性能警告</li>
+                <li>所有功能正常工作</li>
+                <li>使用最新的优化代码</li>
+                <li>版本号显示：v=20251022</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; color: #999; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <p>📚 详细文档：</p>
+            <p style="font-size: 14px; margin-top: 10px;">
+                立即解决缓存问题.txt | 性能警告说明.txt | 图生图测试指南.txt
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function oneClickSolution() {
+            // 添加时间戳强制重新加载
+            const timestamp = new Date().getTime();
+            const url = `/tool.html?cache_bust=${timestamp}`;
+            
+            // 在新标签打开
+            window.open(url, '_blank');
+            
+            // 显示成功消息
+            const statusMsg = document.getElementById('statusMessage');
+            statusMsg.classList.add('show');
+            
+            // 滚动到消息
+            statusMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // 提示用户
+            setTimeout(() => {
+                alert('✅ 页面已在新标签打开！\n\n重要：请在新页面立即按 Ctrl+F5 强制刷新！\n\n这样才能清除所有缓存并加载最新代码。');
+            }, 800);
+        }
+        
+        function openTestPage() {
+            window.open('/test-img2img-direct.html', '_blank');
+            alert('🧪 独立测试页面已打开！\n\n这个页面直接调用 Pollinations.ai，\n不受缓存影响，可以立即测试图生图功能。');
+        }
+        
+        function clearCache() {
+            alert('🗑️ 清除浏览器缓存：\n\n方法1：强制刷新\n按 Ctrl+F5（Windows）或 Cmd+Shift+R（Mac）\n\n方法2：开发工具\n1. 按 F12 打开开发工具\n2. 右键点击刷新按钮\n3. 选择"清空缓存并硬性重新加载"\n\n方法3：清除历史记录\nChrome/Edge: Ctrl+Shift+Delete\n选择"缓存的图片和文件"');
+        }
+        
+        async function checkStatus() {
+            try {
+                const response = await fetch('http://localhost:3000/health', {
+                    method: 'GET'
+                });
+                
+                if (response.ok) {
+                    alert('✅ 服务器状态：正常运行\n\n端口：3000\n地址：http://localhost:3000\n\n您可以放心使用所有功能！');
+                } else {
+                    alert('⚠️ 服务器响应异常\n\n请尝试重启服务器：\nscripts\\启动后端服务器.bat');
+                }
+            } catch (error) {
+                alert('❌ 服务器未运行\n\n请启动后端服务器：\n双击运行：scripts\\启动后端服务器.bat\n或命令行：node server-with-r2.js');
+            }
+        }
+        
+        // 页面加载时的控制台提示
+        console.log('%c🔄 缓存清理助手', 'font-size: 24px; color: #667eea; font-weight: bold;');
+        console.log('%c✅ 当前版本：v=20251022', 'font-size: 16px; color: #28a745;');
+        console.log('%c💡 点击"一键解决"按钮，然后按 Ctrl+F5', 'font-size: 16px; color: #2196F3;');
+    </script>
+</body>
+</html>
+

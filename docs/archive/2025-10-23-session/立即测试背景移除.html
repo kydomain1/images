@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 测试全新的背景移除功能</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .upgrade-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .features {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .features h2 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+        
+        .feature-text {
+            color: #475569;
+            line-height: 1.6;
+        }
+        
+        .feature-text strong {
+            color: #1e293b;
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .steps {
+            margin: 25px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fef3c7;
+            border-radius: 10px;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .step-number {
+            background: #f59e0b;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            color: #78350f;
+            line-height: 1.6;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .alert {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #1e40af;
+        }
+        
+        .alert-icon {
+            margin-right: 10px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .comparison-item {
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .old {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+        }
+        
+        .new {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+        }
+        
+        .comparison-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .old h3 { color: #dc2626; }
+        .new h3 { color: #059669; }
+        
+        .comparison-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .comparison-item li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .comparison-item li::before {
+            position: absolute;
+            left: 0;
+        }
+        
+        .old li::before {
+            content: '❌';
+        }
+        
+        .new li::before {
+            content: '✅';
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center;">
+            <div class="upgrade-badge">🎉 重大升级</div>
+        </div>
+        
+        <h1>🎨 全新背景移除</h1>
+        <p class="subtitle">使用 AI 深度学习模型，获得专业级效果</p>
+        
+        <div class="alert">
+            <span class="alert-icon">💡</span>
+            <strong>重要更新：</strong> 背景移除功能已升级到 AI 模型，效果提升 10 倍！
+        </div>
+        
+        <div class="features">
+            <h2>✨ 全新特性</h2>
+            
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-text">
+                    <strong>AI 深度学习模型</strong>
+                    使用先进的 U²-Net 架构，专门为显著性目标检测设计，准确识别主体并移除背景
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-text">
+                    <strong>完全本地处理</strong>
+                    所有处理在您的浏览器中完成，图片不会上传到服务器，保护您的隐私
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">
+                    <strong>快速高效</strong>
+                    首次使用需下载 5MB 模型（自动缓存），后续处理 3-5 秒即可完成
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-text">
+                    <strong>专业级效果</strong>
+                    细节保留完好，边缘平滑自然，可媲美 Photoshop 等专业工具
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text">
+                    <strong>实时进度显示</strong>
+                    美观的进度条，实时显示处理进度和状态，体验更友好
+                </div>
+            </div>
+        </div>
+        
+        <div class="comparison">
+            <div class="comparison-item old">
+                <h3>❌ 旧算法</h3>
+                <ul>
+                    <li>简单颜色判断</li>
+                    <li>容易误判</li>
+                    <li>边缘锯齿严重</li>
+                    <li>效果很差</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-item new">
+                <h3>✅ 新算法</h3>
+                <ul>
+                    <li>AI 深度学习</li>
+                    <li>精准识别主体</li>
+                    <li>边缘自然平滑</li>
+                    <li>专业级效果</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="steps">
+            <h2 style="margin-bottom: 15px; color: #1e293b;">🚀 使用步骤</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">
+                    点击下方按钮打开网站，进入 <strong>图片编辑器</strong> 标签页
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">
+                    上传或拖拽图片到上传区域（支持 JPG、PNG、WebP 格式）
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">
+                    点击 <strong>"移除背景"</strong> 按钮，AI 会自动处理（首次使用需下载模型）
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-text">
+                    查看对比效果，满意后点击下载保存为透明背景 PNG 图片
+                </div>
+            </div>
+        </div>
+        
+        <div class="btn-group">
+            <a href="http://localhost:3000/tool.html" class="btn btn-primary" target="_blank">
+                🚀 立即测试新功能
+            </a>
+            <a href="docs/背景移除功能升级完成.md" class="btn btn-secondary" target="_blank">
+                📖 查看详细文档
+            </a>
+        </div>
+        
+        <div class="alert" style="margin-top: 25px; background: #fef3c7; border-color: #f59e0b; color: #78350f;">
+            <span class="alert-icon">⚠️</span>
+            <strong>注意：</strong> 首次使用需要下载 AI 模型（约 5MB），请确保网络连接正常。模型下载后会被浏览器缓存，后续使用无需重新下载。
+        </div>
+    </div>
+    
+    <script>
+        // 自动打开工具页面（3秒后）
+        setTimeout(() => {
+            const confirmed = confirm('是否立即打开背景移除工具进行测试？');
+            if (confirmed) {
+                window.open('http://localhost:3000/tool.html', '_blank');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
+

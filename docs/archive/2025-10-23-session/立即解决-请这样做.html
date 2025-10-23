@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>立即解决 404 错误</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .problem {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .problem h2 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .problem p {
+            color: #856404;
+            line-height: 1.8;
+        }
+        .solution {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .solution h2 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 60px;
+            position: relative;
+            color: #155724;
+            line-height: 1.8;
+        }
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .steps strong {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .code {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            color: #333;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .success h3 {
+            color: #155724;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .success p {
+            color: #155724;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 404错误 - 立即解决</h1>
+        <p class="subtitle">让背景移除效果从 ⭐⭐ 提升到 ⭐⭐⭐⭐⭐</p>
+        
+        <div class="problem">
+            <h2>❌ 当前问题</h2>
+            <p>
+                <strong>错误信息：</strong> 
+                POST http://localhost:3000/api/remove-background 404 (Not Found)
+            </p>
+            <p style="margin-top: 10px;">
+                <strong>原因：</strong> 
+                服务器需要<span class="highlight">重启</span>来加载新的API端点。旧的服务器进程不包含背景移除功能。
+            </p>
+        </div>
+        
+        <div class="solution">
+            <h2>✅ 解决方案（只需1分钟）</h2>
+            <ol class="steps">
+                <li>
+                    <strong>找到服务器窗口</strong>
+                    应该有一个黑色命令行窗口显示 "AI图片生成器服务器"
+                </li>
+                <li>
+                    <strong>停止旧服务器</strong>
+                    在服务器窗口按 <span class="highlight">Ctrl + C</span>，然后按 <span class="highlight">Y</span> 确认
+                </li>
+                <li>
+                    <strong>双击运行</strong>
+                    <div class="code">一键启动并打开.bat</div>
+                    它会自动启动新服务器并打开浏览器
+                </li>
+                <li>
+                    <strong>重新测试</strong>
+                    上传图片 → 移除背景 → 看到专业级效果！
+                </li>
+            </ol>
+        </div>
+        
+        <div class="success">
+            <h3>🎯 验证成功的标志</h3>
+            <p>浏览器控制台（F12）会显示：</p>
+            <div class="code" style="margin: 15px auto; max-width: 500px; text-align: left;">
+                🎨 尝试使用 Remove.bg API...<br>
+                ✅ Remove.bg API 成功！剩余额度: 49
+            </div>
+            <p style="margin-top: 15px;">处理时间：<strong>5-10秒</strong>（而不是1-3秒）</p>
+            <p>效果：<strong>⭐⭐⭐⭐⭐ 专业级透明背景</strong></p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="#" onclick="window.close();" class="btn">我知道了，去重启服务器</a>
+        </div>
+    </div>
+</body>
+</html>
+
+

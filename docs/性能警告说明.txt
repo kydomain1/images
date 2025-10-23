@@ -1,0 +1,133 @@
+========================================
+   性能警告说明 - Preload 问题
+========================================
+
+⚠️ 您看到的警告：
+
+"The resource http://localhost:3000/css/style.css 
+was preloaded using link preload but not used 
+within a few seconds from the window's load event."
+
+========================================
+
+✅ 原因分析：
+
+这个警告是因为浏览器缓存了旧版本的HTML文件。
+
+在之前的某个版本中，可能有：
+<link rel="preload" href="css/style.css" as="style">
+
+但在当前版本中，这行代码已经被移除了。
+
+========================================
+
+✅ 当前代码状态（正确）：
+
+tool.html 第40-43行：
+  <!-- 样式表 -->
+  <link rel="stylesheet" href="css/style.css?v=20251022">
+  <link rel="stylesheet" href="css/language-switcher.css?v=20251022">
+  <link rel="stylesheet" href="css/prompt-optimizer.css?v=20251022">
+
+✅ 没有使用 preload
+✅ 直接加载，这样更合适
+✅ 添加了版本号防止缓存
+
+唯一使用 preload 的是 Font Awesome（正确做法）：
+  <link rel="preload" href="...font-awesome..." 
+        as="style" 
+        onload="this.onload=null;this.rel='stylesheet'">
+
+这是异步加载，不会阻塞渲染。
+
+========================================
+
+🎯 解决方法：
+
+方法1：强制刷新（推荐）
+  按 Ctrl + F5（Windows）
+  或 Cmd + Shift + R（Mac）
+
+方法2：使用清缓存页面
+  双击打开：强制刷新-清除缓存.html
+
+方法3：清除浏览器缓存
+  Chrome/Edge: 
+  - 按 F12
+  - 右键点击刷新按钮
+  - "清空缓存并硬性重新加载"
+
+========================================
+
+✅ 刷新后，警告会消失，因为：
+
+1. 新HTML中没有 preload style.css
+2. 所有资源都添加了版本号 v=20251022
+3. 浏览器会下载最新的HTML
+
+========================================
+
+📊 当前性能优化配置：
+
+✅ 正确的优化：
+  - Font Awesome 异步加载（不阻塞渲染）
+  - CSS 直接加载（关键资源，需要立即加载）
+  - JS 有版本号（精确缓存控制）
+  - preconnect CDN（提前建立连接）
+
+❌ 不需要的优化：
+  - CSS 不应该 preload（它是关键资源）
+  - 关键CSS应该立即加载，不要异步
+
+========================================
+
+💡 技术解释：
+
+为什么 CSS 不用 preload？
+
+CSS（如 style.css）是渲染关键资源：
+- 浏览器需要它来正确显示页面
+- 如果异步加载会导致FOUC（无样式闪烁）
+- 应该直接用 <link rel="stylesheet">
+
+什么时候用 preload？
+
+1. 非关键资源（如图标字体）
+2. 需要提前加载但不立即执行的资源
+3. 字体文件
+4. 异步脚本
+
+Font Awesome 使用 preload 是对的：
+- 它是图标字体，非关键
+- 页面可以先渲染，图标后加载
+- 不会阻塞首屏显示
+
+========================================
+
+🔍 验证修复：
+
+刷新后，打开控制台（F12）：
+
+✅ 不应该看到 preload 警告
+✅ Network 标签应该显示：
+   - style.css?v=20251022
+   - language-switcher.css?v=20251022
+   - prompt-optimizer.css?v=20251022
+
+✅ 所有CSS都应该正常加载
+
+========================================
+
+📝 总结：
+
+问题：旧HTML缓存导致的警告
+状态：代码已经是正确的
+解决：强制刷新清除缓存
+
+刷新后，这个警告就不会再出现了！
+
+========================================
+
+更新时间：2025-10-22
+当前HTML版本：包含 v=20251022 的版本
+

@@ -93,7 +93,34 @@ app.post('/api/tongyi/generate', async (req, res) => {
         // 轮询获取结果
         const result = await pollTaskResult(taskId);
         
-        console.log('🎨 图片生成成功，开始上传到R2...');
+        console.log('🎨 图片生成成功');
+        
+        // 检查R2是否正确配置了公开访问
+        const useR2 = R2_PUBLIC_URL && R2_PUBLIC_URL.includes('r2.dev');
+        
+        if (!useR2) {
+            console.log('ℹ️  R2未配置公开域名，使用通义万相临时URL');
+            
+            // 直接使用通义万相的URL（24小时有效）
+            const images = result.results.map((item, index) => ({
+                url: item.url,
+                originalUrl: item.url,
+                prompt: prompt,
+                timestamp: new Date().toISOString(),
+                storage: 'tongyi-temp',
+                note: '临时链接，24小时有效'
+            }));
+            
+            res.json({
+                success: true,
+                images: images,
+                taskId: taskId,
+                note: '使用临时链接，如需永久保存请配置R2公开域名'
+            });
+            return;
+        }
+        
+        console.log('🎨 开始上传到R2...');
         
         // 上传所有图片到R2
         const uploadedImages = await Promise.all(
@@ -116,7 +143,7 @@ app.post('/api/tongyi/generate', async (req, res) => {
                         originalUrl: item.url,
                         prompt: prompt,
                         timestamp: new Date().toISOString(),
-                        storage: 'tongyi',
+                        storage: 'tongyi-temp',
                         uploadError: error.message
                     };
                 }
@@ -295,10 +322,161 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// ==================== 图生图API ====================
-// 注意：这是模拟实现，实际使用需要集成真实的AI图生图服务
+// ==================== 文件上传配置 ====================
 const multer = require('multer');
+const fs = require('fs');
+const FormData = require('form-data');
 const upload = multer({ dest: 'uploads/', limits: { fileSize: 10 * 1024 * 1024 } });
+
+// ==================== 背景移除 API ====================
+const REMOVEBG_API_KEY = process.env.REMOVEBG_API_KEY;
+
+app.post('/api/remove-background', upload.single('image'), async (req, res) => {
+    try {
+        console.log('🎨 收到背景移除请求');
+        
+        if (!req.file) {
+            return res.status(400).json({ 
+                success: false, 
+                error: '未上传图片' 
+            });
+        }
+        
+        if (!REMOVEBG_API_KEY) {
+            console.warn('⚠️  未配置 REMOVEBG_API_KEY');
+            return res.json({
+                success: false,
+                error: '未配置 Remove.bg API',
+                fallback: true
+            });
+        }
+        
+        try {
+            console.log('🚀 调用 Remove.bg API...');
+            console.log('   API Key:', REMOVEBG_API_KEY.substring(0, 8) + '...');
+            
+            // 读取图片文件
+            const imageBuffer = fs.readFileSync(req.file.path);
+            
+            // 创建 FormData
+            const formData = new FormData();
+            formData.append('image_file', imageBuffer, {
+                filename: 'image.png',
+                contentType: req.file.mimetype
+            });
+            formData.append('size', 'auto');
+            
+            // 调用 Remove.bg API
+            const response = await axios.post(
+                'https://api.remove.bg/v1.0/removebg',
+                formData,
+                {
+                    headers: {
+                        'X-Api-Key': REMOVEBG_API_KEY,
+                        ...formData.getHeaders()
+                    },
+                    responseType: 'arraybuffer',
+                    timeout: 30000
+                }
+            );
+            
+            // 转换为 base64
+            const imageBase64 = Buffer.from(response.data).toString('base64');
+            const imageUrl = `data:image/png;base64,${imageBase64}`;
+            
+            // 清理临时文件
+            try {
+                fs.unlinkSync(req.file.path);
+            } catch (e) {
+                console.warn('清理临时文件失败:', e.message);
+            }
+            
+            // 检查剩余额度
+            const creditsCharged = response.headers['x-credits-charged'];
+            const creditsRemaining = response.headers['x-ratelimit-remaining'];
+            
+            console.log('✅ 背景移除成功（Remove.bg API）');
+            if (creditsRemaining) {
+                console.log(`💳 剩余额度: ${creditsRemaining} 次`);
+            }
+            
+            res.json({ 
+                success: true, 
+                result: imageUrl,
+                service: 'Remove.bg',
+                creditsRemaining: creditsRemaining,
+                creditsCharged: creditsCharged
+            });
+            
+        } catch (apiError) {
+            // 清理临时文件
+            if (req.file && req.file.path) {
+                try {
+                    fs.unlinkSync(req.file.path);
+                } catch (e) {}
+            }
+            
+            console.error('❌ Remove.bg API 错误:', apiError.message);
+            
+            // 处理特定错误
+            if (apiError.response) {
+                const status = apiError.response.status;
+                console.error('   状态码:', status);
+                
+                // 尝试解析错误信息
+                let errorMsg = 'API 调用失败';
+                try {
+                    const errorData = JSON.parse(apiError.response.data.toString());
+                    errorMsg = errorData.errors?.[0]?.title || errorMsg;
+                    console.error('   错误详情:', errorData);
+                } catch (e) {
+                    console.error('   响应:', apiError.response.data?.toString() || '无');
+                }
+                
+                if (status === 403) {
+                    return res.json({
+                        success: false,
+                        error: 'API Key 无效或额度已用完',
+                        fallback: true
+                    });
+                } else if (status === 400) {
+                    return res.json({
+                        success: false,
+                        error: '图片格式不支持或文件损坏',
+                        fallback: true
+                    });
+                } else if (status === 402) {
+                    return res.json({
+                        success: false,
+                        error: 'API 额度不足，请充值',
+                        fallback: true
+                    });
+                }
+            }
+            
+            // 返回降级标志
+            return res.json({
+                success: false,
+                error: apiError.message,
+                fallback: true
+            });
+        }
+        
+    } catch (error) {
+        console.error('❌ 背景移除错误:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: '服务器错误：' + error.message,
+            fallback: true
+        });
+    }
+});
+
+// ==================== 图生图API ====================
+
+// Hugging Face API 配置
+const HUGGINGFACE_API_KEY = process.env.HUGGINGFACE_API_KEY;
+const HUGGINGFACE_MODEL = process.env.HUGGINGFACE_MODEL || 'runwayml/stable-diffusion-v1-5';
 
 app.post('/api/img2img/generate', upload.single('image'), async (req, res) => {
     try {
@@ -318,40 +496,94 @@ app.post('/api/img2img/generate', upload.single('image'), async (req, res) => {
         console.log(`   风格: ${style || 'auto'}`);
         console.log(`   数量: ${count || 1}`);
         
-        // TODO: 这里应该调用真实的AI图生图服务
-        // 例如：Stable Diffusion img2img, 通义万相图生图等
-        // 目前返回模拟数据
-        
-        // 模拟处理时间
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // 返回模拟结果（实际应该是生成的图片URL）
-        const mockImages = [];
-        const requestedCount = parseInt(count) || 1;
-        
-        // 生成SVG模拟图片（base64编码）
-        for (let i = 0; i < requestedCount; i++) {
-            const svg = `<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg">
-                <rect width="1024" height="1024" fill="#7F9DAC"/>
-                <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="white" font-size="48" font-family="Arial">
-                    图生图结果 ${i + 1}
-                </text>
-                <text x="50%" y="60%" text-anchor="middle" dy=".3em" fill="#E8E4E1" font-size="24" font-family="Arial">
-                    (模拟数据)
-                </text>
-            </svg>`;
-            const base64 = Buffer.from(svg).toString('base64');
-            mockImages.push(`data:image/svg+xml;base64,${base64}`);
+        // 检查是否配置了 Hugging Face API
+        if (!HUGGINGFACE_API_KEY) {
+            console.warn('⚠️  未配置 HUGGINGFACE_API_KEY，返回提示信息');
+            return res.json({
+                success: false,
+                error: '未配置 Hugging Face API',
+                message: '请在 .env 文件中配置 HUGGINGFACE_API_KEY',
+                hint: '查看 docs/HuggingFace配置指南.md 了解如何配置'
+            });
         }
         
-        res.json({ 
-            success: true, 
-            images: mockImages,
-            message: '图片生成成功（模拟数据）'
-        });
+        try {
+            // 读取上传的图片
+            const imageBuffer = fs.readFileSync(req.file.path);
+            const imageBase64 = imageBuffer.toString('base64');
+            
+            console.log('🚀 调用 Hugging Face API...');
+            
+            // 调用 Hugging Face API
+            const response = await axios.post(
+                `https://api-inference.huggingface.co/models/${HUGGINGFACE_MODEL}`,
+                {
+                    inputs: prompt || '保持原图风格',
+                    parameters: {
+                        image: imageBase64,
+                        strength: parseFloat(strength) || 0.5,
+                        num_inference_steps: 50,
+                        guidance_scale: 7.5
+                    }
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${HUGGINGFACE_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    responseType: 'arraybuffer',
+                    timeout: 60000 // 60秒超时
+                }
+            );
+            
+            // 将生成的图片转换为 base64
+            const generatedImageBase64 = Buffer.from(response.data).toString('base64');
+            const imageUrl = `data:image/jpeg;base64,${generatedImageBase64}`;
+            
+            // 清理临时文件
+            fs.unlinkSync(req.file.path);
+            
+            console.log('✅ 图片生成成功');
+            
+            res.json({ 
+                success: true, 
+                images: [imageUrl],
+                message: '图片生成成功'
+            });
+            
+        } catch (apiError) {
+            // 清理临时文件
+            if (req.file && req.file.path) {
+                try {
+                    fs.unlinkSync(req.file.path);
+                } catch (e) {}
+            }
+            
+            console.error('❌ Hugging Face API 错误:', apiError.message);
+            
+            // 处理特定错误
+            if (apiError.response) {
+                const status = apiError.response.status;
+                if (status === 401) {
+                    return res.status(401).json({
+                        success: false,
+                        error: 'API Token 无效',
+                        message: '请检查 HUGGINGFACE_API_KEY 是否正确'
+                    });
+                } else if (status === 503) {
+                    return res.status(503).json({
+                        success: false,
+                        error: '模型正在加载',
+                        message: '首次使用需要 20-30 秒加载模型，请稍后重试'
+                    });
+                }
+            }
+            
+            throw apiError;
+        }
         
     } catch (error) {
-        console.error('图生图错误:', error);
+        console.error('❌ 图生图错误:', error);
         res.status(500).json({ 
             success: false, 
             error: '服务器错误：' + error.message 
@@ -360,8 +592,10 @@ app.post('/api/img2img/generate', upload.single('image'), async (req, res) => {
 });
 
 // ==================== 高清放大API ====================
-// 注意：这是模拟实现，实际使用需要集成真实的AI超分辨率服务
-app.post('/api/upscale/process', upload.single('image'), async (req, res) => {
+// 使用 ClipDrop AI Upscaler（免费2倍放大）
+const CLIPDROP_API_KEY = process.env.CLIPDROP_API_KEY || process.env.REMOVEBG_API_KEY;
+
+app.post('/api/upscale', upload.single('image'), async (req, res) => {
     try {
         console.log('🔍 收到高清放大请求');
         
@@ -372,19 +606,105 @@ app.post('/api/upscale/process', upload.single('image'), async (req, res) => {
             });
         }
         
-        const { scale, denoise, sharpen, face } = req.body;
+        const { scale = 2 } = req.body;
         
-        console.log(`   放大倍数: ${scale || 2}x`);
-        console.log(`   降噪: ${denoise === 'true' ? '是' : '否'}`);
-        console.log(`   锐化: ${sharpen === 'true' ? '是' : '否'}`);
-        console.log(`   面部修复: ${face === 'true' ? '是' : '否'}`);
+        console.log(`   放大倍数: ${scale}x`);
         
-        // TODO: 这里应该调用真实的AI超分辨率服务
-        // 例如：Real-ESRGAN, Waifu2x, AI Image Upscaler等
-        // 目前返回模拟数据
+        // 如果没有配置API Key，返回错误
+        if (!CLIPDROP_API_KEY) {
+            console.warn('⚠️  未配置 ClipDrop API Key');
+            return res.json({
+                success: false,
+                error: '未配置 ClipDrop API',
+                fallback: true
+            });
+        }
         
-        // 模拟处理时间
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        try {
+            console.log('🚀 调用 ClipDrop AI Upscaler...');
+            console.log('   API Key:', CLIPDROP_API_KEY.substring(0, 8) + '...');
+            
+            // 读取图片文件
+            const imageBuffer = fs.readFileSync(req.file.path);
+            
+            // 创建 FormData
+            const formData = new FormData();
+            formData.append('image_file', imageBuffer, {
+                filename: 'image.png',
+                contentType: req.file.mimetype
+            });
+            
+            // ClipDrop只支持2倍放大
+            if (scale != 2) {
+                console.warn(`⚠️  ClipDrop只支持2倍放大，当前请求${scale}倍`);
+            }
+            
+            // 调用 ClipDrop API
+            const response = await axios.post(
+                'https://clipdrop-api.co/image-upscaling/v1/upscale',
+                formData,
+                {
+                    headers: {
+                        'x-api-key': CLIPDROP_API_KEY,
+                        ...formData.getHeaders()
+                    },
+                    responseType: 'arraybuffer',
+                    timeout: 60000
+                }
+            );
+            
+            // 转换为 base64
+            const imageBase64 = Buffer.from(response.data).toString('base64');
+            const imageUrl = `data:image/png;base64,${imageBase64}`;
+            
+            // 清理临时文件
+            try {
+                fs.unlinkSync(req.file.path);
+            } catch (e) {
+                console.warn('清理临时文件失败:', e.message);
+            }
+            
+            console.log('✅ AI放大成功（ClipDrop API）');
+            
+            res.json({ 
+                success: true, 
+                result: imageUrl,
+                service: 'ClipDrop AI',
+                scale: 2,
+                note: 'ClipDrop免费版仅支持2倍放大'
+            });
+            
+        } catch (apiError) {
+            // 清理临时文件
+            if (req.file && req.file.path) {
+                try {
+                    fs.unlinkSync(req.file.path);
+                } catch (e) {}
+            }
+            
+            console.error('❌ ClipDrop API 错误:', apiError.message);
+            
+            if (apiError.response) {
+                const status = apiError.response.status;
+                console.error('   状态码:', status);
+                
+                if (status === 403 || status === 401) {
+                    return res.json({
+                        success: false,
+                        error: 'API Key 无效',
+                        fallback: true
+                    });
+                }
+            }
+            
+            // 返回降级标志
+            return res.json({
+                success: false,
+                error: apiError.message,
+                fallback: true
+            });
+        }
+        
         
         const scaleValue = parseInt(scale) || 2;
         const originalSize = 512;

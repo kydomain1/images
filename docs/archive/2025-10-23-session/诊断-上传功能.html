@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 诊断上传功能</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .step {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+        .step h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 5px;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .alert-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #78350f;
+        }
+        .alert-info {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            color: #1e40af;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checklist li::before {
+            content: '☐';
+            font-size: 1.5em;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 上传功能诊断指南</h1>
+        
+        <div class="alert alert-warning">
+            <strong>⚠️ 重要：</strong> 必须先按 <code>Ctrl + Shift + R</code> 强制刷新页面，清除缓存！
+        </div>
+        
+        <div class="section">
+            <h2>📝 诊断步骤</h2>
+            
+            <div class="step">
+                <h3>步骤 1：强制刷新页面</h3>
+                <p>按 <code>Ctrl + Shift + R</code>（Windows）或 <code>Cmd + Shift + R</code>（Mac）</p>
+                <p style="margin-top: 10px; color: #64748b;">这会清除所有缓存的旧代码</p>
+            </div>
+            
+            <div class="step">
+                <h3>步骤 2：打开开发者工具</h3>
+                <p>按 <code>F12</code> 键，切换到 <strong>Console</strong> 标签页</p>
+            </div>
+            
+            <div class="step">
+                <h3>步骤 3：检查错误信息</h3>
+                <p>查看控制台是否有红色错误信息</p>
+                <div class="alert alert-info" style="margin-top: 10px;">
+                    <strong>应该看到：</strong><br>
+                    <code>✅ 背景移除功能已加载</code>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>步骤 4：切换到"图片编辑器"</h3>
+                <p>点击页面顶部的第二个标签：<strong>📷 图片编辑器</strong></p>
+                <p style="margin-top: 10px; color: #64748b;">不是"文字生成图片"！</p>
+            </div>
+            
+            <div class="step">
+                <h3>步骤 5：点击"选择图片"按钮</h3>
+                <p>点击蓝色的"选择图片"按钮</p>
+                <div class="alert alert-info" style="margin-top: 10px;">
+                    <strong>控制台应该显示：</strong><br>
+                    <code>🖱️ 选择图片按钮被点击</code>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>步骤 6：如果还是没反应</h3>
+                <p>在控制台中手动运行以下代码检查元素：</p>
+                <div class="code">
+console.log('检查元素:', {<br>
+&nbsp;&nbsp;bgSelectBtn: document.getElementById('bg-select-btn'),<br>
+&nbsp;&nbsp;bgImageInput: document.getElementById('bg-image-input')<br>
+});
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>❓ 可能的问题</h2>
+            
+            <ul class="checklist">
+                <li><strong>缓存问题</strong> - 浏览器使用了旧代码（解决：强制刷新）</li>
+                <li><strong>没切换标签</strong> - 还在"文字生成图片"标签页（解决：切换到图片编辑器）</li>
+                <li><strong>JavaScript错误</strong> - 代码加载失败（解决：查看控制台）</li>
+                <li><strong>元素未加载</strong> - DOM元素还没准备好（已添加检查）</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>🔧 已修复的问题</h2>
+            <p>在最新版本中，我已经添加了：</p>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>✅ 所有事件监听器的 null 检查</li>
+                <li>✅ 点击按钮时的控制台日志</li>
+                <li>✅ 元素不存在时的错误提示</li>
+                <li>✅ 更新的缓存版本号（v20251023d）</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="http://localhost:3000/tool.html" class="btn" target="_blank">
+                🚀 打开测试页面
+            </a>
+        </div>
+        
+        <div class="alert alert-warning" style="margin-top: 20px;">
+            <strong>💡 提示：</strong> 如果按照步骤操作后还是不行，请截图控制台的错误信息，我可以帮您继续诊断。
+        </div>
+    </div>
+    
+    <script>
+        setTimeout(() => {
+            alert('已添加保护性检查！\n\n请务必按 Ctrl+Shift+R 强制刷新页面！\n\n然后查看控制台输出。');
+            window.open('http://localhost:3000/tool.html', '_blank');
+        }, 2000);
+    </script>
+</body>
+</html>
+

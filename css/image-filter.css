@@ -1,0 +1,132 @@
+/* ==================== 滤镜功能样式 ==================== */
+
+/* 预设滤镜按钮网格 */
+.filter-presets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.filter-preset-btn {
+    padding: 12px 8px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-preset-btn i {
+    font-size: 1.5em;
+    color: var(--primary-color);
+}
+
+.filter-preset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-color);
+}
+
+.filter-preset-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-color: #667eea;
+}
+
+.filter-preset-btn.active i {
+    color: white;
+}
+
+/* 调节滑块区域 */
+.filter-adjustments {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.filter-adjustments .slider-group {
+    margin: 20px 0;
+}
+
+.filter-adjustments .slider-group label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.filter-adjustments .slider-group label span {
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    min-width: 50px;
+    text-align: center;
+}
+
+.filter-adjustments input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #e2e8f0 0%, #667eea 50%, #e2e8f0 100%);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.filter-adjustments input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.filter-adjustments input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.filter-adjustments .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .filter-presets {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    
+    .filter-preset-btn {
+        padding: 10px 6px;
+        font-size: 0.75em;
+    }
+    
+    .filter-preset-btn i {
+        font-size: 1.3em;
+    }
+}
+

@@ -10,23 +10,23 @@
     <meta name="keywords" content="AI图片生成,图片编辑器,文字生成图片,AI绘画工具,提示词优化,通义万相API,免费AI作画,在线图片生成">
     <meta name="author" content="AI图片生成器">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="http://localhost:3000/tool.html">
+    <link rel="canonical" href="/tool.html">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:3000/tool.html">
+    <meta property="og:url" content="/tool.html">
     <meta property="og:title" content="AI图片生成工具 - 文字转图片在线编辑器">
     <meta property="og:description" content="支持多种艺术风格的AI图片生成工具，提供提示词优化和历史记录功能">
-    <meta property="og:image" content="http://localhost:3000/assets/tool-preview.svg">
+    <meta property="og:image" content="/assets/tool-preview.svg">
     <meta property="og:locale" content="zh_CN">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="http://localhost:3000/tool.html">
+    <meta name="twitter:url" content="/tool.html">
     <meta name="twitter:title" content="AI图片生成工具 - 文字转图片在线编辑器">
     <meta name="twitter:description" content="支持多种艺术风格的AI图片生成工具">
-    <meta name="twitter:image" content="http://localhost:3000/assets/tool-preview.svg">
+    <meta name="twitter:image" content="/assets/tool-preview.svg">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -38,10 +38,18 @@
     <!-- 预加载已移除：非关键资源，在页面底部异步加载 -->
     
     <!-- 样式表 -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/language-switcher.css">
-    <link rel="stylesheet" href="css/prompt-optimizer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/language-switcher.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/prompt-optimizer.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/image-editor.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/bg-result-display.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/image-modal.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/image-filter.css?v=20251023Final2">
+    <link rel="stylesheet" href="css/crop-convert.css?v=20251023Final2">
+    
+    <!-- Font Awesome 异步加载（避免阻塞渲染） -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
     <!-- Structured Data / Schema.org -->
     <script type="application/ld+json">
@@ -162,7 +170,7 @@
             <div class="sidebar-section">
                 <div class="sidebar-section-header">
                     <h3><i class="fas fa-history"></i> <span data-i18n="history.title">历史记录</span></h3>
-                    <button class="clear-history-btn" onclick="clearAllHistory()" title="清空历史记录">
+                    <button class="clear-history-btn" onclick="clearAllHistory()" data-i18n-title="history.clearAll">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
@@ -204,9 +212,25 @@
                     <i class="fas fa-pen-fancy"></i>
                     <span data-i18n="tool.text2img">文字生成图片</span>
                 </button>
-                <button class="tool-tab" data-tab="img2img-panel">
-                    <i class="fas fa-image"></i>
-                    <span data-i18n="tool.img2img">图生图</span>
+                <button class="tool-tab" data-tab="editor-panel">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span data-i18n="tool.editor">背景移除</span>
+                </button>
+                <button class="tool-tab" data-tab="upscale-panel">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    <span data-i18n="tool.upscale">AI高清放大</span>
+                </button>
+                <button class="tool-tab" data-tab="filter-panel">
+                    <i class="fas fa-palette"></i>
+                    <span data-i18n="tool.filter">滤镜效果</span>
+                </button>
+                <button class="tool-tab" data-tab="crop-panel">
+                    <i class="fas fa-crop"></i>
+                    <span data-i18n="tool.crop">图片裁剪</span>
+                </button>
+                <button class="tool-tab" data-tab="convert-panel">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="tool.convert">格式转换</span>
                 </button>
             </div>
             
@@ -226,7 +250,7 @@
                         rows="5"
                     ></textarea>
                     <div class="char-count">
-                        <span id="char-counter">0</span> / 2000 字符
+                        <span id="char-counter">0</span> / 2000 <span data-i18n="tool.characters">字符</span>
                     </div>
                     
                     <!-- 提示词优化助手 -->
@@ -414,13 +438,13 @@
             <!-- 图片输出区 -->
             <section class="output-section">
                 <div class="output-header">
-                    <h2><i class="fas fa-image"></i> 生成结果</h2>
+                    <h2><i class="fas fa-image"></i> <span data-i18n="tool.result">生成结果</span></h2>
                     <div class="output-actions">
                         <button class="action-btn" id="download-all" disabled>
-                            <i class="fas fa-download"></i> 下载全部
+                            <i class="fas fa-download"></i> <span data-i18n="btn.downloadAll">下载全部</span>
                         </button>
                         <button class="action-btn" id="clear-all" disabled>
-                            <i class="fas fa-trash"></i> 清空
+                            <i class="fas fa-trash"></i> <span data-i18n="btn.clear">清空</span>
                         </button>
                     </div>
                 </div>
@@ -442,249 +466,709 @@
             </div>
             <!-- 文字生成面板结束 -->
             
-            <!-- 图生图面板 -->
-            <div class="tool-panel" id="img2img-panel" style="display: none;">
-                <!-- 功能说明提示 -->
-                <div class="info-banner" id="img2img-mode-banner" style="background: #4A5568; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #7F9DAC;">
-                    <p id="img2img-mode-text" style="margin: 0; font-size: 0.9rem; line-height: 1.6;">
-                        🔍 <strong>检测中...</strong> 正在检查后端服务器状态...
-                    </p>
-                </div>
-                
-                <!-- 输入区 -->
+            <!-- 图片编辑器面板 -->
+            <div class="tool-panel" id="editor-panel" style="display: none;">
+                <!-- 背景移除功能 -->
                 <section class="input-section">
-                    <h2><i class="fas fa-image"></i> <span data-i18n="tool.img2img.title">图生图设置</span></h2>
+                    <h2><i class="fas fa-wand-magic-sparkles"></i> <span data-i18n="editor.bgRemover.title">背景移除</span></h2>
                     
                     <!-- 图片上传区 -->
                     <div class="input-group">
-                        <label for="reference-image">
-                            <i class="fas fa-upload"></i> <span data-i18n="tool.img2img.upload">上传参考图片</span>
+                        <label>
+                            <i class="fas fa-upload"></i> <span data-i18n="editor.bgRemover.upload">上传图片</span>
                         </label>
-                        <div class="image-upload-area" id="image-upload-area">
-                            <input type="file" id="reference-image" accept="image/*" style="display: none;">
-                            <div class="upload-placeholder" id="upload-placeholder">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p><span data-i18n="tool.img2img.dragdrop">拖拽图片到这里</span></p>
-                                <p class="upload-hint"><span data-i18n="tool.img2img.or">或</span></p>
-                                <button type="button" class="upload-btn" id="select-image-btn">
+                        <div class="image-upload-area" id="bg-upload-area">
+                            <input type="file" id="bg-image-input" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="bg-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p><span data-i18n="editor.bgRemover.dragdrop">拖拽图片到这里</span></p>
+                                <p class="upload-hint"><span data-i18n="editor.bgRemover.or">或</span></p>
+                                <button type="button" class="upload-btn" id="bg-select-btn">
                                     <i class="fas fa-folder-open"></i>
-                                    <span data-i18n="tool.img2img.select">选择图片</span>
+                                    <span data-i18n="editor.bgRemover.select">选择图片</span>
                                 </button>
-                                <p class="upload-info"><span data-i18n="tool.img2img.formats">支持 JPG, PNG, WebP 格式，最大10MB</span></p>
+                                <p class="upload-info"><span data-i18n="editor.bgRemover.formats">支持 JPG, PNG, WebP 格式，最大10MB</span></p>
                             </div>
-                            <div class="image-preview" id="image-preview" style="display: none;">
-                                <img id="preview-img" src="" alt="预览">
-                                <button type="button" class="remove-image-btn" id="remove-image-btn">
+                            <div class="image-preview" id="bg-image-preview" style="display: none;">
+                                <img id="bg-preview-img" src="" alt="预览">
+                                <button type="button" class="remove-image-btn" id="bg-remove-btn">
                                     <i class="fas fa-times"></i>
                                 </button>
-                                <div class="image-info" id="image-info"></div>
+                                <div class="image-info" id="bg-image-info"></div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 提示词输入 -->
-                    <div class="input-group">
-                        <label for="img2img-prompt">
-                            <i class="fas fa-message"></i> <span data-i18n="tool.img2img.prompt">描述想要的效果</span>
+                    <!-- 预设模式 -->
+                    <div class="input-group" style="margin-top: 20px;">
+                        <label for="bg-preset">
+                            <i class="fas fa-image"></i> <span data-i18n="bg.preset.title">图片类型（预设）</span>
                         </label>
-                        <textarea 
-                            id="img2img-prompt" 
-                            placeholder="描述您想要的图片效果...&#10;&#10;示例：转换为油画风格，增强色彩饱和度，添加艺术感"
-                            rows="4"
-                        ></textarea>
-                        <div class="char-count">
-                            <span id="img2img-char-counter">0</span> / 1000 字符
-                        </div>
-                        
-                        <!-- 图生图提示词优化工具 -->
-                        <div class="prompt-optimizer-tools">
-                            <button type="button" class="optimizer-btn" id="img2img-optimizeBtn">
-                                <i class="fas fa-magic"></i>
-                                <span data-i18n="optimizer.optimizeBtn">优化提示词</span>
-                            </button>
-                            
-                            <button type="button" class="optimizer-btn secondary" id="img2img-showTemplatesBtn">
-                                <i class="fas fa-lightbulb"></i>
-                                <span data-i18n="optimizer.img2imgTemplates">图生图模板</span>
-                            </button>
-                            
-                            <button type="button" class="optimizer-btn secondary" id="img2img-showStylesBtn">
-                                <i class="fas fa-palette"></i>
-                                <span data-i18n="optimizer.styles">风格预设</span>
-                            </button>
-                        </div>
-                        
-                        <!-- 优化选项面板 -->
-                        <div class="optimizer-panel" id="img2img-optimizerPanel" style="display: none;">
-                            <div class="optimizer-section">
-                                <label data-i18n="optimizer.img2img.effect">转换效果</label>
-                                <select id="img2img-effectSelect">
-                                    <option value="style" data-i18n="optimizer.img2img.effect.style">风格转换</option>
-                                    <option value="enhance" data-i18n="optimizer.img2img.effect.enhance">细节增强</option>
-                                    <option value="mood" data-i18n="optimizer.img2img.effect.mood">氛围调整</option>
-                                    <option value="color" data-i18n="optimizer.img2img.effect.color">色彩调整</option>
-                                    <option value="composition" data-i18n="optimizer.img2img.effect.composition">构图优化</option>
-                                </select>
-                            </div>
-                            
-                            <div class="optimizer-section">
-                                <label data-i18n="optimizer.styleLabel">艺术风格</label>
-                                <select id="img2img-styleSelect">
-                                    <option value="realistic" data-i18n="optimizer.style.realistic">写实风格</option>
-                                    <option value="anime" data-i18n="optimizer.style.anime">动漫风格</option>
-                                    <option value="oil_painting" data-i18n="optimizer.style.oil">油画风格</option>
-                                    <option value="watercolor" data-i18n="optimizer.style.watercolor">水彩风格</option>
-                                    <option value="sketch" data-i18n="optimizer.style.sketch">素描风格</option>
-                                    <option value="cyberpunk" data-i18n="optimizer.style.cyberpunk">赛博朋克</option>
-                                    <option value="fantasy" data-i18n="optimizer.style.fantasy">奇幻风格</option>
-                                    <option value="minimalist" data-i18n="optimizer.style.minimalist">极简风格</option>
-                                    <option value="vintage" data-i18n="optimizer.style.vintage">复古风格</option>
-                                    <option value="3d_render" data-i18n="optimizer.style.3d">3D渲染</option>
-                                </select>
-                            </div>
-                            
-                            <div class="optimizer-actions">
-                                <button type="button" class="optimizer-btn-small" id="img2img-applyOptimizeBtn">
-                                    <i class="fas fa-check"></i>
-                                    <span data-i18n="optimizer.apply">应用优化</span>
-                                </button>
-                                <button type="button" class="optimizer-btn-small secondary" id="img2img-cancelOptimizeBtn">
-                                    <i class="fas fa-times"></i>
-                                    <span data-i18n="optimizer.cancel">取消</span>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- 图生图模板面板 -->
-                        <div class="templates-panel" id="img2img-templatesPanel" style="display: none;">
-                            <div class="templates-header">
-                                <h4 data-i18n="optimizer.img2imgTemplatesTitle">图生图提示词模板</h4>
-                                <button class="close-btn" id="img2img-closeTemplates">×</button>
-                            </div>
-                            <div class="templates-grid" id="img2img-templatesGrid">
-                                <!-- 动态生成模板 -->
-                            </div>
-                        </div>
-                        
-                        <!-- 风格面板（复用） -->
-                        <div class="styles-panel" id="img2img-stylesPanel" style="display: none;">
-                            <div class="styles-header">
-                                <h4 data-i18n="optimizer.stylesTitle">风格预设</h4>
-                                <button class="close-btn" id="img2img-closeStyles">×</button>
-                            </div>
-                            <div class="styles-grid" id="img2img-stylesGrid">
-                                <!-- 动态生成风格 -->
-                            </div>
-                        </div>
+                        <select id="bg-preset" style="padding: 10px; font-size: 1em;">
+                            <option value="auto" data-i18n="bg.preset.auto">🤖 自动检测</option>
+                            <option value="portrait" data-i18n="bg.preset.portrait">👤 人物照片</option>
+                            <option value="product" data-i18n="bg.preset.product">📦 产品图（纯色背景）</option>
+                            <option value="pet" data-i18n="bg.preset.pet">🐱 宠物照片</option>
+                            <option value="icon" data-i18n="bg.preset.icon">🎨 图标/Logo</option>
+                            <option value="complex" data-i18n="bg.preset.complex">🌄 复杂场景</option>
+                            <option value="custom" data-i18n="bg.preset.custom">⚙️ 自定义</option>
+                        </select>
+                        <p class="hint" style="font-size: 0.85em; color: #94A3B8; margin-top: 8px;">
+                            <span data-i18n="bg.preset.hint">💡 选择图片类型可获得最佳效果</span>
+                        </p>
                     </div>
                     
-                    <!-- 图生图强度 -->
-                    <div class="input-group">
-                        <label for="img2img-strength">
-                            <i class="fas fa-sliders-h"></i>
-                            <span data-i18n="tool.img2img.strength">转换强度</span>
-                            <span class="strength-value" id="strength-value">0.5</span>
-                        </label>
-                        <input 
-                            type="range" 
-                            id="img2img-strength" 
-                            min="0.1" 
-                            max="1.0" 
-                            step="0.05" 
-                            value="0.5"
-                            class="slider"
-                        >
-                        <div class="slider-labels">
-                            <span data-i18n="tool.img2img.lowStrength">保留原图</span>
-                            <span data-i18n="tool.img2img.highStrength">大幅变化</span>
-                        </div>
-                        <p class="hint"><span data-i18n="tool.img2img.strengthHint">值越小越接近原图，值越大变化越大</span></p>
-                    </div>
-                    
-                    <!-- 基础设置 -->
-                    <div class="settings-grid">
-                        <div class="input-group">
-                            <label for="img2img-art-style">
-                                <i class="fas fa-palette"></i> <span data-i18n="tool.artStyle">艺术风格</span>
-                            </label>
-                            <select id="img2img-art-style">
-                                <option value="<auto>" data-i18n="style.auto">自动</option>
-                                <option value="<3d cartoon>" data-i18n="style.3d">3D卡通</option>
-                                <option value="<anime>" data-i18n="style.anime">动漫</option>
-                                <option value="<oil painting>" data-i18n="style.oil">油画</option>
-                                <option value="<watercolor>" data-i18n="style.watercolor">水彩</option>
-                                <option value="<sketch>" data-i18n="style.sketch">素描</option>
-                                <option value="<chinese painting>" data-i18n="style.chinese">中国画</option>
-                                <option value="<flat illustration>" data-i18n="style.flat">扁平插画</option>
-                            </select>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label for="img2img-size">
-                                <i class="fas fa-expand"></i> <span data-i18n="tool.size">图片尺寸</span>
-                            </label>
-                            <select id="img2img-size">
-                                <option value="1024x1024" data-i18n="size.square">1024×1024 (正方形)</option>
-                                <option value="1280x720" data-i18n="size.landscape">1280×720 (横版)</option>
-                                <option value="720x1280" data-i18n="size.portrait">720×1280 (竖版)</option>
-                                <option value="512x512">512×512</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- 负面提示词 -->
-                    <div class="input-group">
-                        <label for="img2img-negative-prompt">
-                            <i class="fas fa-ban"></i> <span data-i18n="tool.negativePrompt">负面提示词</span>
-                            <span class="optional" data-i18n="tool.optional">(可选)</span>
-                        </label>
-                        <textarea 
-                            id="img2img-negative-prompt" 
-                            placeholder="描述您不想要的元素..."
-                            rows="2"
-                        ></textarea>
-                    </div>
-                    
-                <!-- 生成按钮 -->
-                <button class="generate-btn-large" id="img2img-generate-btn">
-                    <i class="fas fa-wand-magic-sparkles"></i>
-                    <span data-i18n="tool.img2img.generate">开始转换</span>
-                </button>
-            </section>
-            
-            <!-- 图片输出区 -->
-            <section class="output-section">
-                <div class="output-header">
-                    <h2><i class="fas fa-image"></i> <span data-i18n="tool.output">生成结果</span></h2>
-                    <div class="output-actions">
-                        <button class="action-btn" id="img2img-download-all" disabled>
-                            <i class="fas fa-download"></i>
-                            <span data-i18n="tool.downloadAll">下载全部</span>
+                    <!-- 高级设置 -->
+                    <div class="advanced-settings" style="margin-top: 20px;">
+                        <button class="toggle-advanced" id="toggle-bg-advanced">
+                            <i class="fas fa-cog"></i> <span data-i18n="tool.advanced">高级设置</span>
+                            <i class="fas fa-chevron-down"></i>
                         </button>
-                        <button class="action-btn" id="img2img-clear-all" disabled>
-                            <i class="fas fa-trash"></i>
-                            <span data-i18n="tool.clearAll">清空全部</span>
-                        </button>
+                        <div class="advanced-panel" id="bg-advanced-panel" style="display: none;">
+                            <div class="slider-group">
+                                <label for="bg-threshold">
+                                    <i class="fas fa-adjust"></i> <span data-i18n="bg.sensitivity">敏感度</span>
+                                    <span id="bg-threshold-value">15</span>
+                                </label>
+                                <input type="range" id="bg-threshold" min="5" max="30" value="15" step="1">
+                                <div class="slider-labels">
+                                    <span data-i18n="bg.loose">宽松（保留更多）</span>
+                                    <span data-i18n="bg.strict">严格（移除更多）</span>
+                                </div>
+                                <p class="hint" style="font-size: 0.85em; color: #94A3B8; margin-top: 8px;">
+                                    <span data-i18n="bg.hint">💡 提示：当前值 = </span><span id="bg-threshold-hint">平衡模式</span>
+                                </p>
+                            </div>
+                            
+                            <div class="input-group" style="margin-top: 15px;">
+                                <label style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="checkbox" id="bg-smoothing" checked style="width: auto;">
+                                    <span><i class="fas fa-magic"></i> <span data-i18n="bg.smoothing">边缘平滑</span></span>
+                                </label>
+                                <p class="hint" style="font-size: 0.85em; color: #94A3B8; margin-top: 5px;">
+                                    <span data-i18n="bg.smoothingHint">启用后边缘更自然，但处理时间稍长</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    
+                    <!-- 处理按钮 -->
+                    <button class="generate-btn-large" id="bg-remove-process-btn" disabled>
+                        <i class="fas fa-scissors"></i>
+                        <span data-i18n="editor.bgRemover.process">移除背景</span>
+                    </button>
+                </section>
                 
-                <div id="img2img-output-grid" class="output-grid">
-                    <div class="empty-output">
-                        <i class="fas fa-image fa-3x"></i>
-                        <p data-i18n="tool.noImages">还没有生成图片</p>
-                        <p class="hint" data-i18n="tool.img2img.hint">上传图片并设置效果后，点击"开始转换"按钮</p>
+                <!-- 结果展示区 - 重新设计 -->
+                <section class="bg-result-section">
+                    <!-- 空状态 -->
+                    <div id="bg-result-empty" class="bg-result-empty">
+                        <div class="empty-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <h3 data-i18n="editor.bgRemover.empty">还没有处理图片</h3>
+                        <p data-i18n="editor.bgRemover.hint">上传图片并点击"移除背景"按钮</p>
                     </div>
-                </div>
-                
-                <div id="img2img-loading-state" class="loading-state" style="display: none;">
-                    <div class="loader"></div>
-                    <p>AI正在转换图片中...</p>
-                    <p class="loading-hint">这可能需要几秒钟时间</p>
-                </div>
-            </section>
+                    
+                    <!-- 加载状态 -->
+                    <div id="bg-loading-state" class="bg-loading-state" style="display: none;">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                        <h3 id="bg-loading-title" data-i18n="editor.bgRemover.processing">AI正在处理中...</h3>
+                        <div class="loading-progress-bar">
+                            <div class="progress-fill" id="bg-progress-bar"></div>
+                        </div>
+                        <p class="loading-hint" id="bg-loading-info" data-i18n="editor.bgRemover.processingHint">正在调用 Remove.bg AI...</p>
+                    </div>
+                    
+                    <!-- 处理结果 -->
+                    <div id="bg-compare-view" class="bg-result-display" style="display: none;">
+                        <!-- 顶部操作栏 -->
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span id="api-service-badge" class="service-badge">
+                                    <i class="fas fa-robot"></i> Remove.bg AI
+                                </span>
+                                <span id="credits-info" class="credits-badge" style="display: none;">
+                                    <i class="fas fa-coins"></i> 剩余 <strong id="credits-count">--</strong> 次
+                                </span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="result-btn download-btn" id="bg-download-btn">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                                <button class="result-btn clear-btn" id="bg-clear-btn">
+                                    <i class="fas fa-redo"></i> 重新处理
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 图片对比 -->
+                        <div class="result-compare">
+                            <div class="result-image-card">
+                                <div class="image-label">
+                                    <i class="fas fa-file-image"></i> 原图
+                                </div>
+                                <div class="image-wrapper">
+                                    <img id="bg-original-img" src="" alt="原图">
+                                </div>
+                                <div class="image-footer">
+                                    带背景的原始图片
+                                </div>
+                            </div>
+                            
+                            <div class="result-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            
+                            <div class="result-image-card processed">
+                                <div class="image-label success">
+                                    <i class="fas fa-check-circle"></i> 处理后
+                                </div>
+                                <div class="image-wrapper checkerboard">
+                                    <img id="bg-processed-img" src="" alt="处理后">
+                                </div>
+                                <div class="image-footer success">
+                                    <i class="fas fa-download"></i> PNG 透明背景
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <!-- 图生图面板结束 -->
+            <!-- 图片编辑器面板结束 -->
             
+            <!-- AI高清放大面板 -->
+            <div class="tool-panel" id="upscale-panel" style="display: none;">
+                <!-- 上传区域 -->
+                <section class="input-section">
+                    <h2><i class="fas fa-expand-arrows-alt"></i> <span data-i18n="upscale.title">AI高清放大</span></h2>
+                    
+                    <!-- 图片上传 -->
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-upload"></i> <span data-i18n="upscale.upload">上传图片</span>
+                        </label>
+                        <div class="image-upload-area" id="upscale-upload-area">
+                            <input type="file" id="upscale-image-input" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="upscale-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p><span data-i18n="editor.bgRemover.dragdrop">拖拽图片到这里</span></p>
+                                <p class="upload-hint"><span data-i18n="editor.bgRemover.or">或</span></p>
+                                <button type="button" class="upload-btn" id="upscale-select-btn">
+                                    <i class="fas fa-folder-open"></i> <span data-i18n="editor.bgRemover.select">选择图片</span>
+                                </button>
+                                <p class="upload-info"><span data-i18n="editor.bgRemover.formats">支持 JPG, PNG, WebP 格式，最大10MB</span></p>
+                            </div>
+                            <div class="image-preview" id="upscale-image-preview" style="display: none;">
+                                <img id="upscale-preview-img" src="" alt="预览">
+                                <button type="button" class="remove-image-btn" id="upscale-remove-btn">
+                                    <i class="fas fa-times"></i>
+                            </button>
+                                <div class="image-info" id="upscale-image-info"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 放大设置 -->
+                    <div class="settings-row">
+                        <div class="input-group">
+                            <label for="upscale-scale">
+                                <i class="fas fa-expand"></i> <span data-i18n="upscale.scale">放大倍数</span>
+                            </label>
+                            <select id="upscale-scale">
+                                <option value="2" data-i18n="upscale.scale2x">2x 放大（推荐）</option>
+                                <option value="3" data-i18n="upscale.scale3x">3x 放大</option>
+                                <option value="4" data-i18n="upscale.scale4x">4x 放大</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="upscale-algorithm">
+                                <i class="fas fa-cogs"></i> <span data-i18n="upscale.algorithm">放大算法</span>
+                            </label>
+                            <select id="upscale-algorithm">
+                                <option value="lanczos" data-i18n="upscale.lanczos">Lanczos（高质量）</option>
+                                <option value="superresolution" data-i18n="upscale.superres">超分辨率（最佳）</option>
+                                <option value="bicubic" data-i18n="upscale.bicubic">双三次（快速）</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- 高级选项 -->
+                    <div class="input-group" style="margin-top: 15px;">
+                        <div style="display: flex; gap: 20px;">
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="upscale-sharpen" checked style="width: auto;">
+                                <span><i class="fas fa-adjust"></i> <span data-i18n="upscale.sharpen">锐化增强</span></span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="upscale-denoise" style="width: auto;">
+                                <span><i class="fas fa-magic"></i> <span data-i18n="upscale.denoise">降噪处理</span></span>
+                            </label>
+                        </div>
+                        <p class="hint" style="font-size: 0.85em; color: #94A3B8; margin-top: 8px;">
+                            <span data-i18n="upscale.sharpenHint">💡 锐化可提升细节，降噪可减少颗粒感</span>
+                        </p>
+                    </div>
+                    
+                    <!-- 处理按钮 -->
+                    <button class="generate-btn-large" id="upscale-process-btn" disabled>
+                        <i class="fas fa-magic"></i> <span data-i18n="upscale.process">开始放大</span>
+                    </button>
+                </section>
+                
+                <!-- 结果展示区 -->
+                <section class="bg-result-section">
+                    <!-- 空状态 -->
+                    <div id="upscale-result-empty" class="bg-result-empty">
+                        <div class="empty-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <h3 data-i18n="upscale.empty">还没有处理图片</h3>
+                        <p data-i18n="upscale.hint">上传图片并点击"开始放大"按钮</p>
+                    </div>
+                    
+                    <!-- 加载状态 -->
+                    <div id="upscale-loading-state" class="bg-loading-state" style="display: none;">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                        <h3 id="upscale-loading-title" data-i18n="upscale.processing">AI正在放大图片...</h3>
+                        <div class="loading-progress-bar">
+                            <div class="progress-fill" id="upscale-progress-bar"></div>
+                        </div>
+                        <p class="loading-hint" id="upscale-loading-info">正在处理中...</p>
+                    </div>
+                    
+                    <!-- 处理结果 -->
+                    <div id="upscale-compare-view" class="bg-result-display" style="display: none;">
+                        <!-- 顶部操作栏 -->
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span id="upscale-service-badge" class="service-badge">
+                                    <i class="fas fa-desktop"></i> 浏览器端处理
+                                </span>
+                                <span class="credits-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">
+                                    <i class="fas fa-infinity"></i> 免费无限
+                                </span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="result-btn download-btn" id="upscale-download-btn">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                                <button class="result-btn clear-btn" id="upscale-clear-btn">
+                                    <i class="fas fa-redo"></i> 重新处理
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 图片对比 -->
+                        <div class="result-compare">
+                            <div class="result-image-card">
+                                <div class="image-label">
+                                    <i class="fas fa-file-image"></i> 原图
+                                </div>
+                                <div class="image-wrapper">
+                                    <img id="upscale-original-img" src="" alt="原图">
+                                </div>
+                                <div class="image-footer" id="upscale-original-info">
+                                    512 × 512 px
+                                </div>
+                            </div>
+                            
+                            <div class="result-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            
+                            <div class="result-image-card processed">
+                                <div class="image-label success">
+                                    <i class="fas fa-check-circle"></i> 放大后
+                                </div>
+                                <div class="image-wrapper">
+                                    <img id="upscale-processed-img" src="" alt="放大后">
+                                </div>
+                                <div class="image-footer success" id="upscale-processed-info">
+                                    <i class="fas fa-expand"></i> 1024 × 1024 px
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- AI高清放大面板结束 -->
+            
+            <!-- 滤镜效果面板 -->
+            <div class="tool-panel" id="filter-panel" style="display: none;">
+                <!-- 上传区域 -->
+                <section class="input-section">
+                    <h2><i class="fas fa-palette"></i> <span data-i18n="filter.title">滤镜效果</span></h2>
+                    
+                    <!-- 图片上传 -->
+                    <div class="input-group">
+                        <label><i class="fas fa-upload"></i> <span data-i18n="filter.upload">上传图片</span></label>
+                        <div class="image-upload-area" id="filter-upload-area">
+                            <input type="file" id="filter-image-input" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="filter-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p><span data-i18n="editor.bgRemover.dragdrop">拖拽图片到这里</span></p>
+                                <p class="upload-hint"><span data-i18n="editor.bgRemover.or">或</span></p>
+                                <button type="button" class="upload-btn" id="filter-select-btn">
+                                    <i class="fas fa-folder-open"></i> <span data-i18n="editor.bgRemover.select">选择图片</span>
+                                </button>
+                                <p class="upload-info"><span data-i18n="editor.bgRemover.formats">支持 JPG, PNG, WebP 格式</span></p>
+                            </div>
+                            <div class="image-preview" id="filter-image-preview" style="display: none;">
+                                <img id="filter-preview-img" src="" alt="预览">
+                                <button type="button" class="remove-image-btn" id="filter-remove-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 预设滤镜 -->
+                    <div class="input-group">
+                        <label><i class="fas fa-magic"></i> <span data-i18n="filter.presets">预设滤镜（快速应用）</span></label>
+                        <div class="filter-presets">
+                            <button class="filter-preset-btn" data-filter="grayscale">
+                                <i class="fas fa-adjust"></i> <span data-i18n="filter.grayscale">黑白</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="vintage">
+                                <i class="fas fa-camera-retro"></i> <span data-i18n="filter.vintage">复古</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="cool">
+                                <i class="fas fa-snowflake"></i> <span data-i18n="filter.cool">冷色调</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="warm">
+                                <i class="fas fa-fire"></i> <span data-i18n="filter.warm">暖色调</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="film">
+                                <i class="fas fa-film"></i> <span data-i18n="filter.film">胶片</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="sunset">
+                                <i class="fas fa-sun"></i> <span data-i18n="filter.sunset">日落</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="ocean">
+                                <i class="fas fa-water"></i> <span data-i18n="filter.ocean">海洋</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="sakura">
+                                <i class="fas fa-flower"></i> <span data-i18n="filter.sakura">樱花</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="autumn">
+                                <i class="fas fa-leaf"></i> <span data-i18n="filter.autumn">秋天</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="hdr">
+                                <i class="fas fa-sun-bright"></i> <span data-i18n="filter.hdr">HDR</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="invert">
+                                <i class="fas fa-circle-half-stroke"></i> <span data-i18n="filter.invert">反色</span>
+                            </button>
+                            <button class="filter-preset-btn" data-filter="reset">
+                                <i class="fas fa-undo"></i> <span data-i18n="filter.reset">原图</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 调节滑块 -->
+                    <div class="filter-adjustments">
+                        <div class="slider-group">
+                            <label>
+                                <i class="fas fa-sun"></i> <span data-i18n="filter.brightness">亮度</span>
+                                <span id="filter-brightness-value">0</span>
+                            </label>
+                            <input type="range" id="filter-brightness" min="-100" max="100" value="0" step="1">
+                            <div class="slider-labels">
+                                <span data-i18n="filter.dark">暗</span>
+                                <span data-i18n="filter.bright">亮</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label>
+                                <i class="fas fa-adjust"></i> <span data-i18n="filter.contrast">对比度</span>
+                                <span id="filter-contrast-value">0</span>
+                            </label>
+                            <input type="range" id="filter-contrast" min="-100" max="100" value="0" step="1">
+                            <div class="slider-labels">
+                                <span data-i18n="filter.low">低</span>
+                                <span data-i18n="filter.high">高</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label>
+                                <i class="fas fa-droplet"></i> <span data-i18n="filter.saturation">饱和度</span>
+                                <span id="filter-saturation-value">100</span>
+                            </label>
+                            <input type="range" id="filter-saturation" min="0" max="200" value="100" step="1">
+                            <div class="slider-labels">
+                                <span data-i18n="filter.bw">黑白</span>
+                                <span data-i18n="filter.vivid">鲜艳</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-group">
+                            <label>
+                                <i class="fas fa-temperature-half"></i> <span data-i18n="filter.temperature">色温</span>
+                                <span id="filter-temperature-value">0</span>
+                            </label>
+                            <input type="range" id="filter-temperature" min="-100" max="100" value="0" step="1">
+                            <div class="slider-labels">
+                                <span data-i18n="filter.cold">冷</span>
+                                <span data-i18n="filter.hot">暖</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="generate-btn-large" id="filter-apply-btn" disabled style="flex: 1;">
+                            <i class="fas fa-check"></i> <span data-i18n="filter.apply">应用滤镜</span>
+                        </button>
+                        <button class="generate-btn-large" id="filter-reset-btn" disabled style="flex: 1; background: linear-gradient(135deg, #64748b, #475569);">
+                            <i class="fas fa-undo"></i> <span data-i18n="filter.resetBtn">重置</span>
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- 结果展示区 -->
+                <section class="bg-result-section">
+                    <!-- 空状态 -->
+                    <div id="filter-result-empty" class="bg-result-empty">
+                        <div class="empty-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 data-i18n="filter.empty">还没有处理图片</h3>
+                        <p data-i18n="filter.hint">上传图片开始应用滤镜</p>
+                    </div>
+                    
+                    <!-- 实时预览 -->
+                    <div id="filter-preview-area" class="bg-result-display" style="display: none;">
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span class="service-badge" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                    <i class="fas fa-palette"></i> 实时预览
+                                </span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="result-btn download-btn" id="filter-download-btn">
+                                    <i class="fas fa-download"></i> <span data-i18n="btn.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-compare">
+                            <div class="result-image-card">
+                                <div class="image-label">
+                                    <i class="fas fa-file-image"></i> 原图
+                                </div>
+                                <div class="image-wrapper">
+                                    <img id="filter-original-img" src="" alt="原图">
+                                </div>
+                            </div>
+                            
+                            <div class="result-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            
+                            <div class="result-image-card processed">
+                                <div class="image-label success">
+                                    <i class="fas fa-magic"></i> 滤镜后
+                                </div>
+                                <div class="image-wrapper">
+                                    <img id="filter-processed-img" src="" alt="滤镜后">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- 滤镜效果面板结束 -->
+            
+            <!-- 图片裁剪面板 -->
+            <div class="tool-panel" id="crop-panel" style="display: none;">
+                <section class="input-section">
+                    <h2><i class="fas fa-crop"></i> <span data-i18n="crop.title">图片裁剪</span></h2>
+                    
+                    <div class="input-group">
+                        <label><i class="fas fa-upload"></i> <span data-i18n="crop.upload">上传图片</span></label>
+                        <div class="image-upload-area" id="crop-upload-area">
+                            <input type="file" id="crop-image-input" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="crop-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p><span data-i18n="editor.bgRemover.dragdrop">拖拽图片到这里</span></p>
+                                <p class="upload-hint"><span data-i18n="editor.bgRemover.or">或</span></p>
+                                <button type="button" class="upload-btn" id="crop-select-btn">
+                                    <i class="fas fa-folder-open"></i> <span data-i18n="editor.bgRemover.select">选择图片</span>
+                                </button>
+                            </div>
+                            <div class="image-preview" id="crop-image-preview" style="display: none;">
+                                <div style="position: relative; display: inline-block;">
+                                    <img id="crop-preview-img" src="" alt="预览" style="max-width: 100%; max-height: 400px;">
+                                    <div id="crop-box" style="position: absolute; border: 2px dashed #10b981; background: rgba(16, 185, 129, 0.1); cursor: move; display: none;"></div>
+                                </div>
+                                <button type="button" class="remove-image-btn" id="crop-remove-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div class="input-group">
+                            <label><i class="fas fa-crop-simple"></i> <span data-i18n="crop.ratio">裁剪比例</span></label>
+                            <select id="crop-ratio">
+                                <option value="free" data-i18n="crop.free">自由裁剪</option>
+                                <option value="1:1" data-i18n="crop.square">1:1 (正方形)</option>
+                                <option value="16:9">16:9 (横向)</option>
+                                <option value="9:16">9:16 (竖向)</option>
+                                <option value="4:3">4:3</option>
+                                <option value="instagram-post">Instagram 帖子</option>
+                                <option value="instagram-story">Instagram 故事</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label><i class="fas fa-ruler-combined"></i> <span data-i18n="crop.size">输出尺寸</span></label>
+                            <select id="crop-output-size">
+                                <option value="original" data-i18n="crop.keepSize">保持原尺寸</option>
+                                <option value="1024">1024px (标准)</option>
+                                <option value="2048">2048px (高清)</option>
+                                <option value="512">512px (小图)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="generate-btn-large" id="crop-process-btn" disabled>
+                        <i class="fas fa-crop"></i> <span data-i18n="crop.process">执行裁剪</span>
+                    </button>
+                </section>
+                
+                <section class="bg-result-section">
+                    <div id="crop-result-empty" class="bg-result-empty">
+                        <div class="empty-icon"><i class="fas fa-crop"></i></div>
+                        <h3 data-i18n="crop.empty">还没有裁剪图片</h3>
+                        <p data-i18n="crop.hint">上传图片开始裁剪</p>
+                    </div>
+                    
+                    <div id="crop-result-display" class="bg-result-display" style="display: none;">
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span class="service-badge"><i class="fas fa-crop"></i> <span data-i18n="crop.title">图片裁剪</span></span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="result-btn download-btn" id="crop-download-btn">
+                                    <i class="fas fa-download"></i> <span data-i18n="btn.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="result-compare">
+                            <div class="result-image-card">
+                                <div class="image-label"><i class="fas fa-file-image"></i> <span data-i18n="editor.bgRemover.original">原图</span></div>
+                                <div class="image-wrapper"><img id="crop-original-img" src="" alt="原图"></div>
+                                <div class="image-footer" id="crop-original-info">1024 × 768</div>
+                            </div>
+                            <div class="result-arrow"><i class="fas fa-arrow-right"></i></div>
+                            <div class="result-image-card processed">
+                                <div class="image-label success"><i class="fas fa-check-circle"></i> <span data-i18n="crop.cropped">裁剪后</span></div>
+                                <div class="image-wrapper"><img id="crop-processed-img" src="" alt="裁剪后"></div>
+                                <div class="image-footer success" id="crop-processed-info">1024 × 1024</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- 图片裁剪面板结束 -->
+            
+            <!-- 格式转换面板 -->
+            <div class="tool-panel" id="convert-panel" style="display: none;">
+                <section class="input-section">
+                    <h2><i class="fas fa-exchange-alt"></i> <span data-i18n="convert.title">格式转换</span></h2>
+                    
+                    <div class="input-group">
+                        <label><i class="fas fa-upload"></i> <span data-i18n="convert.upload">上传图片（支持批量）</span></label>
+                        <div class="image-upload-area" id="convert-upload-area">
+                            <input type="file" id="convert-image-input" accept="image/*" multiple style="display: none;">
+                            <div class="upload-placeholder" id="convert-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p><span data-i18n="convert.dragdrop">拖拽图片到这里（可多选）</span></p>
+                                <p class="upload-hint"><span data-i18n="editor.bgRemover.or">或</span></p>
+                                <button type="button" class="upload-btn" id="convert-select-btn">
+                                    <i class="fas fa-folder-open"></i> <span data-i18n="convert.select">选择图片（可多选）</span>
+                                </button>
+                                <p class="upload-info"><span data-i18n="convert.formats">支持 JPG, PNG, WebP</span></p>
+                            </div>
+                            <div id="convert-file-list" style="display: none; padding: 15px;">
+                                <h4><span data-i18n="convert.selected">已选择</span> <span id="convert-file-count">0</span> <span data-i18n="convert.files">张图片</span></h4>
+                                <div id="convert-files-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 10px;"></div>
+                                <button type="button" class="remove-image-btn" id="convert-clear-btn" style="position: static; margin-top: 10px;">
+                                    <i class="fas fa-times"></i> <span data-i18n="btn.clear">清空</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div class="input-group">
+                            <label><i class="fas fa-file-image"></i> <span data-i18n="convert.targetFormat">目标格式</span></label>
+                            <select id="convert-format">
+                                <option value="png" data-i18n="convert.png">PNG (无损，支持透明)</option>
+                                <option value="jpeg" data-i18n="convert.jpeg">JPEG (适合照片)</option>
+                                <option value="webp" data-i18n="convert.webp">WebP (体积小)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label><i class="fas fa-sliders-h"></i> <span data-i18n="convert.quality">质量</span></label>
+                            <select id="convert-quality">
+                                <option value="1.0" data-i18n="convert.best">最佳质量 (100%)</option>
+                                <option value="0.92" selected data-i18n="convert.high">高质量 (92%)</option>
+                                <option value="0.85" data-i18n="convert.good">良好 (85%)</option>
+                                <option value="0.75" data-i18n="convert.medium">中等 (75%)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="generate-btn-large" id="convert-process-btn" disabled>
+                        <i class="fas fa-exchange-alt"></i> <span data-i18n="convert.process">开始转换</span>
+                    </button>
+                </section>
+                
+                <section class="bg-result-section">
+                    <div id="convert-result-empty" class="bg-result-empty">
+                        <div class="empty-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <h3 data-i18n="convert.empty">还没有转换图片</h3>
+                        <p data-i18n="convert.hint">上传图片开始格式转换</p>
+                    </div>
+                    
+                    <div id="convert-progress" class="bg-loading-state" style="display: none;">
+                        <div class="loading-spinner"><div class="spinner"></div></div>
+                        <h3 id="convert-progress-title" data-i18n="convert.processing">正在转换...</h3>
+                        <div class="loading-progress-bar">
+                            <div class="progress-fill" id="convert-progress-bar"></div>
+                        </div>
+                        <p class="loading-hint" id="convert-progress-info">0 / 0</p>
+                    </div>
+                    
+                    <div id="convert-result-display" class="bg-result-display" style="display: none;">
+                        <div class="result-header">
+                            <div class="result-info">
+                                <span class="service-badge"><i class="fas fa-check"></i> <span data-i18n="convert.complete">转换完成</span></span>
+                                <span id="convert-result-count" style="margin-left: 10px; color: #10b981;"></span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="result-btn download-btn" id="convert-download-all-btn">
+                                    <i class="fas fa-download"></i> <span data-i18n="convert.downloadAll">下载全部</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="convert-results-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;"></div>
+                    </div>
+                </section>
+            </div>
+            <!-- 格式转换面板结束 -->
         </main>
     </div>
 
@@ -719,18 +1203,37 @@
                 <span>•</span>
                 <a href="pages/contact.html" data-i18n="footer.contact">联系我们</a>
             </div>
-            <p class="copyright">© 2025 • AI图片生成器. 保留所有权利.</p>
+            <p class="copyright">© 2025 • <span data-i18n="nav.brand">AI图片生成器</span>. <span data-i18n="footer.rights">保留所有权利</span>.</p>
         </div>
     </footer>
 
-    <script src="js/config.js"></script>
-    <script src="js/performance.js" defer></script>
-    <script src="js/lazy-load.js" defer></script>
-    <script src="js/i18n.js?v=2"></script>
-    <script src="js/tongyi-api.js?v=2"></script>
-    <script src="js/api-config.js?v=2"></script>
-    <script src="js/prompt-optimizer.js?v=2"></script>
-    <script src="js/tool.js?v=2"></script>
-    <script src="js/img2img.js?v=1"></script>
+    <script src="js/config.js?v=20251023i"></script>
+    <script src="js/performance.js?v=20251023i" defer></script>
+    <script src="js/lazy-load.js?v=20251023i" defer></script>
+    <script src="js/i18n.js?v=20251023i"></script>
+    <script src="js/tongyi-api.js?v=20251023i"></script>
+    <script src="js/api-config.js?v=20251023i"></script>
+    <script src="js/prompt-optimizer.js?v=20251023i"></script>
+    <script src="js/tool.js?v=20251023i"></script>
+    <!-- 背景移除功能 -->
+    <script src="js/bg-remover-ai.js?v=20251023Final"></script>
+    <script src="js/background-remover-init.js?v=20251023Final"></script>
+    <!-- AI高清放大功能 -->
+    <script src="js/image-upscaler.js?v=20251023Final"></script>
+    <script src="js/upscaler-init.js?v=20251023Final"></script>
+    <!-- 滤镜效果功能 -->
+    <script src="js/image-filter.js?v=20251023Final"></script>
+    <script src="js/filter-init.js?v=20251023Final"></script>
+    <!-- 图片裁剪功能 -->
+    <script src="js/image-cropper.js?v=20251023Final"></script>
+    <script src="js/cropper-init.js?v=20251023Final"></script>
+    <!-- 格式转换功能（支持批量）-->
+    <script src="js/image-converter.js?v=20251023Final"></script>
+    <script src="js/converter-init.js?v=20251023Final"></script>
+    <script src="js/batch-processor.js?v=20251023Final"></script>
+    <!-- 新功能多语言翻译 -->
+    <script src="js/i18n-new-features.js?v=20251023Final"></script>
+    <!-- 图片查看功能 -->
+    <script src="js/image-viewer.js?v=20251023Final"></script>
 </body>
 </html>

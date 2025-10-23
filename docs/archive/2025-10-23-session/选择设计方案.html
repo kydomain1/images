@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 选择您喜欢的设计方案</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .option {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .option:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+        .option h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .recommended {
+            background: #10b981;
+            color: white;
+        }
+        .compact {
+            background: #3b82f6;
+            color: white;
+        }
+        .simple {
+            background: #f59e0b;
+            color: white;
+        }
+        .preview-box {
+            background: #1a202c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .features li {
+            padding: 8px 0;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .features li::before {
+            content: '✅';
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 选择您喜欢的设计方案</h1>
+        
+        <div class="options">
+            <!-- 方案 1：当前版本 -->
+            <div class="option" onclick="applyDesign('current')">
+                <span class="badge recommended">✨ 当前版本</span>
+                <h2>深色面板 + 动画</h2>
+                <div class="preview-box">
+                    <div>
+                        原图 ➡️ 处理后<br>
+                        <small style="color: #94a3b8;">带动画效果</small>
+                    </div>
+                </div>
+                <ul class="features">
+                    <li>深色渐变背景面板</li>
+                    <li>中间大箭头动画</li>
+                    <li>图片发光效果</li>
+                    <li>间距: 1.5rem</li>
+                </ul>
+                <button class="btn">保持当前设计</button>
+            </div>
+            
+            <!-- 方案 2：紧凑版 -->
+            <div class="option" onclick="applyDesign('compact')">
+                <span class="badge compact">📐 紧凑布局</span>
+                <h2>精简间距 + 小箭头</h2>
+                <div class="preview-box">
+                    <div>
+                        原图 → 处理后<br>
+                        <small style="color: #94a3b8;">更紧凑</small>
+                    </div>
+                </div>
+                <ul class="features">
+                    <li>深色面板背景</li>
+                    <li>小箭头图标</li>
+                    <li>紧凑布局</li>
+                    <li>间距: 1rem</li>
+                </ul>
+                <button class="btn">使用紧凑版</button>
+            </div>
+            
+            <!-- 方案 3：卡片式 -->
+            <div class="option" onclick="applyDesign('card')">
+                <span class="badge simple">🎴 卡片式</span>
+                <h2>独立卡片布局</h2>
+                <div class="preview-box">
+                    <div>
+                        [原图卡片] [处理后卡片]<br>
+                        <small style="color: #94a3b8;">无分隔线</small>
+                    </div>
+                </div>
+                <ul class="features">
+                    <li>每张图片独立卡片</li>
+                    <li>无中间分隔线</li>
+                    <li>卡片悬停效果</li>
+                    <li>最简洁</li>
+                </ul>
+                <button class="btn">使用卡片式</button>
+            </div>
+        </div>
+        
+        <div style="background: white; padding: 30px; border-radius: 16px; margin-top: 30px; text-align: center;">
+            <h2 style="color: #1e293b; margin-bottom: 20px;">或者告诉我您的具体需求</h2>
+            <p style="color: #64748b; margin-bottom: 20px;">例如：</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea;">间距更小</strong><br>
+                    <small style="color: #94a3b8;">0.5rem - 1rem</small>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea;">图片更大</strong><br>
+                    <small style="color: #94a3b8;">占满容器宽度</small>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea;">上下布局</strong><br>
+                    <small style="color: #94a3b8;">垂直排列</small>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong style="color: #667eea;">去掉动画</strong><br>
+                    <small style="color: #94a3b8;">静态展示</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function applyDesign(type) {
+            const messages = {
+                current: '将保持当前设计（深色面板 + 动画效果）',
+                compact: '将应用紧凑版设计（小箭头 + 1rem间距）',
+                card: '将应用卡片式设计（独立卡片 + 无分隔线）'
+            };
+            
+            if (confirm(messages[type] + '\n\n是否继续？')) {
+                // 这里可以通过修改CSS文件来应用不同的设计
+                alert('设计方案：' + type + '\n\n请告诉 AI 助手应用此设计');
+            }
+        }
+    </script>
+</body>
+</html>
+

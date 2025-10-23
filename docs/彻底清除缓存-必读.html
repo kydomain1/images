@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 彻底清除缓存 - 必读！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+        
+        .fire {
+            font-size: 100px;
+            animation: fire 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes fire {
+            from { transform: scale(1) rotate(-5deg); }
+            to { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(255, 107, 107, 0.4);
+            border: 3px solid #ff8787;
+        }
+        
+        .warning-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .warning-content {
+            font-size: 20px;
+            line-height: 1.8;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .problem {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+            color: #1a1a2e;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(254, 202, 87, 0.4);
+        }
+        
+        .problem-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .problem-list {
+            font-size: 18px;
+            line-height: 2;
+            list-style: none;
+        }
+        
+        .problem-list li {
+            padding: 10px;
+            background: rgba(255,255,255,0.3);
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+        
+        .solution {
+            background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(72, 219, 251, 0.4);
+        }
+        
+        .solution-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .method {
+            background: rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #fff;
+        }
+        
+        .method-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .method-steps {
+            font-size: 18px;
+            line-height: 2;
+            padding-left: 20px;
+        }
+        
+        .keyboard {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #feca57;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 5px;
+            box-shadow: 0 4px 0 #000, 0 0 20px rgba(254, 202, 87, 0.5);
+            border: 2px solid #feca57;
+        }
+        
+        .big-button {
+            display: block;
+            width: 100%;
+            padding: 30px;
+            font-size: 32px;
+            background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 10px 40px rgba(95, 39, 205, 0.5);
+            border: 3px solid #6c5ce7;
+        }
+        
+        .big-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(95, 39, 205, 0.7);
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f27cd 100%);
+        }
+        
+        .success {
+            background: linear-gradient(135deg, #00d2d3 0%, #54a0ff 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 210, 211, 0.4);
+        }
+        
+        .success-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .checklist {
+            text-align: left;
+            display: inline-block;
+            font-size: 20px;
+            line-height: 2.5;
+            list-style: none;
+        }
+        
+        .checklist li:before {
+            content: "✅ ";
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="fire">🔥</div>
+            <h1>彻底清除缓存</h1>
+            <p style="font-size: 24px; color: #feca57;">必须执行！否则无法看到最新代码！</p>
+        </div>
+        
+        <div class="warning-box">
+            <div class="warning-title">
+                <span>⚠️</span>
+                <span>检测到严重缓存问题</span>
+            </div>
+            <div class="warning-content">
+6 个 preload 警告<br>
+图生图显示"模拟效果"<br>
+浏览器正在使用旧版HTML/CSS/JS<br>
+<br>
+<strong style="color: #feca57; font-size: 24px;">您看到的代码可能是几个版本之前的！</strong>
+            </div>
+        </div>
+        
+        <div class="problem">
+            <div class="problem-title">❌ 当前您看到的（错误的）：</div>
+            <ul class="problem-list">
+                <li>⚠️ 6个资源的 preload 警告</li>
+                <li>😢 图生图显示"图生图结果 1"（模拟数据）</li>
+                <li>⚠️ 各种性能警告</li>
+                <li>📦 旧版本的代码和样式</li>
+            </ul>
+        </div>
+        
+        <div class="solution">
+            <div class="solution-title">✅ 终极解决方案</div>
+            
+            <div class="method">
+                <div class="method-title">
+                    <span style="font-size: 36px;">1️⃣</span>
+                    <span>完全关闭浏览器</span>
+                </div>
+                <div class="method-steps">
+                    1. 关闭所有浏览器窗口和标签页<br>
+                    2. 确保浏览器进程完全退出<br>
+                    3. 等待5秒
+                </div>
+            </div>
+            
+            <div class="method">
+                <div class="method-title">
+                    <span style="font-size: 36px;">2️⃣</span>
+                    <span>重新打开 + 强制刷新</span>
+                </div>
+                <div class="method-steps">
+                    1. 重新打开浏览器<br>
+                    2. 访问：http://localhost:3000/tool.html<br>
+                    3. <strong style="color: #feca57; font-size: 24px;">立即按</strong>
+                    <span class="keyboard pulse">Ctrl</span> 
+                    <strong style="font-size: 28px;">+</strong> 
+                    <span class="keyboard pulse">F5</span>
+                </div>
+            </div>
+            
+            <div class="method">
+                <div class="method-title">
+                    <span style="font-size: 36px;">3️⃣</span>
+                    <span>或使用无痕模式（推荐！）</span>
+                </div>
+                <div class="method-steps">
+                    Chrome/Edge: 
+                    <span class="keyboard">Ctrl</span> + 
+                    <span class="keyboard">Shift</span> + 
+                    <span class="keyboard">N</span><br>
+                    Firefox: 
+                    <span class="keyboard">Ctrl</span> + 
+                    <span class="keyboard">Shift</span> + 
+                    <span class="keyboard">P</span><br>
+                    <br>
+                    <strong style="color: #feca57;">无痕模式不会有任何缓存！</strong>
+                </div>
+            </div>
+        </div>
+        
+        <button class="big-button" onclick="openFresh()">
+            🚀 在新窗口打开（带时间戳）
+        </button>
+        
+        <div class="success">
+            <div class="success-title">✅ 成功后您会看到：</div>
+            <ul class="checklist">
+                <li>没有任何 preload 警告</li>
+                <li>图生图生成真实的AI图片</li>
+                <li>所有资源版本号：v=20251022</li>
+                <li>页面加载速度更快</li>
+                <li>所有功能正常工作</li>
+            </ul>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; text-align: center; margin-top: 40px;">
+            <p style="font-size: 24px; margin-bottom: 20px;">💡 <strong>为什么要这样做？</strong></p>
+            <p style="font-size: 18px; line-height: 1.8;">
+                浏览器会缓存HTML、CSS、JS文件。<br>
+                即使我们更新了代码和版本号，<br>
+                <strong style="color: #feca57;">浏览器可能还在使用缓存的旧HTML</strong>，<br>
+                而旧HTML中引用的还是旧版本的CSS/JS！<br>
+                <br>
+                解决方法：<br>
+                <strong style="color: #48dbfb; font-size: 22px;">完全关闭浏览器 + 强制刷新</strong><br>
+                或<br>
+                <strong style="color: #48dbfb; font-size: 22px;">使用无痕模式（最可靠）</strong>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        function openFresh() {
+            // 使用毫秒级时间戳作为唯一标识
+            const timestamp = new Date().getTime();
+            const url = `/tool.html?v=${timestamp}&nocache=${Math.random()}`;
+            
+            // 在新窗口打开
+            const newWindow = window.open(url, '_blank');
+            
+            // 延迟提示
+            setTimeout(() => {
+                alert(
+                    '✅ 新窗口已打开！\n\n' +
+                    '🔥 重要提示：\n' +
+                    '1. 请在新窗口立即按 Ctrl+F5\n' +
+                    '2. 或者关闭所有窗口重新打开\n' +
+                    '3. 或者使用无痕模式（最可靠）\n\n' +
+                    '💡 无痕模式快捷键：\n' +
+                    'Chrome/Edge: Ctrl+Shift+N\n' +
+                    'Firefox: Ctrl+Shift+P'
+                );
+            }, 500);
+        }
+        
+        // 页面加载时显示提示
+        window.onload = function() {
+            console.clear();
+            console.log('%c🔥 严重缓存问题！', 'font-size: 40px; color: #ff6b6b; font-weight: bold; text-shadow: 2px 2px 4px #000;');
+            console.log('%c必须清除缓存！', 'font-size: 30px; color: #feca57; font-weight: bold;');
+            console.log('%c推荐：使用无痕模式', 'font-size: 24px; color: #48dbfb; font-weight: bold;');
+            console.log('%cChrome/Edge: Ctrl+Shift+N', 'font-size: 20px; color: #00d2d3;');
+            console.log('%cFirefox: Ctrl+Shift+P', 'font-size: 20px; color: #00d2d3;');
+        };
+    </script>
+</body>
+</html>
+

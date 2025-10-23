@@ -10,14 +10,69 @@
     <meta name="keywords" content="AI图片生成,AI绘画,文字转图片,免费AI作画,在线图片生成器,AI艺术创作">
     <meta name="author" content="AI图片生成器">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:title" content="AI图片生成器 - 免费在线AI绘画工具">
+    <meta property="og:description" content="免费的AI图片生成器，支持文字转图片、多种艺术风格。快速创建高质量AI绘画，无需注册，永久免费。">
+    <meta property="og:image" content="/assets/og-image.svg">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="/">
+    <meta name="twitter:title" content="AI图片生成器 - 免费在线AI绘画工具">
+    <meta name="twitter:description" content="免费的AI图片生成器，支持文字转图片、多种艺术风格">
+    <meta name="twitter:image" content="/assets/og-image.svg">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/language-switcher.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://image.pollinations.ai">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/style.css?v=20251022">
+    <link rel="stylesheet" href="css/language-switcher.css?v=20251022">
+    
+    <!-- Font Awesome 异步加载（避免阻塞渲染） -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AI图片生成器",
+      "applicationCategory": "MultimediaApplication",
+      "description": "免费的AI图片生成器，支持文字转图片、多种艺术风格。快速创建高质量AI绘画，无需注册，永久免费。",
+      "url": "/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "CNY"
+      },
+      "featureList": [
+        "文字转图片",
+        "多种艺术风格",
+        "AI提示词优化",
+        "图生图功能",
+        "历史记录管理"
+      ],
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "author": {
+        "@type": "Organization",
+        "name": "AI图片生成器"
+      }
+    }
+    </script>
+    
     <style>
         /* 语言切换器集成到导航栏 */
         .nav-menu {
@@ -217,7 +272,8 @@
     </footer>
 
     <!-- 多语言支持脚本 -->
-    <script src="js/i18n.js"></script>
+    <script src="js/config.js?v=20251022"></script>
+    <script src="js/i18n.js?v=20251022"></script>
     
     <!-- 语言切换器脚本 -->
     <script>
@@ -272,6 +328,6 @@
     });
     </script>
     
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=20251022"></script>
 </body>
 </html>

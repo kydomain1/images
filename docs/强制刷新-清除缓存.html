@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除缓存并重新加载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .message {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        
+        .steps {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .step-desc {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
+        }
+        
+        .keyboard {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 0 3px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #856404;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            color: #155724;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🔄</div>
+        <h1>浏览器缓存问题</h1>
+        
+        <div class="warning">
+            <strong>⚠️ 检测到旧缓存</strong><br>
+            您看到的"图生图结果 1"是旧版本的代码。<br>
+            新版本已经移除了这个模拟效果。
+        </div>
+        
+        <div class="message">
+            请按照以下步骤清除缓存：
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">关闭当前页面</div>
+                <div class="step-desc">关闭所有 tool.html 标签页</div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">强制刷新</div>
+                <div class="step-desc">
+                    Windows: 按 <span class="keyboard">Ctrl</span> + <span class="keyboard">F5</span><br>
+                    Mac: 按 <span class="keyboard">Cmd</span> + <span class="keyboard">Shift</span> + <span class="keyboard">R</span>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">或清空缓存</div>
+                <div class="step-desc">
+                    按 <span class="keyboard">F12</span> → 右键点击刷新按钮 → "清空缓存并硬性重新加载"
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-primary" onclick="openToolPage()">
+                🚀 打开工具页面
+            </button>
+            <button class="btn-secondary" onclick="openTestPage()">
+                🧪 打开测试页面
+            </button>
+        </div>
+        
+        <div class="success" id="success">
+            ✅ 页面已在新标签打开！<br>
+            记得按 <span class="keyboard">Ctrl + F5</span> 强制刷新！
+        </div>
+    </div>
+    
+    <script>
+        function openToolPage() {
+            // 添加时间戳强制刷新
+            const timestamp = new Date().getTime();
+            window.open(`/tool.html?t=${timestamp}`, '_blank');
+            
+            document.getElementById('success').style.display = 'block';
+            
+            setTimeout(() => {
+                alert('页面已打开！\n\n请在新页面按 Ctrl+F5 强制刷新！');
+            }, 500);
+        }
+        
+        function openTestPage() {
+            window.open('/test-img2img-direct.html', '_blank');
+            
+            document.getElementById('success').style.display = 'block';
+            
+            setTimeout(() => {
+                alert('测试页面已打开！\n\n这个页面直接测试 Pollinations.ai，不受缓存影响。');
+            }, 500);
+        }
+        
+        // 页面加载时的提示
+        window.onload = function() {
+            console.log('%c⚠️ 检测到浏览器缓存问题', 'font-size: 20px; color: #f44336; font-weight: bold;');
+            console.log('%c当前版本：img2img.js v3', 'font-size: 16px; color: #4CAF50;');
+            console.log('%c请按 Ctrl+F5 强制刷新！', 'font-size: 16px; color: #2196F3; font-weight: bold;');
+        };
+    </script>
+</body>
+</html>
+
