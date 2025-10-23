@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.local
+npm-debug.log
+.DS_Store
+docs/archive
+test
+uploads/*
+!uploads/.gitkeep
+*.md
+scripts/*.bat
+.vercel
+.now
+
