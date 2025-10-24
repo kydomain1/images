@@ -6,5 +6,3 @@ test
 uploads
 scripts
 .git
-*.md
-!README.md
