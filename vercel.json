@@ -2,14 +2,48 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "name": "ai-image-tools",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/tongyi/generate",
-      "destination": "/api/tongyi-generate.js"
+      "src": "*.html",
+      "use": "@vercel/static"
     },
     {
-      "source": "/api/remove-bg",
-      "destination": "/api/remove-bg.js"
+      "src": "pages/**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.{png,svg,ico,txt,xml}",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/tongyi/generate",
+      "dest": "/api/tongyi-generate.js"
+    },
+    {
+      "src": "/api/remove-bg",
+      "dest": "/api/remove-bg.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ],
   "functions": {
