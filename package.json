@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server-with-r2.js",
     "dev": "node server-with-r2.js",
-    "build": "npm install",
-    "vercel-build": "echo 'No build required for static site'"
+    "build": "echo 'Static site - no build needed'",
+    "vercel-build": "echo 'Static site - no build needed'"
   },
   "keywords": [
     "ai",
