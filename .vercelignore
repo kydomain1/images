@@ -3,12 +3,15 @@ node_modules
 .env.local
 npm-debug.log
 .DS_Store
-docs/archive
+docs
 test
-uploads/*
-!uploads/.gitkeep
-*.md
-scripts/*.bat
+uploads
+scripts
 .vercel
 .now
+*.bat
+*.txt
+*.md
+README.md
+ClipDrop集成完成-立即测试.txt
 
