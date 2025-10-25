@@ -4,7 +4,7 @@
 const API_CONFIG = {
     // 选择使用的API服务
     // 可选值: 'huggingface', 'craiyon', 'deepai', 'stability', 'pollinations', 'tongyi'
-    provider: 'tongyi', // 使用通义万相API（已配置API Key + R2存储）
+    provider: 'pollinations', // 使用Pollinations.ai（完全免费，无需API Key）
     
     // Hugging Face配置
     huggingface: {
