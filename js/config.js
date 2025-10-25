@@ -31,7 +31,7 @@
                 window.location.origin + '/api',
             
             // 各个API端点
-            tongyi: '/tongyi/generate',
+            tongyi: '/tongyi-generate',
             contact: '/contact',
             health: '/health'
         },
