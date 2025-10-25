@@ -44,8 +44,12 @@ class TongyiWanxiangAPI {
         const artStyle = styleMap[style] || '<auto>';
         
         try {
-            // 通过本地代理服务器调用API
-            const response = await fetch('http://localhost:3000/api/tongyi/generate', {
+            // 通过API服务器调用（自动检测开发/生产环境）
+            const apiURL = typeof APP_CONFIG !== 'undefined' ? 
+                APP_CONFIG.getApiURL('tongyi') : 
+                '/api/tongyi/generate';
+            
+            const response = await fetch(apiURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -78,7 +82,12 @@ class TongyiWanxiangAPI {
             
             // 提供友好的错误提示
             if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                throw new Error('无法连接到服务器！\n\n请确保：\n1. 已启动后端服务器（双击"启动服务器.bat"）\n2. 服务器运行在 http://localhost:3000\n3. 通过 http://localhost:3000/tool.html 访问本页面');
+                const isLocal = typeof APP_CONFIG !== 'undefined' && APP_CONFIG.isDevelopment;
+                if (isLocal) {
+                    throw new Error('无法连接到本地服务器！\n\n请确保：\n1. 已启动后端服务器（双击"启动服务器.bat"）\n2. 服务器运行在 http://localhost:3000\n3. 通过 http://localhost:3000/tool.html 访问本页面');
+                } else {
+                    throw new Error('API请求失败，请检查网络连接或稍后重试。');
+                }
             }
             
             throw new Error(`图片生成失败: ${error.message}`);
