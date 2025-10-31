@@ -1,0 +1,9 @@
+# Cloudflare Pages 重定向配置
+
+# API路由
+/api/tongyi-generate  /functions/tongyi-generate  200
+/api/remove-bg        /functions/remove-bg        200
+
+# SPA fallback
+/*    /index.html   200
+

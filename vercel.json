@@ -1,5 +1,8 @@
 {
   "functions": {
+    "api/tongyi-generate.js": {
+      "maxDuration": 60
+    },
     "api/**/*.js": {
       "maxDuration": 30
     }
