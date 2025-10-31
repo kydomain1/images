@@ -1,12 +1,4 @@
-# Cloudflare Pages 重定向配置
-
-# 注意：functions/api/ 目录下的文件会自动映射为 /api/* 路由
-# 例如：functions/api/tongyi-generate.js → /api/tongyi-generate
-
-# HTML页面
-/tool     /tool.html    200
-/about    /pages/about.html  200
-/contact  /pages/contact.html  200
-/privacy  /pages/privacy.html  200
-/terms    /pages/terms.html    200
+# Cloudflare Pages 简化配置
+# Functions 自动映射: functions/api/xxx.js → /api/xxx
+# 静态文件自动处理，无需配置
 
