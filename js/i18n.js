@@ -2911,8 +2911,8 @@ const translations = {
     }
 };
 
-// 当前语言
-let currentLang = localStorage.getItem('language') || 'zh-CN';
+// 当前语言 - 默认英文
+let currentLang = localStorage.getItem('language') || 'en';
 
 // 翻译函数 - 优化的回退逻辑
 function t(key, defaultValue = '') {
