@@ -1,9 +1,12 @@
 # Cloudflare Pages 重定向配置
 
-# API路由
-/api/tongyi-generate  /functions/tongyi-generate  200
-/api/remove-bg        /functions/remove-bg        200
+# 注意：functions/api/ 目录下的文件会自动映射为 /api/* 路由
+# 例如：functions/api/tongyi-generate.js → /api/tongyi-generate
 
-# SPA fallback
-/*    /index.html   200
+# HTML页面
+/tool     /tool.html    200
+/about    /pages/about.html  200
+/contact  /pages/contact.html  200
+/privacy  /pages/privacy.html  200
+/terms    /pages/terms.html    200
 
