@@ -245,6 +245,14 @@ const translations = {
         'suggest.sakura': '樱花街道',
         'suggest.dragon': '东方神龙',
         
+        // 推荐提示词完整文本
+        'suggest.catPrompt': '一只可爱的橘猫坐在窗台上，阳光洒在它的身上，油画风格，细节丰富',
+        'suggest.cityPrompt': '未来主义城市景观，赛博朋克风格，霓虹灯，夜晚，高楼大厦，科幻感',
+        'suggest.forestPrompt': '梦幻森林，魔法氛围，发光的蘑菇，仙女，奇幻风格，柔和光线',
+        'suggest.spacePrompt': '宇宙星空，星云，行星，深邃的太空，壮观的宇宙景象，超现实主义',
+        'suggest.sakuraPrompt': '日本樱花盛开的街道，春天，粉色花瓣飘落，传统建筑，动漫风格',
+        'suggest.dragonPrompt': '古代龙，威武雄壮，东方神话风格，云雾缭绕，金色鳞片',
+        
         // 选项翻译
         'option.count1': '1张图片',
         'option.count2': '2张图片',
@@ -651,6 +659,14 @@ const translations = {
         'suggest.space': 'Cosmic Space',
         'suggest.sakura': 'Sakura Street',
         'suggest.dragon': 'Eastern Dragon',
+        
+        // Suggested Prompt Texts
+        'suggest.catPrompt': 'A cute orange cat sitting on a windowsill, sunlight shining on it, oil painting style, highly detailed',
+        'suggest.cityPrompt': 'Futuristic cityscape, cyberpunk style, neon lights, nighttime, skyscrapers, sci-fi atmosphere',
+        'suggest.forestPrompt': 'Dreamy forest, magical atmosphere, glowing mushrooms, fairies, fantasy style, soft lighting',
+        'suggest.spacePrompt': 'Cosmic space, nebula, planets, deep space, spectacular universe view, surrealism',
+        'suggest.sakuraPrompt': 'Japanese street with blooming cherry blossoms, spring, pink petals falling, traditional architecture, anime style',
+        'suggest.dragonPrompt': 'Ancient dragon, majestic and powerful, Eastern mythology style, surrounded by clouds and mist, golden scales',
         
         // Option Translations
         'option.count1': '1 Image',
@@ -3314,6 +3330,14 @@ function updatePageLanguage() {
         const key = element.getAttribute('data-i18n-placeholder');
         const text = t(key);
         element.placeholder = text;
+    });
+    
+    // 更新带有data-i18n-prompt属性的元素（用于推荐提示词按钮）
+    document.querySelectorAll('[data-i18n-prompt]').forEach(element => {
+        const key = element.getAttribute('data-i18n-prompt');
+        const text = t(key);
+        element.setAttribute('data-prompt', text);
+        console.log(`[i18n] 更新提示词: ${key} = ${text.substring(0, 50)}...`);
     });
     
     // 更新带有data-i18n-html属性的元素（支持HTML）
