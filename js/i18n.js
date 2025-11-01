@@ -3009,8 +3009,208 @@ const translations = {
     }
 };
 
-// 当前语言 - 默认英文
-let currentLang = localStorage.getItem('language') || 'en';
+// 国家代码到语言的映射表
+const countryToLanguage = {
+    // 中文区域
+    'CN': 'zh',      // 中国大陆
+    'TW': 'zh-tw',   // 台湾
+    'HK': 'zh-tw',   // 香港
+    'MO': 'zh-tw',   // 澳门
+    'SG': 'zh',      // 新加坡（简体中文）
+    
+    // 日语区域
+    'JP': 'ja',      // 日本
+    
+    // 韩语区域
+    'KR': 'ko',      // 韩国
+    
+    // 西班牙语区域
+    'ES': 'es',      // 西班牙
+    'MX': 'es',      // 墨西哥
+    'AR': 'es',      // 阿根廷
+    'CO': 'es',      // 哥伦比亚
+    'CL': 'es',      // 智利
+    'PE': 'es',      // 秘鲁
+    'VE': 'es',      // 委内瑞拉
+    'EC': 'es',      // 厄瓜多尔
+    'GT': 'es',      // 危地马拉
+    'CU': 'es',      // 古巴
+    'BO': 'es',      // 玻利维亚
+    'DO': 'es',      // 多米尼加
+    'HN': 'es',      // 洪都拉斯
+    'PY': 'es',      // 巴拉圭
+    'SV': 'es',      // 萨尔瓦多
+    'NI': 'es',      // 尼加拉瓜
+    'CR': 'es',      // 哥斯达黎加
+    'PA': 'es',      // 巴拿马
+    'UY': 'es',      // 乌拉圭
+    
+    // 法语区域
+    'FR': 'fr',      // 法国
+    'BE': 'fr',      // 比利时
+    'CH': 'fr',      // 瑞士
+    'CA': 'fr',      // 加拿大（部分）
+    'LU': 'fr',      // 卢森堡
+    'MC': 'fr',      // 摩纳哥
+    
+    // 德语区域
+    'DE': 'de',      // 德国
+    'AT': 'de',      // 奥地利
+    'LI': 'de',      // 列支敦士登
+    
+    // 葡萄牙语区域
+    'PT': 'pt',      // 葡萄牙
+    'BR': 'pt',      // 巴西
+    'AO': 'pt',      // 安哥拉
+    'MZ': 'pt',      // 莫桑比克
+    
+    // 俄语区域
+    'RU': 'ru',      // 俄罗斯
+    'BY': 'ru',      // 白俄罗斯
+    'KZ': 'ru',      // 哈萨克斯坦
+    'KG': 'ru',      // 吉尔吉斯斯坦
+    
+    // 阿拉伯语区域
+    'SA': 'ar',      // 沙特阿拉伯
+    'AE': 'ar',      // 阿联酋
+    'EG': 'ar',      // 埃及
+    'IQ': 'ar',      // 伊拉克
+    'JO': 'ar',      // 约旦
+    'KW': 'ar',      // 科威特
+    'LB': 'ar',      // 黎巴嫩
+    'OM': 'ar',      // 阿曼
+    'QA': 'ar',      // 卡塔尔
+    'SY': 'ar',      // 叙利亚
+    'YE': 'ar',      // 也门
+    'BH': 'ar',      // 巴林
+    'PS': 'ar',      // 巴勒斯坦
+    'LY': 'ar',      // 利比亚
+    'TN': 'ar',      // 突尼斯
+    'DZ': 'ar',      // 阿尔及利亚
+    'MA': 'ar',      // 摩洛哥
+    
+    // 意大利语区域
+    'IT': 'it',      // 意大利
+    'SM': 'it',      // 圣马力诺
+    'VA': 'it',      // 梵蒂冈
+    
+    // 土耳其语区域
+    'TR': 'tr',      // 土耳其
+    'CY': 'tr',      // 塞浦路斯（部分）
+    
+    // 英语区域（最后匹配）
+    'US': 'en',      // 美国
+    'GB': 'en',      // 英国
+    'AU': 'en',      // 澳大利亚
+    'NZ': 'en',      // 新西兰
+    'IE': 'en',      // 爱尔兰
+    'ZA': 'en',      // 南非
+    'IN': 'en',      // 印度
+    'PH': 'en',      // 菲律宾
+};
+
+// IP检测语言函数
+async function detectLanguageByIP() {
+    try {
+        // 使用免费的IP地理位置API
+        const response = await fetch('https://ipapi.co/json/', {
+            timeout: 3000 // 3秒超时
+        });
+        
+        if (!response.ok) {
+            throw new Error('IP detection failed');
+        }
+        
+        const data = await response.json();
+        const countryCode = data.country_code;
+        
+        // 根据国家代码获取语言
+        if (countryCode && countryToLanguage[countryCode]) {
+            console.log(`🌍 IP检测: 国家=${countryCode}, 语言=${countryToLanguage[countryCode]}`);
+            return countryToLanguage[countryCode];
+        }
+        
+        return null;
+    } catch (error) {
+        console.warn('IP语言检测失败，将使用浏览器语言:', error);
+        return null;
+    }
+}
+
+// 从浏览器语言获取最佳匹配的语言
+function getBrowserLanguage() {
+    const browserLang = navigator.language || navigator.userLanguage;
+    
+    // 完全匹配
+    if (translations[browserLang]) {
+        return browserLang;
+    }
+    
+    // 尝试匹配语言代码（不含地区）
+    const langCode = browserLang.split('-')[0];
+    
+    // 特殊处理中文
+    if (langCode === 'zh') {
+        if (browserLang.includes('TW') || browserLang.includes('HK') || browserLang.includes('MO')) {
+            return 'zh-tw';
+        }
+        return 'zh';
+    }
+    
+    // 其他语言直接使用语言代码
+    if (translations[langCode]) {
+        return langCode;
+    }
+    
+    return null;
+}
+
+// 初始化语言（带IP检测）
+async function initLanguage() {
+    // 1. 优先使用用户保存的语言偏好
+    const savedLang = localStorage.getItem('language');
+    if (savedLang && translations[savedLang]) {
+        currentLang = savedLang;
+        console.log('✅ 使用保存的语言:', savedLang);
+        return savedLang;
+    }
+    
+    // 2. 检查是否已经进行过IP检测
+    const ipDetected = localStorage.getItem('ipDetected');
+    if (!ipDetected) {
+        // 首次访问，进行IP检测
+        const ipLang = await detectLanguageByIP();
+        
+        if (ipLang && translations[ipLang]) {
+            currentLang = ipLang;
+            localStorage.setItem('ipDetected', 'true'); // 标记已检测
+            localStorage.setItem('language', ipLang);   // 保存检测到的语言
+            console.log('🌍 使用IP检测的语言:', ipLang);
+            return ipLang;
+        }
+        
+        // 标记已尝试检测（即使失败）
+        localStorage.setItem('ipDetected', 'true');
+    }
+    
+    // 3. IP检测失败或已检测过，使用浏览器语言
+    const browserLang = getBrowserLanguage();
+    if (browserLang) {
+        currentLang = browserLang;
+        localStorage.setItem('language', browserLang);
+        console.log('🌐 使用浏览器语言:', browserLang);
+        return browserLang;
+    }
+    
+    // 4. 默认使用英文
+    currentLang = 'en';
+    localStorage.setItem('language', 'en');
+    console.log('🔤 使用默认语言: en');
+    return 'en';
+}
+
+// 当前语言 - 将在初始化后设置
+let currentLang = 'en';
 
 // 翻译函数 - 优化的回退逻辑
 function t(key, defaultValue = '') {
@@ -3049,6 +3249,21 @@ function setLanguage(lang) {
         // 触发自定义事件，通知其他模块语言已更改
         window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
     }
+}
+
+// 重置IP检测（用于测试或更换地区后重新检测）
+function resetIPDetection() {
+    localStorage.removeItem('ipDetected');
+    console.log('🔄 IP检测已重置，下次访问将重新检测');
+}
+
+// 手动触发IP检测（仅用于测试）
+async function forceIPDetection() {
+    localStorage.removeItem('ipDetected');
+    const lang = await initLanguage();
+    updatePageLanguage();
+    console.log('🌍 强制IP检测完成，语言:', lang);
+    return lang;
 }
 
 // 更新页面语言
@@ -3092,7 +3307,11 @@ function updatePageLanguage() {
 }
 
 // 初始化
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // 先初始化语言（包含IP检测）
+    await initLanguage();
+    
+    // 然后更新页面显示
     updatePageLanguage();
     
     // 绑定旧版语言切换按钮
