@@ -2947,6 +2947,9 @@ function setLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('language', lang);
         updatePageLanguage();
+        
+        // 触发自定义事件，通知其他模块语言已更改
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
     }
 }
 

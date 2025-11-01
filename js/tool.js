@@ -579,12 +579,24 @@ document.addEventListener('DOMContentLoaded', function() {
         stylesPanel.style.display = 'none';
     });
     
+    // 监听语言切换事件
+    window.addEventListener('languageChanged', function() {
+        // 重新初始化模板和风格
+        if (templatesPanel.style.display === 'block') {
+            initializeTemplates();
+        }
+        if (stylesPanel.style.display === 'block') {
+            initializeStyles();
+        }
+    });
+    
     // 初始化模板
     function initializeTemplates() {
         const categories = ['character', 'landscape', 'animal', 'product', 'architecture', 'food'];
         templatesGrid.innerHTML = '';
         
-        const currentLang = localStorage.getItem('selectedLanguage') || 'zh-CN';
+        // 使用与多语言系统一致的localStorage键
+        const currentLang = localStorage.getItem('language') || 'en';
         const lang = currentLang === 'zh-CN' || currentLang === 'zh-TW' ? 'zh' : 'en';
         
         categories.forEach(category => {
@@ -608,7 +620,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeStyles() {
         stylesGrid.innerHTML = '';
         
-        const currentLang = localStorage.getItem('selectedLanguage') || 'zh-CN';
+        // 使用与多语言系统一致的localStorage键
+        const currentLang = localStorage.getItem('language') || 'en';
         const lang = currentLang === 'zh-CN' || currentLang === 'zh-TW' ? 'zh' : 'en';
         
         const styles = [
