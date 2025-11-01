@@ -1717,6 +1717,12 @@ const translations = {
         'nav.home': 'Accueil',
         'nav.tool': 'Éditeur d\'Images',
         'nav.editor': 'Éditeur d\'Images',
+        
+        // Tool page loading states
+        'tool.generating': 'L\'IA crée pour vous...',
+        'tool.generatingHint': 'Cela peut prendre quelques secondes',
+        'tool.empty': 'Vos images générées apparaîtront ici',
+        'tool.emptyHint': 'Entrez une description et cliquez sur "Générer" pour commencer',
         'hero.title': 'Gratuit en Ligne',
         'hero.generator': 'Générateur d\'Images AI',
         'hero.description': 'Créez des images époustouflantes avec notre modèle texte-image de la plus haute qualité.',
@@ -2020,6 +2026,12 @@ const translations = {
         'nav.home': 'Startseite',
         'nav.tool': 'Bildbearbeitung',
         'nav.editor': 'Bildbearbeitung',
+        
+        // Tool page loading states
+        'tool.generating': 'KI erstellt für Sie...',
+        'tool.generatingHint': 'Dies kann einige Sekunden dauern',
+        'tool.empty': 'Ihre generierten Bilder werden hier angezeigt',
+        'tool.emptyHint': 'Geben Sie eine Beschreibung ein und klicken Sie auf "Generieren"',
         'hero.title': 'Kostenlos Online',
         'hero.generator': 'AI Bildgenerator',
         'hero.description': 'Erstellen Sie atemberaubende Bilder mit unserem hochwertigsten Text-zu-Bild-Modell.',
@@ -2625,6 +2637,13 @@ const translations = {
         'nav.brand': 'Gerador de Imagens AI',
         'nav.home': 'Início',
         'nav.tool': 'Editor de Imagens',
+        
+        // Tool page loading states
+        'tool.generating': 'IA está criando para você...',
+        'tool.generatingHint': 'Isso pode levar alguns segundos',
+        'tool.empty': 'Suas imagens geradas aparecerão aqui',
+        'tool.emptyHint': 'Digite uma descrição e clique em "Gerar" para começar',
+        
         'hero.title': 'Grátis Online',
         'hero.generator': 'Gerador de Imagens AI',
         'hero.description': 'Crie imagens impressionantes com nosso modelo de texto para imagem de altíssima qualidade.',
@@ -2820,12 +2839,23 @@ const translations = {
         'tool.creativityLow': 'Консервативный',
         'tool.creativityHigh': 'Креативный',
         'tool.result': 'Результат Генерации',
+        'tool.generating': 'ИИ создаёт для вас...',
+        'tool.generatingHint': 'Это может занять несколько секунд',
+        'tool.empty': 'Ваши сгенерированные изображения появятся здесь',
+        'tool.emptyHint': 'Введите описание и нажмите "Создать"',
     },
     
     'ar': {
         'nav.brand': 'مولد الصور بالذكاء الاصطناعي',
         'nav.home': 'الرئيسية',
         'nav.tool': 'محرر الصور',
+        
+        // Tool page loading states
+        'tool.generating': 'الذكاء الاصطناعي يقوم بالإنشاء...',
+        'tool.generatingHint': 'قد يستغرق هذا بضع ثوان',
+        'tool.empty': 'ستظهر صورك المُنشأة هنا',
+        'tool.emptyHint': 'أدخل وصفًا وانقر على "إنشاء" للبدء',
+        
         'hero.title': 'مجاني على الإنترنت',
         'hero.generator': 'مولد الصور بالذكاء الاصطناعي',
         'hero.description': 'أنشئ صورًا مذهلة باستخدام نموذج تحويل النص إلى صورة عالي الجودة.',
@@ -2998,6 +3028,10 @@ const translations = {
         'history.confirmClear': 'Sei sicuro di voler cancellare tutta la cronologia?',
         
         // Tool page
+        'tool.generating': 'L\'IA sta creando per te...',
+        'tool.generatingHint': 'Questo potrebbe richiedere alcuni secondi',
+        'tool.empty': 'Le tue immagini generate appariranno qui',
+        'tool.emptyHint': 'Inserisci una descrizione e clicca su "Genera" per iniziare',
         'tool.prompt': 'Descrivi la tua immagine',
         'tool.promptPlaceholder': 'Descrivi in dettaglio l\'immagine che vuoi creare...\n\nEsempio: Un gatto arancione carino seduto sul davanzale con la luce del sole, stile pittura a olio, molto dettagliato, colori caldi, luce morbida',
         'tool.count': 'Quantità di Generazione',
@@ -3016,6 +3050,13 @@ const translations = {
         'nav.brand': 'AI Görüntü Oluşturucu',
         'nav.home': 'Ana Sayfa',
         'nav.tool': 'Görüntü Düzenleyici',
+        
+        // Tool page loading states
+        'tool.generating': 'AI sizin için oluşturuyor...',
+        'tool.generatingHint': 'Bu birkaç saniye sürebilir',
+        'tool.empty': 'Oluşturulan görselleriniz burada görünecek',
+        'tool.emptyHint': 'Bir açıklama girin ve "Oluştur"a tıklayın',
+        
         'hero.title': 'Ücretsiz Çevrimiçi',
         'hero.generator': 'AI Görüntü Oluşturucu',
         'hero.description': 'En yüksek kaliteli metinden görüntüye modelimizle çarpıcı görüntüler oluşturun.',
