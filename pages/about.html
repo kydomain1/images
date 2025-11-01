@@ -3,27 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="footer.about">关于我们 - AI图片生成�?/title>
+    <title data-i18n="about.title">About Us - AI Image Generator</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="了解AI图片生成器的使命、技术和团队。我们致力于让先进的AI图像生成技术惠及每个人�?>
-    <meta name="keywords" content="关于我们,AI图片生成�?团队介绍,公司使命,AI技�?>
+    <meta name="description" content="Learn about AI Image Generator's mission, technology, and team">
+    <meta name="keywords" content="about us,AI image generator,team,mission,AI technology">
     <meta name="author" content="AI Image Generator">
     <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="/pages/about.html">
-    <meta property="og:title" content="关于我们 - AI图片生成�?>
-    <meta property="og:description" content="了解AI图片生成器的使命、技术和团队。我们致力于让先进的AI图像生成技术惠及每个人�?>
-    <meta property="og:image" content="/assets/og-image.svg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/pages/about.html">
-    <meta property="twitter:title" content="关于我们 - AI图片生成�?>
-    <meta property="twitter:description" content="了解AI图片生成器的使命、技术和团队。我们致力于让先进的AI图像生成技术惠及每个人�?>
-    <meta property="twitter:image" content="/assets/og-image.svg">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -31,192 +17,117 @@
     
     <link rel="canonical" href="/pages/about.html">
     
-    <!-- 预加载关键资�?-->
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
-    <!-- 样式�?-->
-    <link rel="stylesheet" href="../css/style.css?v=20251022">
-    <link rel="stylesheet" href="../css/policy-pages.css?v=20251022">
-    <link rel="stylesheet" href="../css/language-switcher.css?v=20251022">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/policy-pages.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
     
-    <!-- Font Awesome 异步加载（避免阻塞渲染） -->
+    <!-- Font Awesome -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
-    <!-- 导航�?-->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="../index.html" class="nav-brand" data-i18n="nav.brand">AI图片生成�?/a>
+                <a href="../index.html" class="nav-brand" data-i18n="nav.brand">AI Image Generator</a>
                 <ul class="nav-menu">
-                    <li><a href="../index.html" data-i18n="nav.home">首页</a></li>
-                    <li><a href="../tool.html" data-i18n="nav.tool">图片编辑�?/a></li>
-                    <li class="language-switcher-item">
-                        <button class="language-switcher-btn" id="languageSwitcher">
-                            <i class="fas fa-globe"></i>
-                            <span id="currentLanguage">中文</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="language-dropdown" id="languageDropdown">
-                            <div class="language-option" data-lang="en">
-                                <span class="lang-code">CN</span>
-                                <span class="lang-name">中文 (简�?</span>
-                            </div>
-                            <div class="language-option" data-lang="en">
-                                <span class="lang-code">US</span>
-                                <span class="lang-name">English</span>
-                            </div>
-                            <div class="language-option" data-lang="ja">
-                                <span class="lang-code">JP</span>
-                                <span class="lang-name">日本�?/span>
-                            </div>
-                            <div class="language-option" data-lang="ko">
-                                <span class="lang-code">KR</span>
-                                <span class="lang-name">한국�?/span>
-                            </div>
-                            <div class="language-option" data-lang="es">
-                                <span class="lang-code">ES</span>
-                                <span class="lang-name">Español</span>
-                            </div>
-                            <div class="language-option" data-lang="fr">
-                                <span class="lang-code">FR</span>
-                                <span class="lang-name">Français</span>
-                            </div>
-                            <div class="language-option" data-lang="de">
-                                <span class="lang-code">DE</span>
-                                <span class="lang-name">Deutsch</span>
-                            </div>
-                            <div class="language-option" data-lang="pt">
-                                <span class="lang-code">PT</span>
-                                <span class="lang-name">Português</span>
-                            </div>
-                            <div class="language-option" data-lang="ru">
-                                <span class="lang-code">RU</span>
-                                <span class="lang-name">Русский</span>
-                            </div>
-                            <div class="language-option" data-lang="ar">
-                                <span class="lang-code">AR</span>
-                                <span class="lang-name">العربية</span>
-                            </div>
-                            <div class="language-option" data-lang="hi">
-                                <span class="lang-code">IN</span>
-                                <span class="lang-name">हिन्दी</span>
-                            </div>
-                            <div class="language-option" data-lang="th">
-                                <span class="lang-code">TH</span>
-                                <span class="lang-name">ไท�?/span>
-                            </div>
-                            <div class="language-option" data-lang="vi">
-                                <span class="lang-code">VN</span>
-                                <span class="lang-name">Tiếng Việt</span>
-                            </div>
-                            <div class="language-option" data-lang="id">
-                                <span class="lang-code">ID</span>
-                                <span class="lang-name">Bahasa Indonesia</span>
-                            </div>
-                            <div class="language-option" data-lang="it">
-                                <span class="lang-code">IT</span>
-                                <span class="lang-name">Italiano</span>
-                            </div>
-                            <div class="language-option" data-lang="tr">
-                                <span class="lang-code">TR</span>
-                                <span class="lang-name">Türkçe</span>
-                            </div>
-                            <div class="language-option" data-lang="zh-TW">
-                                <span class="lang-code">TW</span>
-                                <span class="lang-name">繁體中文</span>
-                            </div>
-                        </div>
-                    </li>
+                    <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+                    <li><a href="../tool.html" data-i18n="nav.tool">Image Editor</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- 页面内容 -->
-    <section class="policy-page about-page">
+    <!-- Main Content -->
+    <section class="policy-page">
         <div class="container">
-            <h1 class="page-title" data-i18n="about.title">关于我们</h1>
+            <h1 class="page-title" data-i18n="about.title">About Us</h1>
             
             <div class="policy-content">
                 <div class="policy-section">
-                    <h2 data-i18n="about.section1.title">我们的使�?/h2>
+                    <h2 data-i18n="about.section1.title">Our Mission</h2>
                     <p data-i18n="about.section1.content">
-                        AI图片生成器致力于让每个人都能轻松访问先进的人工智能图像生成技术。我们相信创造力不应受到技术障碍的限制，每个人都应该能够将自己的想象变为现实�?                    </p>
+                        AI Image Generator is dedicated to making advanced AI image generation technology easily accessible to everyone. We believe creativity should not be limited by technical barriers, and everyone should be able to turn their imagination into reality.
+                    </p>
                 </div>
 
                 <div class="policy-section">
-                    <h2 data-i18n="about.section2.title">我们的技�?/h2>
+                    <h2 data-i18n="about.section2.title">Our Technology</h2>
                     <p data-i18n="about.section2.content">
-                        我们采用最新的AI图像生成技术，包括�?                    </p>
+                        We employ the latest AI image generation technologies, including:
+                    </p>
                     <ul>
-                        <li data-i18n="about.section2.item1"><strong>通义万相</strong> - 阿里巴巴达摩院开发的先进文本到图像生成模�?/li>
-                        <li data-i18n="about.section2.item2"><strong>多模态架�?/strong> - 结合文本理解和图像生成的混合系统</li>
-                        <li data-i18n="about.section2.item3"><strong>并行扩散变换�?/strong> - 快速高质量的图像生�?/li>
-                        <li data-i18n="about.section2.item4"><strong>云存储集�?/strong> - 使用Cloudflare R2实现可靠的图像存�?/li>
+                        <li data-i18n="about.section2.item1">Tongyi Wanxiang - Advanced text-to-image generation model developed by Alibaba DAMO Academy</li>
+                        <li data-i18n="about.section2.item2">Multimodal Architecture - Hybrid system combining text understanding and image generation</li>
+                        <li data-i18n="about.section2.item3">Parallel Diffusion Transformers - Fast, high-quality image generation</li>
+                        <li data-i18n="about.section2.item4">Cloud Storage Integration - Reliable image storage using Cloudflare R2</li>
                     </ul>
                 </div>
 
                 <div class="policy-section">
-                    <h2 data-i18n="about.section3.title">我们的价值观</h2>
+                    <h2 data-i18n="about.section3.title">Our Values</h2>
                     <div class="values-grid">
-                        <div class="value-card">
-                            <i class="fas fa-heart"></i>
-                            <h3 data-i18n="about.value1.title">用户至上</h3>
-                            <p data-i18n="about.value1.desc">我们始终将用户体验放在首位，持续改进服务以满足您的需求�?/p>
+                        <div class="value-item">
+                            <h3 data-i18n="about.value1.title">User-First</h3>
+                            <p data-i18n="about.value1.desc">We always prioritize user experience and continuously improve our services to meet your needs.</p>
                         </div>
-                        <div class="value-card">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3 data-i18n="about.value2.title">安全可靠</h3>
-                            <p data-i18n="about.value2.desc">我们采用行业最佳实践保护您的数据和隐私�?/p>
+                        <div class="value-item">
+                            <h3 data-i18n="about.value2.title">Secure and Reliable</h3>
+                            <p data-i18n="about.value2.desc">We employ industry best practices to protect your data and privacy.</p>
                         </div>
-                        <div class="value-card">
-                            <i class="fas fa-lightbulb"></i>
-                            <h3 data-i18n="about.value3.title">持续创新</h3>
-                            <p data-i18n="about.value3.desc">我们不断探索新技术，为您带来更好的创作体验�?/p>
+                        <div class="value-item">
+                            <h3 data-i18n="about.value3.title">Continuous Innovation</h3>
+                            <p data-i18n="about.value3.desc">We constantly explore and integrate the latest AI technologies to provide you with the best creative tools.</p>
                         </div>
-                        <div class="value-card">
-                            <i class="fas fa-universal-access"></i>
-                            <h3 data-i18n="about.value4.title">人人可用</h3>
-                            <p data-i18n="about.value4.desc">我们提供免费、无限制的服务，让每个人都能发挥创造力�?/p>
+                        <div class="value-item">
+                            <h3 data-i18n="about.value4.title">Accessible to All</h3>
+                            <p data-i18n="about.value4.desc">We offer powerful AI generation capabilities for free, making creativity accessible to everyone.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="policy-section">
-                    <h2 data-i18n="about.section4.title">我们的团�?/h2>
-                    <p data-i18n="about.section4.content">
-                        我们是一支充满激情的团队，由AI研究人员、软件工程师和设计师组成。我们来自不同的背景，但都有一个共同的目标：让AI技术更加普惠和易用�?                    </p>
+                    <h2 data-i18n="about.section4.title">Why Choose Us</h2>
+                    <ul>
+                        <li data-i18n="about.section4.item1">Free to use - No credit card required</li>
+                        <li data-i18n="about.section4.item2">High-quality generation - Advanced AI models</li>
+                        <li data-i18n="about.section4.item3">Easy to use - No technical knowledge needed</li>
+                        <li data-i18n="about.section4.item4">Multilingual support - Available in 13+ languages</li>
+                        <li data-i18n="about.section4.item5">Privacy protection - Your data is secure</li>
+                    </ul>
                 </div>
 
                 <div class="policy-section">
-                    <h2 data-i18n="about.section5.title">联系我们</h2>
+                    <h2 data-i18n="about.section5.title">Contact Us</h2>
                     <p data-i18n="about.section5.content">
-                        我们很乐意听取您的意见和建议。如果您有任何问题或反馈，请随时与我们联系：
+                        We'd love to hear from you! Whether you have questions, suggestions, or just want to say hello, feel free to reach out.
                     </p>
-                    <div class="contact-info">
-                        <p><i class="fas fa-envelope"></i> <span data-i18n="about.section5.email">电子邮件：hello@aiimagegenerator.com</span></p>
-                        <p><i class="fas fa-globe"></i> <span data-i18n="about.section5.website">网站：www.aiimagegenerator.com</span></p>
-                    </div>
+                    <p>
+                        <strong>Email:</strong> contact@aiimagegenerator.com
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
-                <a href="privacy.html" data-i18n="footer.privacy">隐私政策</a>
-                <span>�?/span>
-                <a href="terms.html" data-i18n="footer.terms">服务条款</a>
-                <span>�?/span>
-                <a href="about.html" class="active" data-i18n="footer.about">关于我们</a>
-                <span>�?/span>
-                <a href="contact.html" data-i18n="footer.contact">联系我们</a>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+                <span>•</span>
+                <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+                <span>•</span>
+                <a href="about.html" class="active" data-i18n="footer.about">About Us</a>
+                <span>•</span>
+                <a href="contact.html" data-i18n="footer.contact">Contact Us</a>
             </div>
-            <p class="copyright" data-i18n="footer.copyright">© 2025 �?AI图片生成�? 保留所有权�?</p>
+            <p class="copyright" data-i18n="footer.copyright">© 2025 • AI Image Generator. All rights reserved.</p>
         </div>
     </footer>
 
@@ -224,4 +135,3 @@
     <script src="../js/policy.js"></script>
 </body>
 </html>
-

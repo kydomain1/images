@@ -3,27 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="footer.contact">联系我们 - AI图片生成�?/title>
+    <title data-i18n="contact.title">Contact Us - AI Image Generator</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="联系AI图片生成器团队。有任何问题、反馈或建议？我们很乐意听取您的声音�?4小时内回复�?>
-    <meta name="keywords" content="联系我们,客服支持,技术支�?AI图片生成�?反馈建议">
+    <meta name="description" content="Get in touch with the AI Image Generator team">
+    <meta name="keywords" content="contact us,support,AI image generator,customer service">
     <meta name="author" content="AI Image Generator">
     <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="/pages/contact.html">
-    <meta property="og:title" content="联系我们 - AI图片生成�?>
-    <meta property="og:description" content="联系AI图片生成器团队。有任何问题、反馈或建议？我们很乐意听取您的声音�?>
-    <meta property="og:image" content="/assets/og-image.svg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="/pages/contact.html">
-    <meta property="twitter:title" content="联系我们 - AI图片生成�?>
-    <meta property="twitter:description" content="联系AI图片生成器团队。有任何问题、反馈或建议？我们很乐意听取您的声音�?>
-    <meta property="twitter:image" content="/assets/og-image.svg">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -31,218 +17,133 @@
     
     <link rel="canonical" href="/pages/contact.html">
     
-    <!-- 预加载关键资�?-->
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
-    <!-- 样式�?-->
-    <link rel="stylesheet" href="../css/style.css?v=20251022">
-    <link rel="stylesheet" href="../css/policy-pages.css?v=20251022">
-    <link rel="stylesheet" href="../css/language-switcher.css?v=20251022">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/policy-pages.css">
+    <link rel="stylesheet" href="../css/language-switcher.css">
     
-    <!-- Font Awesome 异步加载（避免阻塞渲染） -->
+    <!-- Font Awesome -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
-    <!-- 导航�?-->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="../index.html" class="nav-brand" data-i18n="nav.brand">AI图片生成�?/a>
+                <a href="../index.html" class="nav-brand" data-i18n="nav.brand">AI Image Generator</a>
                 <ul class="nav-menu">
-                    <li><a href="../index.html" data-i18n="nav.home">首页</a></li>
-                    <li><a href="../tool.html" data-i18n="nav.tool">图片编辑�?/a></li>
-                    <li class="language-switcher-item">
-                        <button class="language-switcher-btn" id="languageSwitcher">
-                            <i class="fas fa-globe"></i>
-                            <span id="currentLanguage">中文</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="language-dropdown" id="languageDropdown">
-                            <div class="language-option" data-lang="en">
-                                <span class="lang-code">CN</span>
-                                <span class="lang-name">中文 (简�?</span>
-                            </div>
-                            <div class="language-option" data-lang="en">
-                                <span class="lang-code">US</span>
-                                <span class="lang-name">English</span>
-                            </div>
-                            <div class="language-option" data-lang="ja">
-                                <span class="lang-code">JP</span>
-                                <span class="lang-name">日本�?/span>
-                            </div>
-                            <div class="language-option" data-lang="ko">
-                                <span class="lang-code">KR</span>
-                                <span class="lang-name">한국�?/span>
-                            </div>
-                            <div class="language-option" data-lang="es">
-                                <span class="lang-code">ES</span>
-                                <span class="lang-name">Español</span>
-                            </div>
-                            <div class="language-option" data-lang="fr">
-                                <span class="lang-code">FR</span>
-                                <span class="lang-name">Français</span>
-                            </div>
-                            <div class="language-option" data-lang="de">
-                                <span class="lang-code">DE</span>
-                                <span class="lang-name">Deutsch</span>
-                            </div>
-                            <div class="language-option" data-lang="pt">
-                                <span class="lang-code">PT</span>
-                                <span class="lang-name">Português</span>
-                            </div>
-                            <div class="language-option" data-lang="ru">
-                                <span class="lang-code">RU</span>
-                                <span class="lang-name">Русский</span>
-                            </div>
-                            <div class="language-option" data-lang="ar">
-                                <span class="lang-code">AR</span>
-                                <span class="lang-name">العربية</span>
-                            </div>
-                            <div class="language-option" data-lang="hi">
-                                <span class="lang-code">IN</span>
-                                <span class="lang-name">हिन्दी</span>
-                            </div>
-                            <div class="language-option" data-lang="th">
-                                <span class="lang-code">TH</span>
-                                <span class="lang-name">ไท�?/span>
-                            </div>
-                            <div class="language-option" data-lang="vi">
-                                <span class="lang-code">VN</span>
-                                <span class="lang-name">Tiếng Việt</span>
-                            </div>
-                            <div class="language-option" data-lang="id">
-                                <span class="lang-code">ID</span>
-                                <span class="lang-name">Bahasa Indonesia</span>
-                            </div>
-                            <div class="language-option" data-lang="it">
-                                <span class="lang-code">IT</span>
-                                <span class="lang-name">Italiano</span>
-                            </div>
-                            <div class="language-option" data-lang="tr">
-                                <span class="lang-code">TR</span>
-                                <span class="lang-name">Türkçe</span>
-                            </div>
-                            <div class="language-option" data-lang="zh-TW">
-                                <span class="lang-code">TW</span>
-                                <span class="lang-name">繁體中文</span>
-                            </div>
-                        </div>
-                    </li>
+                    <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+                    <li><a href="../tool.html" data-i18n="nav.tool">Image Editor</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- 页面内容 -->
-    <section class="policy-page contact-page">
+    <!-- Main Content -->
+    <section class="policy-page">
         <div class="container">
-            <h1 class="page-title" data-i18n="contact.title">联系我们</h1>
-            <p class="page-subtitle" data-i18n="contact.subtitle">我们很乐意听到您的声�?/p>
+            <h1 class="page-title" data-i18n="contact.title">Contact Us</h1>
+            <p class="page-subtitle" data-i18n="contact.subtitle">We'd love to hear from you! Reach out with any questions or feedback.</p>
             
-            <div class="contact-wrapper">
-                <!-- 联系表单 -->
-                <div class="contact-form-section">
-                    <h2 data-i18n="contact.form.title">发送消�?/h2>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="name" data-i18n="contact.form.name">姓名</label>
-                            <input type="text" id="name" name="name" required data-i18n-placeholder="contact.form.namePlaceholder" placeholder="请输入您的姓�?>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" data-i18n="contact.form.email">电子邮件</label>
-                            <input type="email" id="email" name="email" required data-i18n-placeholder="contact.form.emailPlaceholder" placeholder="your@email.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" data-i18n="contact.form.subject">主题</label>
-                            <select id="subject" name="subject" required>
-                                <option value="" data-i18n="contact.form.selectSubject">请选择主题</option>
-                                <option value="general" data-i18n="contact.form.general">一般咨�?/option>
-                                <option value="technical" data-i18n="contact.form.technical">技术支�?/option>
-                                <option value="feedback" data-i18n="contact.form.feedback">意见反馈</option>
-                                <option value="business" data-i18n="contact.form.business">商务合作</option>
-                                <option value="other" data-i18n="contact.form.other">其他</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" data-i18n="contact.form.message">消息</label>
-                            <textarea id="message" name="message" rows="6" required data-i18n-placeholder="contact.form.messagePlaceholder" placeholder="请输入您的消�?.."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-paper-plane"></i>
-                            <span data-i18n="contact.form.submit">发送消�?/span>
-                        </button>
-                    </form>
+            <div class="policy-content">
+                <div class="policy-section">
+                    <h2 data-i18n="contact.section1.title">Get in Touch</h2>
+                    <p data-i18n="contact.section1.content">
+                        Whether you have a question about features, need technical support, or just want to share your feedback, our team is here to help.
+                    </p>
                 </div>
-                
-                <!-- 联系信息 -->
-                <div class="contact-info-section">
-                    <h2 data-i18n="contact.info.title">其他联系方式</h2>
-                    
-                    <div class="contact-methods">
-                        <div class="contact-method">
-                            <div class="method-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="method-content">
-                                <h3 data-i18n="contact.info.email.title">电子邮件</h3>
-                                <p data-i18n="contact.info.email.desc">support@aiimagegenerator.com</p>
+
+                <div class="policy-section">
+                    <h2 data-i18n="contact.section2.title">Contact Information</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h3 data-i18n="contact.info.email.title">Email Support</h3>
+                                <p>support@aiimagegenerator.com</p>
+                                <p data-i18n="contact.info.email.desc">For general inquiries and technical support</p>
                             </div>
                         </div>
-                        
-                        <div class="contact-method">
-                            <div class="method-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="method-content">
-                                <h3 data-i18n="contact.info.hours.title">工作时间</h3>
-                                <p data-i18n="contact.info.hours.desc">周一至周�? 9:00 - 18:00 (CST)</p>
+
+                        <div class="contact-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h3 data-i18n="contact.info.privacy.title">Privacy Inquiries</h3>
+                                <p>privacy@aiimagegenerator.com</p>
+                                <p data-i18n="contact.info.privacy.desc">For questions about data protection and privacy</p>
                             </div>
                         </div>
-                        
-                        <div class="contact-method">
-                            <div class="method-icon">
-                                <i class="fas fa-comments"></i>
+
+                        <div class="contact-item">
+                            <i class="fas fa-briefcase"></i>
+                            <div>
+                                <h3 data-i18n="contact.info.business.title">Business Inquiries</h3>
+                                <p>business@aiimagegenerator.com</p>
+                                <p data-i18n="contact.info.business.desc">For partnerships and commercial opportunities</p>
                             </div>
-                            <div class="method-content">
-                                <h3 data-i18n="contact.info.response.title">响应时间</h3>
-                                <p data-i18n="contact.info.response.desc">我们通常�?4小时内回�?/p>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3 data-i18n="contact.info.response.title">Response Time</h3>
+                                <p data-i18n="contact.info.response.desc">We typically respond within 24 hours</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="faq-link">
-                        <p data-i18n="contact.faq.text">在联系我们之前，您可能想查看我们�?/p>
-                        <a href="index.html#faq" class="faq-btn" data-i18n="contact.faq.link">常见问题</a>
+                </div>
+
+                <div class="policy-section">
+                    <h2 data-i18n="contact.section3.title">Frequently Asked Questions</h2>
+                    <p data-i18n="contact.faq.text">
+                        Before reaching out, you may want to check our
+                        <a href="../index.html#faq" data-i18n="contact.faq.link">Frequently Asked Questions</a>
+                        for quick answers to common questions.
+                    </p>
+                </div>
+
+                <div class="policy-section">
+                    <h2 data-i18n="contact.section4.title">Follow Us</h2>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
-                <a href="privacy.html" data-i18n="footer.privacy">隐私政策</a>
-                <span>�?/span>
-                <a href="terms.html" data-i18n="footer.terms">服务条款</a>
-                <span>�?/span>
-                <a href="about.html" data-i18n="footer.about">关于我们</a>
-                <span>�?/span>
-                <a href="contact.html" class="active" data-i18n="footer.contact">联系我们</a>
+                <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+                <span>•</span>
+                <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+                <span>•</span>
+                <a href="about.html" data-i18n="footer.about">About Us</a>
+                <span>•</span>
+                <a href="contact.html" class="active" data-i18n="footer.contact">Contact Us</a>
             </div>
-            <p class="copyright" data-i18n="footer.copyright">© 2025 �?AI图片生成�? 保留所有权�?</p>
+            <p class="copyright" data-i18n="footer.copyright">© 2025 • AI Image Generator. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="../js/i18n.js"></script>
-    <script src="../js/policy.js"></script>
     <script src="../js/contact.js"></script>
 </body>
 </html>
-
