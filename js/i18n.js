@@ -2720,6 +2720,20 @@ const translations = {
         'history.clearAll': 'Limpar Todo o Histórico',
         'history.delete': 'Excluir',
         'history.confirmClear': 'Tem certeza de que deseja limpar todo o histórico?',
+        
+        // Tool page
+        'tool.prompt': 'Descreva sua imagem',
+        'tool.promptPlaceholder': 'Descreva em detalhes a imagem que deseja criar...\n\nExemplo: Um gato laranja fofo sentado no parapeito da janela, com luz solar sobre ele, estilo pintura a óleo, muito detalhado, cores quentes, luz suave',
+        'tool.count': 'Quantidade de Geração',
+        'tool.size': 'Tamanho da Imagem',
+        'tool.style': 'Estilo Artístico',
+        'tool.advanced': 'Configurações Avançadas',
+        'tool.negative': 'Prompt Negativo (evitar)',
+        'tool.negativePlaceholder': 'Insira elementos que você não deseja...\nex: desfocado, baixa qualidade, distorcido, marca d\'água',
+        'tool.creativity': 'Nível de Criatividade',
+        'tool.creativityLow': 'Conservador',
+        'tool.creativityHigh': 'Criativo',
+        'tool.result': 'Resultado da Geração',
     },
     
     'ru': {
@@ -2747,6 +2761,20 @@ const translations = {
         'history.clearAll': 'Очистить Всю Историю',
         'history.delete': 'Удалить',
         'history.confirmClear': 'Вы уверены, что хотите очистить всю историю?',
+        
+        // Tool page
+        'tool.prompt': 'Опишите ваше изображение',
+        'tool.promptPlaceholder': 'Детально опишите изображение, которое хотите создать...\n\nПример: Милый рыжий кот сидит на подоконнике, солнечный свет на нем, стиль масляной живописи, очень детально, теплые тона, мягкий свет',
+        'tool.count': 'Количество Генераций',
+        'tool.size': 'Размер Изображения',
+        'tool.style': 'Художественный Стиль',
+        'tool.advanced': 'Дополнительные Настройки',
+        'tool.negative': 'Негативный Промпт (избегать)',
+        'tool.negativePlaceholder': 'Введите элементы, которые не хотите...\nнапр.: размытый, низкое качество, искаженный, водяной знак',
+        'tool.creativity': 'Уровень Креативности',
+        'tool.creativityLow': 'Консервативный',
+        'tool.creativityHigh': 'Креативный',
+        'tool.result': 'Результат Генерации',
     },
     
     'ar': {
@@ -2774,6 +2802,20 @@ const translations = {
         'history.clearAll': 'مسح كل السجل',
         'history.delete': 'حذف',
         'history.confirmClear': 'هل أنت متأكد من رغبتك في مسح كل السجل؟',
+        
+        // Tool page
+        'tool.prompt': 'صف صورتك',
+        'tool.promptPlaceholder': 'صف الصورة التي تريد إنشاءها بالتفصيل...\n\nمثال: قطة برتقالية لطيفة جالسة على عتبة النافذة، ضوء الشمس عليها، أسلوب الرسم الزيتي، مفصل للغاية، ألوان دافئة، ضوء ناعم',
+        'tool.count': 'كمية التوليد',
+        'tool.size': 'حجم الصورة',
+        'tool.style': 'النمط الفني',
+        'tool.advanced': 'الإعدادات المتقدمة',
+        'tool.negative': 'موجه سلبي (تجنب)',
+        'tool.negativePlaceholder': 'أدخل العناصر التي لا تريدها...\nمثال: ضبابي، جودة منخفضة، مشوه، علامة مائية',
+        'tool.creativity': 'مستوى الإبداع',
+        'tool.creativityLow': 'محافظ',
+        'tool.creativityHigh': 'إبداعي',
+        'tool.result': 'نتيجة التوليد',
     },
     
     'hi': {
@@ -2909,6 +2951,20 @@ const translations = {
         'history.clearAll': 'Cancella Tutta la Cronologia',
         'history.delete': 'Elimina',
         'history.confirmClear': 'Sei sicuro di voler cancellare tutta la cronologia?',
+        
+        // Tool page
+        'tool.prompt': 'Descrivi la tua immagine',
+        'tool.promptPlaceholder': 'Descrivi in dettaglio l\'immagine che vuoi creare...\n\nEsempio: Un gatto arancione carino seduto sul davanzale con la luce del sole, stile pittura a olio, molto dettagliato, colori caldi, luce morbida',
+        'tool.count': 'Quantità di Generazione',
+        'tool.size': 'Dimensione Immagine',
+        'tool.style': 'Stile Artistico',
+        'tool.advanced': 'Impostazioni Avanzate',
+        'tool.negative': 'Prompt Negativo (evitare)',
+        'tool.negativePlaceholder': 'Inserisci elementi che non desideri...\nes: sfocato, bassa qualità, distorto, filigrana',
+        'tool.creativity': 'Livello di Creatività',
+        'tool.creativityLow': 'Conservativo',
+        'tool.creativityHigh': 'Creativo',
+        'tool.result': 'Risultato della Generazione',
     },
     
     'tr': {
@@ -2936,6 +2992,20 @@ const translations = {
         'history.clearAll': 'Tüm Geçmişi Temizle',
         'history.delete': 'Sil',
         'history.confirmClear': 'Tüm geçmişi temizlemek istediğinizden emin misiniz?',
+        
+        // Tool page
+        'tool.prompt': 'Görselinizi Tanımlayın',
+        'tool.promptPlaceholder': 'Oluşturmak istediğiniz görseli detaylı tanımlayın...\n\nÖrnek: Pencere pervazında oturan sevimli turuncu bir kedi, üzerinde güneş ışığı, yağlı boya stili, çok detaylı, sıcak renkler, yumuşak ışık',
+        'tool.count': 'Oluşturma Miktarı',
+        'tool.size': 'Görsel Boyutu',
+        'tool.style': 'Sanat Stili',
+        'tool.advanced': 'Gelişmiş Ayarlar',
+        'tool.negative': 'Negatif İstem (kaçınılacak)',
+        'tool.negativePlaceholder': 'İstemediğiniz öğeleri girin...\nörn: bulanık, düşük kalite, bozuk, filigran',
+        'tool.creativity': 'Yaratıcılık Seviyesi',
+        'tool.creativityLow': 'Muhafazakar',
+        'tool.creativityHigh': 'Yaratıcı',
+        'tool.result': 'Oluşturma Sonucu',
     }
 };
 
