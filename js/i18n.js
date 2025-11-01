@@ -4,7 +4,7 @@
  */
 
 const translations = {
-    'zh-CN': {
+    'zh': {
         // 导航栏
         'nav.brand': 'AI图片生成器',
         'nav.home': '首页',
@@ -2273,7 +2273,7 @@ const translations = {
         'history.confirmClear': 'Sind Sie sicher, dass Sie den gesamten Verlauf löschen möchten?',
     },
     
-    'zh-TW': {
+    'zh-tw': {
         'nav.brand': 'AI圖片生成器',
         'nav.home': '首頁',
         'nav.tool': '圖片編輯器',
