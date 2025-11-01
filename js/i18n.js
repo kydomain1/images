@@ -3221,13 +3221,13 @@ function t(key, defaultValue = '') {
     }
     
     // 2. 如果当前语言是中文，回退到英文；否则先回退到英文
-    if (currentLang !== 'zh-CN' && translations['en'] && translations['en'][key]) {
+    if (currentLang !== 'zh' && translations['en'] && translations['en'][key]) {
         return translations['en'][key];
     }
     
     // 3. 回退到中文
-    if (translations['zh-CN'] && translations['zh-CN'][key]) {
-        return translations['zh-CN'][key];
+    if (translations['zh'] && translations['zh'][key]) {
+        return translations['zh'][key];
     }
     
     // 4. 如果中文也没有，尝试英文（中文用户的情况）
@@ -3344,7 +3344,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     
                     // 更新当前语言显示
                     const langNames = {
-                        'zh-CN': '中文',
+                        'zh': '中文',
+                        'zh-tw': '繁體中文',
                         'en': 'English',
                         'ja': '日本語',
                         'ko': '한국어',
@@ -3396,7 +3397,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // 初始化当前语言显示
         const langNames = {
-            'zh-CN': '中文',
+            'zh': '中文',
+            'zh-tw': '繁體中文',
             'en': 'English',
             'ja': '日本語',
             'ko': '한국어',
