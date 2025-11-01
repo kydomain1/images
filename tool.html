@@ -411,20 +411,20 @@
                             </label>
                             <textarea 
                                 id="negative-prompt" 
-                                placeholder="输入您不想在图片中出现的元素...&#10;例如：模糊、低质量、变形、水印"
+                                data-i18n-placeholder="tool.negativePlaceholder"
                                 rows="2"
                             ></textarea>
                         </div>
                         
                         <div class="slider-group">
                             <label for="creativity">
-                                <i class="fas fa-lightbulb"></i> 创意程度
+                                <i class="fas fa-lightbulb"></i> <span data-i18n="tool.creativity">创意程度</span>
                                 <span id="creativity-value">7</span>
                             </label>
                             <input type="range" id="creativity" min="1" max="10" value="7" step="1">
                             <div class="slider-labels">
-                                <span>保守</span>
-                                <span>创新</span>
+                                <span data-i18n="tool.creativityLow">保守</span>
+                                <span data-i18n="tool.creativityHigh">创新</span>
                             </div>
                         </div>
                     </div>
